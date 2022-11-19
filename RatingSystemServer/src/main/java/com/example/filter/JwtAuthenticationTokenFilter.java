@@ -56,14 +56,15 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 }
             }
             // 从redis中获取LoginUser
-            String redisKey = "login:" + userid;
-            LoginAdmin loginUser = redisCache.getCacheObject(redisKey);
-            if(Objects.isNull(loginUser)){
+            String redisKey = "adminLogin:" + userid;
+            LoginAdmin loginAdmin = redisCache.getCacheObject(redisKey);
+            if(Objects.isNull(loginAdmin)){
                 throw new RuntimeException("用户不存在");
             }
             // 存入SecurityContextHolder
+
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                    = new UsernamePasswordAuthenticationToken(loginUser, null, null);
+                    = new UsernamePasswordAuthenticationToken(loginAdmin, null, null);
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             filterChain.doFilter(request,response);
         }

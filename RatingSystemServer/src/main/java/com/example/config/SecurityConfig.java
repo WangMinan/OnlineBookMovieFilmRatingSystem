@@ -28,9 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationEntryPointImpl authenticationEntryPoint;
 
-    private static final String URL_WHITELIST[] ={
-            "/user/login",
-            "/user/logout",
+    private static final String[] URL_WHITELIST ={
+            "/admin/login",
+            "/admin/logout"
     };
 
     @Bean

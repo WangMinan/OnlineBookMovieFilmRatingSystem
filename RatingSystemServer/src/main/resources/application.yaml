@@ -2,6 +2,23 @@ server:
   port: 8080
 
 spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://121.41.227.153:3306/AssessmentSystem?useUnicode=true&characterEncoding=UTF-8
+    username: wangminan
+    password: HaoHao20021118
+  redis:
+    port: 6379
+    host: 121.41.227.153
+    password: HaoHao20021118
+    timeout: 10000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
 ## jsp支持
   mvc:
     view:
