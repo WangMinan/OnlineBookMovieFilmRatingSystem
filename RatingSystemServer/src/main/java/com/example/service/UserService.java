@@ -1,8 +1,13 @@
 package com.example.service;
 
+import com.example.domain.Admin;
 import com.example.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.pojo.QueryInfo;
+import com.example.pojo.R;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
 * @author wangminan
@@ -12,4 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService extends IService<User> {
 
+    Map<String,Object> getAllUsers(QueryInfo queryInfo);
+
+    R addUser(User user);
 }
