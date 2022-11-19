@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.FilmMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.domain.Film">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="VARCHAR"/>
+            <result property="publishyear" column="publishYear" jdbcType="INTEGER"/>
+            <result property="picurl" column="picUrl" jdbcType="VARCHAR"/>
+            <result property="discription" column="discription" jdbcType="VARCHAR"/>
+            <result property="isdeleted" column="isDeleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,type,
+        publishYear,picUrl,discription,
+        isDeleted
+    </sql>
+</mapper>

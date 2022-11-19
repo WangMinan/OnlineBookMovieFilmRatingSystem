@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.AssessmentMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.domain.Assessment">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userid" column="userId" jdbcType="BIGINT"/>
+            <result property="objectid" column="objectId" jdbcType="BIGINT"/>
+            <result property="objecttype" column="objectType" jdbcType="VARCHAR"/>
+            <result property="assessment" column="assessment" jdbcType="VARCHAR"/>
+            <result property="postdate" column="postDate" jdbcType="VARCHAR"/>
+            <result property="isdeleted" column="isDeleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,userId,objectId,
+        objectType,assessment,postDate,
+        isDeleted
+    </sql>
+</mapper>
