@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+## jsp支持
+  mvc:
+    view:
+      suffix: .jsp
+      prefix: /WEB-INF/views/
+
