@@ -15,7 +15,7 @@ import java.io.IOException;
 
 /**
  * @author : [wangminan]
- * @description : [一句话描述该类的功能]
+ * @description : [未登录或token失效时访问接口时自定义的返回结果]
  */
 @Component
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {

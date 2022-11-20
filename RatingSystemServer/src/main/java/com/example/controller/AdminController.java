@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * @author : [wangminan]
- * @description : [一句话描述该类的功能]
+ * @description : [管理员Controller]
  */
 @RestController
 @RequestMapping("/admin")

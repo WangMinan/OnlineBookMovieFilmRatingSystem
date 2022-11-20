@@ -19,4 +19,6 @@ public interface AssessmentService extends IService<Assessment> {
     Map<String, Object> getAllAssessments(QueryInfo queryInfo);
 
     R deleteAssessment(long id);
+
+    R addAssessment(Assessment assessment);
 }

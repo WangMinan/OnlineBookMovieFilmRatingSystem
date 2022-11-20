@@ -65,6 +65,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setId(id);
         return userMapper.updateById(user) > 0 ? R.ok("更新用户成功") : R.error("更新用户失败");
     }
+
+    @Override
+    public R registerUser(User user) {
+        // 加密后插入数据库
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String password = encoder.encode(user.getPassword());
+        user.setPassword(password);
+        return userMapper.insert(user) > 0 ? R.ok("注册用户成功") : R.error("注册用户失败");
+    }
+
+    @Override
+    public boolean login(User user) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("username", user.getUsername());
+        User user1 = userMapper.selectOne(wrapper);
+        if(user1 == null){
+            return false;
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(user.getPassword(), user1.getPassword());
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("username", username);
+        return userMapper.selectOne(wrapper);
+    }
 }
 
 

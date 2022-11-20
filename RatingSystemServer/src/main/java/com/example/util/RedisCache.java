@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Redis工具类
  * 对redis template中的常用操作进行封装
+ * @author sangeng
  */
 @SuppressWarnings(value = { "unchecked", "rawtypes" })
 @Component

@@ -32,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/admin/login",
             "/admin/logout",
             //  这算是自己摸索出来的通配符
-            "/user/**"
+            "/user/**",
+            "/view/**"
     };
 
     @Bean

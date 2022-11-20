@@ -24,4 +24,10 @@ public interface UserService extends IService<User> {
     R deleteUser(long id);
 
     R updateUser(long id, User user);
+
+    R registerUser(User user);
+
+    boolean login(User user);
+
+    User getUserByUsername(String username);
 }

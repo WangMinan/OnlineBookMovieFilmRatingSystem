@@ -3,7 +3,6 @@ package com.example.util;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.domain.Book;
 import com.example.pojo.QueryInfo;
 
@@ -13,10 +12,16 @@ import java.util.Objects;
 
 /**
  * @author : [wangminan]
- * @description : [一句话描述该类的功能]
+ * @description : [分页查询工具类]
  */
 public class PageGetUtil {
 
+    /**
+     * 分页获取基本信息的单一实例方法
+     * @param mapper 传入的mapper
+     * @param queryInfo 传入的查询信息
+     * @return 返回的分页信息
+     */
     public static Map<String,Object> getPage(BaseMapper mapper, QueryInfo queryInfo){
         Page<Book> page = new Page<>(queryInfo.getPagenum(), queryInfo.getPagesize());
         Page list;

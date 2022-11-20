@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.example.domain.Assessment">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="userid" column="userId" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="objectid" column="objectId" jdbcType="BIGINT"/>
             <result property="objecttype" column="objectType" jdbcType="VARCHAR"/>
             <result property="assessment" column="assessment" jdbcType="VARCHAR"/>
@@ -15,7 +15,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,userId,objectId,
+        id,username,objectId,
         objectType,assessment,postDate,
         isDeleted
     </sql>

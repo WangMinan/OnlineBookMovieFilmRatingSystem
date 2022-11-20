@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 页面响应domain
+ * @author : [wangminan]
+ * @description : [统一返回结果]
  */
 public class R extends HashMap<String, Object> {
 

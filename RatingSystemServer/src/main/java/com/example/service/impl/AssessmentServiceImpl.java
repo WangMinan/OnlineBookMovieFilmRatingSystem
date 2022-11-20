@@ -33,6 +33,11 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
     public R deleteAssessment(long id) {
         return assessmentMapper.deleteById(id) > 0 ? R.ok("删除评价成功") : R.error("删除评价失败");
     }
+
+    @Override
+    public R addAssessment(Assessment assessment) {
+        return assessmentMapper.insert(assessment) > 0 ? R.ok("添加评价成功") : R.error("添加评价失败");
+    }
 }
 
 

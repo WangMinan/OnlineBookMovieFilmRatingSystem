@@ -23,7 +23,7 @@ import java.util.Objects;
  * 使用userid去redis中获取对应的LoginUser对象。
  * 然后封装Authentication对象存入SecurityContextHolder
  * @author : [wangminan]
- * @description : [一句话描述该类的功能]
+ * @description : [Jwt认证过滤器]
  */
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
@@ -42,10 +42,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
         } else {
             // 解析token
-            String userid;
+            String adminId;
             try {
                 Claims claims = JwtUtil.parseJWT(token);
-                userid = claims.getSubject();
+                adminId = claims.getSubject();
             } catch (Exception e) {
                 if(e instanceof io.jsonwebtoken.ExpiredJwtException){
                     // token过期
@@ -56,7 +56,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 }
             }
             // 从redis中获取LoginUser
-            String redisKey = "adminLogin:" + userid;
+            String redisKey = "adminLogin:" + adminId;
             LoginAdmin loginAdmin = redisCache.getCacheObject(redisKey);
             if(Objects.isNull(loginAdmin)){
                 throw new RuntimeException("用户不存在");
