@@ -1,5 +1,8 @@
 server:
   port: 8080
+  servlet:
+    session:
+      timeout: PT1H # 1 hour
 
 spring:
   datasource:
@@ -7,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://121.41.227.153:3306/AssessmentSystem?useUnicode=true&characterEncoding=UTF-8
     username: wangminan
-    password: HaoHao20021118
+    password: ********
   redis:
     port: 6379
     host: 121.41.227.153
@@ -22,6 +25,6 @@ spring:
 ## jsp支持
   mvc:
     view:
-      prefix: /WEB-INF/view/
+      prefix: /WEB-INF/views
       suffix: .jsp
 
