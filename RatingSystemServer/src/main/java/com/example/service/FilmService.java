@@ -2,7 +2,10 @@ package com.example.service;
 
 import com.example.domain.Film;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.pojo.QueryInfo;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
 * @author wangminan
@@ -12,4 +15,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface FilmService extends IService<Film> {
 
+    Map<String, Object> getAllFilms(QueryInfo queryInfo);
 }

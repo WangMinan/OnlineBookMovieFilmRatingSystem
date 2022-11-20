@@ -54,6 +54,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setPassword(password);
         return userMapper.insert(user) > 0 ? R.ok("添加用户成功") : R.error("添加用户失败");
     }
+
+    @Override
+    public R deleteUser(long id) {
+        return userMapper.deleteById(id) > 0 ? R.ok("删除用户成功") : R.error("删除用户失败");
+    }
+
+    @Override
+    public R updateUser(long id, User user) {
+        user.setId(id);
+        return userMapper.updateById(user) > 0 ? R.ok("更新用户成功") : R.error("更新用户失败");
+    }
 }
 
 

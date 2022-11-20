@@ -30,7 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] URL_WHITELIST ={
             "/admin/login",
-            "/admin/logout"
+            "/admin/logout",
+            //  这算是自己摸索出来的通配符
+            "/user/**"
     };
 
     @Bean

@@ -3,7 +3,10 @@ package com.example.domain;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -11,6 +14,8 @@ import lombok.Data;
  */
 @TableName(value ="Book")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book implements Serializable {
     /**
      *
@@ -56,6 +61,15 @@ public class Book implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public Book(String name, String isbn, String type, String publishyear, String description, String picurl) {
+        this.name = name;
+        this.isbn = isbn;
+        this.type = type;
+        this.publishyear = publishyear;
+        this.description = description;
+        this.picurl = picurl;
+    }
 
     @Override
     public boolean equals(Object that) {

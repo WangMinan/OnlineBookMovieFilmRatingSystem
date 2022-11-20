@@ -3,7 +3,10 @@ package com.example.domain;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -11,6 +14,8 @@ import lombok.Data;
  */
 @TableName(value ="User")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
     /**
      *
@@ -41,6 +46,12 @@ public class User implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public User(String username, String password, String mail) {
+        this.username = username;
+        this.password = password;
+        this.mail = mail;
+    }
 
     @Override
     public boolean equals(Object that) {

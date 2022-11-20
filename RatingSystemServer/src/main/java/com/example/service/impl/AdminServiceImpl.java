@@ -73,7 +73,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         String userid = loginAdmin.getAdmin().getId().toString();
         // 删除redis中的token
         redisCache.deleteObject("adminLogin:" + userid);
-        System.out.println("退出成功");
+//        System.out.println("退出成功");
         return R.ok("退出成功");
     }
 }

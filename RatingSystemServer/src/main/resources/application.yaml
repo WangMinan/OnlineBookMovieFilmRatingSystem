@@ -22,6 +22,6 @@ spring:
 ## jsp支持
   mvc:
     view:
+      prefix: /WEB-INF/view/
       suffix: .jsp
-      prefix: /WEB-INF/views/
 

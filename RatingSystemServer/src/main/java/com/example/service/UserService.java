@@ -20,4 +20,8 @@ public interface UserService extends IService<User> {
     Map<String,Object> getAllUsers(QueryInfo queryInfo);
 
     R addUser(User user);
+
+    R deleteUser(long id);
+
+    R updateUser(long id, User user);
 }

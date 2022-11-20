@@ -2,7 +2,11 @@ package com.example.service;
 
 import com.example.domain.Book;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.pojo.QueryInfo;
+import com.example.pojo.R;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
 * @author wangminan
@@ -12,4 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface BookService extends IService<Book> {
 
+    Map<String, Object> getAllBooks(QueryInfo queryInfo);
+
+    R addBook(Book book);
+
+    R deleteBook(long id);
+
+    R updateBook(long id, Book book);
 }
