@@ -10,11 +10,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://121.41.227.153:3306/AssessmentSystem?useUnicode=true&characterEncoding=UTF-8
     username: wangminan
-    password: HaoHao20021118
+    password: *
   redis:
     port: 6379
     host: 121.41.227.153
-    password: HaoHao20021118
+    password: *
     timeout: 10000
     lettuce:
       pool:
