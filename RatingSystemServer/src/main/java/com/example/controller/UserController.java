@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.domain.Assessment;
+import com.example.domain.Music;
 import com.example.domain.User;
 import com.example.pojo.QueryInfo;
 import com.example.pojo.R;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : [wangminan]
@@ -26,6 +29,10 @@ import java.util.Date;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    private static final String MEANINGLESS_QUERY = "";
+    private static final int MAX_PAGE_SIZE = Integer.MAX_VALUE;
+    private static final int MIN_PAGE_NUM = 1;
 
     @Autowired
     private UserService userService;
@@ -95,6 +102,9 @@ public class UserController {
     public String booksInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
         checkSession(request, response);
         QueryInfo queryInfo = new QueryInfo();
+        queryInfo.setQuery(MEANINGLESS_QUERY);
+        queryInfo.setPagenum(MIN_PAGE_NUM);
+        queryInfo.setPagesize(MAX_PAGE_SIZE);
         request.setAttribute("books", bookService.getAllBooks(queryInfo));
         request.setAttribute("assessments", assessmentService.getAllAssessments(queryInfo));
         return "/booksPage";
@@ -104,6 +114,9 @@ public class UserController {
     public String filmsInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
         checkSession(request, response);
         QueryInfo queryInfo = new QueryInfo();
+        queryInfo.setQuery(MEANINGLESS_QUERY);
+        queryInfo.setPagenum(MIN_PAGE_NUM);
+        queryInfo.setPagesize(MAX_PAGE_SIZE);
         request.setAttribute("films", filmService.getAllFilms(queryInfo));
         request.setAttribute("assessments", assessmentService.getAllAssessments(queryInfo));
         return "/filmsPage";
@@ -113,7 +126,10 @@ public class UserController {
     public String musicsInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
         checkSession(request, response);
         QueryInfo queryInfo = new QueryInfo();
-        request.setAttribute("musics", musicService.getAllMusics(queryInfo));
+        queryInfo.setQuery(MEANINGLESS_QUERY);
+        queryInfo.setPagenum(MIN_PAGE_NUM);
+        queryInfo.setPagesize(MAX_PAGE_SIZE);
+        request.setAttribute("musics", filmService.getAllFilms(queryInfo));
         request.setAttribute("assessments", assessmentService.getAllAssessments(queryInfo));
         return "/musicsPage";
     }

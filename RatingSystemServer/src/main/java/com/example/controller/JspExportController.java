@@ -31,19 +31,4 @@ public class JspExportController {
     public String register(){
         return "/register";
     }
-
-    @RequestMapping(value = "/booksPage", method = RequestMethod.GET)
-    public String booksPage(){
-        return "/booksPage";
-    }
-
-    @RequestMapping(value = "/filmsPage", method = RequestMethod.GET)
-    public String filmsPage(){
-        return "/filmsPage";
-    }
-
-    @RequestMapping(value = "/musicsPage", method = RequestMethod.GET)
-    public String musicsPage(){
-        return "/musicsPage";
-    }
 }

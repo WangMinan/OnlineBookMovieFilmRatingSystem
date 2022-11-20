@@ -42,6 +42,11 @@ public class PageGetUtil {
             queryInfo.setQuery(queryInfo.getQuery().substring(4));
             wrapper.like("publishYear", queryInfo.getQuery());
             list = (Page) mapper.selectPage(page, wrapper);
+        } else if(queryInfo.getQuery().startsWith("objectType")) {
+            QueryWrapper wrapper = new QueryWrapper();
+            queryInfo.setQuery(queryInfo.getQuery().substring(10));
+            wrapper.like("objectType", queryInfo.getQuery());
+            list = (Page) mapper.selectPage(page, wrapper);
         } else {
             list = (Page) mapper.selectPage(page, null);
         }

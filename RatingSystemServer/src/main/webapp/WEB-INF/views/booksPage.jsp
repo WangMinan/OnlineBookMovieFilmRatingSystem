@@ -1,3 +1,8 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <!--输出,条件,迭代标签库-->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fmt"%> <!--数据格式化标签库-->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="sql"%> <!--数据库相关标签库-->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fn"%> <!--常用函数标签库-->
+<%@ page isELIgnored="false"%>
 <%--
   Created by IntelliJ IDEA.
   User: wangminan
@@ -11,6 +16,20 @@
     <title>Title</title>
 </head>
 <body>
-
+    <table>
+        <jsp:useBean id="books" scope="request" type="java.util.Map"/>
+        <%
+            System.out.println(books);
+        %>
+        <c:forEach var="book" items="${books.result}">
+            <tr>
+                <td>${book.id}</td>
+                <td>${book.name}</td>
+                <td>${book.isbn}</td>
+                <td>${book.type}</td>
+                <td>${book.publishyear}</td>
+            </tr>
+        </c:forEach>
+</table>
 </body>
 </html>
