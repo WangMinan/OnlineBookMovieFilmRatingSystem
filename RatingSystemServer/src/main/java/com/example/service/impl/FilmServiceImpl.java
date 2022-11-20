@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.domain.Book;
 import com.example.domain.Film;
 import com.example.pojo.QueryInfo;
+import com.example.pojo.R;
 import com.example.service.FilmService;
 import com.example.mapper.FilmMapper;
 import com.example.util.PageGetUtil;
@@ -31,6 +32,22 @@ public class FilmServiceImpl extends ServiceImpl<FilmMapper, Film>
     @Override
     public Map<String, Object> getAllFilms(QueryInfo queryInfo) {
         return PageGetUtil.getPage(filmMapper, queryInfo);
+    }
+
+    @Override
+    public R addFilm(Film film) {
+        return filmMapper.insert(film) > 0 ? R.ok("添加电影成功") : R.error("添加电影失败");
+    }
+
+    @Override
+    public R deleteFilm(long id) {
+        return filmMapper.deleteById(id) > 0 ? R.ok("删除电影成功") : R.error("删除电影失败");
+    }
+
+    @Override
+    public R updateFilm(long id, Film film) {
+        film.setId(id);
+        return filmMapper.updateById(film) > 0 ? R.ok("修改电影成功") : R.error("修改电影失败");
     }
 }
 

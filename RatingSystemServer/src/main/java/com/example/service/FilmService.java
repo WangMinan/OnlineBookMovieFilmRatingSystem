@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.domain.Film;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.pojo.QueryInfo;
+import com.example.pojo.R;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -16,4 +17,10 @@ import java.util.Map;
 public interface FilmService extends IService<Film> {
 
     Map<String, Object> getAllFilms(QueryInfo queryInfo);
+
+    R addFilm(Film film);
+
+    R deleteFilm(long id);
+
+    R updateFilm(long id, Film film);
 }

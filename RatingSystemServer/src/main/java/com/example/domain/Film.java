@@ -3,7 +3,10 @@ package com.example.domain;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -11,6 +14,8 @@ import lombok.Data;
  */
 @TableName(value ="Film")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Film implements Serializable {
     /**
      *
@@ -41,7 +46,7 @@ public class Film implements Serializable {
     /**
      *
      */
-    private String discription;
+    private String description;
 
     /**
      * 逻辑删除字段,0未删除,1已删除
@@ -69,7 +74,7 @@ public class Film implements Serializable {
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getPublishyear() == null ? other.getPublishyear() == null : this.getPublishyear().equals(other.getPublishyear()))
             && (this.getPicurl() == null ? other.getPicurl() == null : this.getPicurl().equals(other.getPicurl()))
-            && (this.getDiscription() == null ? other.getDiscription() == null : this.getDiscription().equals(other.getDiscription()))
+            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getIsdeleted() == null ? other.getIsdeleted() == null : this.getIsdeleted().equals(other.getIsdeleted()));
     }
 
@@ -82,7 +87,7 @@ public class Film implements Serializable {
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getPublishyear() == null) ? 0 : getPublishyear().hashCode());
         result = prime * result + ((getPicurl() == null) ? 0 : getPicurl().hashCode());
-        result = prime * result + ((getDiscription() == null) ? 0 : getDiscription().hashCode());
+        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getIsdeleted() == null) ? 0 : getIsdeleted().hashCode());
         return result;
     }
@@ -98,7 +103,7 @@ public class Film implements Serializable {
         sb.append(", type=").append(type);
         sb.append(", publishyear=").append(publishyear);
         sb.append(", picurl=").append(picurl);
-        sb.append(", discription=").append(discription);
+        sb.append(", discription=").append(description);
         sb.append(", isdeleted=").append(isdeleted);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

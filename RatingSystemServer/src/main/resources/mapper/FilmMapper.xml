@@ -10,13 +10,13 @@
             <result property="type" column="type" jdbcType="VARCHAR"/>
             <result property="publishyear" column="publishYear" jdbcType="INTEGER"/>
             <result property="picurl" column="picUrl" jdbcType="VARCHAR"/>
-            <result property="discription" column="discription" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
             <result property="isdeleted" column="isDeleted" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,name,type,
-        publishYear,picUrl,discription,
+        publishYear,picUrl,description,
         isDeleted
     </sql>
 </mapper>

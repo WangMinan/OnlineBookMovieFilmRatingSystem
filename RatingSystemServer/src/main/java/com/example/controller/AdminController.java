@@ -1,8 +1,6 @@
 package com.example.controller;
 
-import com.example.domain.Admin;
-import com.example.domain.Book;
-import com.example.domain.User;
+import com.example.domain.*;
 import com.example.pojo.QueryInfo;
 import com.example.pojo.R;
 import com.example.service.*;
@@ -108,7 +106,7 @@ public class AdminController {
     }
 
     // 接下来是电影管理部分
-    @GetMapping("/movies/{query}/{pagenum}/{pagesize}")
+    @GetMapping("/films/{query}/{pagenum}/{pagesize}")
     public R handleGetAllMovies(@PathVariable("query") String query,
                                @PathVariable("pagenum") int pagenum,
                                @PathVariable("pagesize") int pagesize){
@@ -118,5 +116,48 @@ public class AdminController {
         QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
         Map<String,Object> map = filmService.getAllFilms(queryInfo);
         return R.ok(map);
+    }
+
+    @PostMapping("/films")
+    public R handleAddMovie(@RequestBody Film film){
+        return filmService.addFilm(film);
+    }
+
+    @DeleteMapping("/films/{id}")
+    public R handleDeleteMovie(@PathVariable("id") long id){
+        return filmService.deleteFilm(id);
+    }
+
+    @PutMapping("/films/{id}")
+    public R handleUpdateMovie(@PathVariable("id") long id, @RequestBody Film film){
+        return filmService.updateFilm(id, film);
+    }
+
+    // 接下来是音乐管理部分
+    @GetMapping("/musics/{query}/{pagenum}/{pagesize}")
+    public R handleGetAllMusics(@PathVariable("query") String query,
+                                @PathVariable("pagenum") int pagenum,
+                                @PathVariable("pagesize") int pagesize){
+        if(query.equals(MEANINGLESS_QUERY)){
+            query="";
+        }
+        QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
+        Map<String,Object> map = musicService.getAllMusics(queryInfo);
+        return R.ok(map);
+    }
+
+    @PostMapping("/musics")
+    public R handleAddMusic(@RequestBody Music music){
+        return musicService.addMusic(music);
+    }
+
+    @DeleteMapping("/musics/{id}")
+    public R handleDeleteMusic(@PathVariable("id") long id){
+        return musicService.deleteMusic(id);
+    }
+
+    @PutMapping("/musics/{id}")
+    public R handleUpdateMusic(@PathVariable("id") long id, @RequestBody Music music){
+        return musicService.updateMusic(id, music);
     }
 }
