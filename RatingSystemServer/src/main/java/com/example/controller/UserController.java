@@ -129,7 +129,7 @@ public class UserController {
         queryInfo.setQuery(MEANINGLESS_QUERY);
         queryInfo.setPagenum(MIN_PAGE_NUM);
         queryInfo.setPagesize(MAX_PAGE_SIZE);
-        request.setAttribute("musics", filmService.getAllFilms(queryInfo));
+        request.setAttribute("musics", musicService.getAllMusics(queryInfo));
         request.setAttribute("assessments", assessmentService.getAllAssessments(queryInfo));
         return "/musicsPage";
     }
