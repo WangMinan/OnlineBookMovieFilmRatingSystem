@@ -39,6 +39,9 @@ public class AdminController {
     @Autowired
     private MusicService musicService;
 
+    @Autowired
+    private AssessmentService assessmentService;
+
     @PostMapping("/login")
     public R handleAdminLogin(@RequestBody Admin admin){
         return adminService.login(admin);
@@ -159,5 +162,23 @@ public class AdminController {
     @PutMapping("/musics/{id}")
     public R handleUpdateMusic(@PathVariable("id") long id, @RequestBody Music music){
         return musicService.updateMusic(id, music);
+    }
+
+    // 接下来是评价管理
+    @GetMapping("/assessments/{query}/{pagenum}/{pagesize}")
+    public R handleGetAllAssessments(@PathVariable("query") String query,
+                                     @PathVariable("pagenum") int pagenum,
+                                     @PathVariable("pagesize") int pagesize){
+        if(query.equals(MEANINGLESS_QUERY)){
+            query="";
+        }
+        QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
+        Map<String,Object> map = assessmentService.getAllAssessments(queryInfo);
+        return R.ok(map);
+    }
+
+    @DeleteMapping("/assessments/{id}")
+    public R handleDeleteAssessment(@PathVariable("id") long id){
+        return assessmentService.deleteAssessment(id);
     }
 }

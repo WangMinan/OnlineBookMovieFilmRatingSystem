@@ -18,4 +18,10 @@ public class GlobalExceptionHandler {
         log.error("运行时异常:" + e.getMessage());
         return R.error(e.getMessage()); // 向前端返回500错误并传输异常message
     }
+
+    @ExceptionHandler(value = Exception.class)
+    public R handler(Exception e){
+        log.error("异常:" + e.getMessage());
+        return R.error(e.getMessage()); // 向前端返回500错误并传输异常message
+    }
 }

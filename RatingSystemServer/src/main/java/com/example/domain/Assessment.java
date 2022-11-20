@@ -3,7 +3,12 @@ package com.example.domain;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.swing.text.DateFormatter;
 
 /**
  *
@@ -11,6 +16,8 @@ import lombok.Data;
  */
 @TableName(value ="Assessment")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Assessment implements Serializable {
     /**
      *
@@ -51,6 +58,13 @@ public class Assessment implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public Assessment(Long userid, Long objectid, String objecttype, String assessment) {
+        this.userid = userid;
+        this.objectid = objectid;
+        this.objecttype = objecttype;
+        this.assessment = assessment;
+    }
 
     @Override
     public boolean equals(Object that) {
