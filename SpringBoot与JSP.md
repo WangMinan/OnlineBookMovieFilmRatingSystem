@@ -6,11 +6,11 @@
 
 ### 前置说明
 
-由于在SpringBoot中，我们并不使用显式的class来继承HttpServlet，而是在框架下使用@Controller注解来引导tomcat自动配置servlet，因此就不使用web.xml来配置映射关系。(我记得spring也不用web.xml了，所以很好奇各位的实验4是怎么完成的。)撰写这篇说明的原因就是希望说明在SpringBoot中如何配置相关的映射。
+由于在SpringBoot中，我们并不使用显式的class来继承HttpServlet，而是在框架下使用@Controller注解来引导tomcat自动配置servlet，因此就不使用web.xml来配置映射关系。(我记得spring也不用web.xml了，我看大家实验4也没有用web.xml。)撰写这篇说明的原因就是希望说明在SpringBoot中如何配置相关的映射。
 
 ### 开发环境修正
 
-本次项目中的依赖我已经进行了引入，包括JSP支持与jstl标准库依赖。配置文件已经写入。在IDEA中对JSP开发环境进行配置请参考博文https://blog.csdn.net/pan_junbiao/article/details/105600172。如果JSP资源无法正常访问，最大的可能就是没有设置webapp的目录映射。请检查项目结构-模块中是否已添加设置。
+本次项目中的依赖我已经进行了引入，包括JSP支持与jstl标准库依赖。配置文件已经写入。在IDEA中对JSP开发环境进行配置请参考博文https://blog.csdn.net/pan_junbiao/article/details/105600172   如果JSP资源无法正常访问，最大的可能就是没有设置webapp的目录映射。请检查项目结构-模块中是否已添加设置。
 
 <img src="https://cdn.jsdelivr.net/gh/WangMinan/Pics/image-20221120191410612.png" alt="image-20221120191410612" style="zoom:50%;" />
 
