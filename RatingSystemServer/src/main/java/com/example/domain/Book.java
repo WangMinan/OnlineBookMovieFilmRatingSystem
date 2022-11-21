@@ -29,6 +29,8 @@ public class Book extends Work implements Serializable {
      */
     private String isbn;
 
+    private String author;
+
     /**
      * 逻辑删除字段,0未删除,1已删除
      */
@@ -38,9 +40,10 @@ public class Book extends Work implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    public Book(String name, String isbn, String type, String publishyear, String description, String picurl) {
+    public Book(String name, String author, String isbn, String type, String publishyear, String description, String picurl) {
         this.name = name;
         this.isbn = isbn;
+        this.author = author;
         this.type = type;
         this.publishyear = publishyear;
         this.description = description;
@@ -62,6 +65,7 @@ public class Book extends Work implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getIsbn() == null ? other.getIsbn() == null : this.getIsbn().equals(other.getIsbn()))
+            && (this.getAuthor() == null ? other.getAuthor() == null : this.getAuthor().equals(other.getAuthor()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getPublishyear() == null ? other.getPublishyear() == null : this.getPublishyear().equals(other.getPublishyear()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
@@ -76,6 +80,7 @@ public class Book extends Work implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getIsbn() == null) ? 0 : getIsbn().hashCode());
+        result = prime * result + ((getAuthor() == null) ? 0 : getAuthor().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getPublishyear() == null) ? 0 : getPublishyear().hashCode());
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
@@ -89,6 +94,7 @@ public class Book extends Work implements Serializable {
         return "Book{" +
                 "id=" + id +
                 ", isbn='" + isbn + '\'' +
+                ", author='" + author + '\'' +
                 ", isdeleted=" + isdeleted +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +

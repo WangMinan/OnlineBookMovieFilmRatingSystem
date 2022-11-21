@@ -8,6 +8,7 @@
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="isbn" column="isbn" jdbcType="VARCHAR"/>
+            <result property="author" column="author" jdbcType="VARCHAR"/>
             <result property="worktype" column="workType" jdbcType="VARCHAR"/>
             <result property="type" column="type" jdbcType="VARCHAR"/>
             <result property="publishyear" column="publishYear" jdbcType="VARCHAR"/>
