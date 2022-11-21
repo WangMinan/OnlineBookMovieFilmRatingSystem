@@ -5,6 +5,7 @@ import com.example.pojo.QueryInfo;
 import com.example.pojo.R;
 import com.example.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;

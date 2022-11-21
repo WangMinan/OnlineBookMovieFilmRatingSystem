@@ -85,6 +85,12 @@
             <version>1.2.11</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.0.6</version>
+        </dependency>
+
         <!--        接下来添加springboot对JSP的依赖-->
         <!-- 添加servlet依赖模块 -->
 

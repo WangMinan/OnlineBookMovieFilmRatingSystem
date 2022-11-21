@@ -86,6 +86,13 @@ const options = {
       axios.defaults.headers.token = ''
       Cookies.remove('manualExit')
     }
+    document.onkeydown = e => {
+      if (e.keyCode === 13 && e.target.baseURI.match('/login')) {
+        // match(此处应填写文件在浏览器中的地址，如 '/home/index')，不写的话，其他页面也会有调用回车按下的方法
+        // console.log('enter')
+        this.login() // 调用查询方法
+      }
+    }
   },
   methods: {
     login () {
@@ -96,7 +103,11 @@ const options = {
             // 验证通过
             try {
               this.loading = true
-              const resp = await axios.post('/admin/login', this.loginForm)
+              const encryptLoginForm = {
+                username: this.loginForm.username,
+                password: encrypt(this.loginForm.password)
+              }
+              const resp = await axios.post('/admin/login', encryptLoginForm)
               console.log(resp)
               if (resp.data.code === 200) {
                 if (this.rememberMe === true) {
