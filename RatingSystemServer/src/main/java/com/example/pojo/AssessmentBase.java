@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Assessment {
+public class AssessmentBase {
 
     @TableField(exist = false)
     protected User user;

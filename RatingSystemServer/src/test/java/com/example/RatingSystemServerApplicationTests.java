@@ -1,8 +1,7 @@
 package com.example;
 
-import com.example.domain.AssessmentView;
+import com.example.domain.Assessment;
 import com.example.domain.Book;
-import com.example.domain.User;
 import com.example.mapper.AssessmentMapper;
 import com.example.pojo.QueryInfo;
 import com.example.service.BookService;
@@ -50,8 +49,8 @@ class RatingSystemServerApplicationTests {
         // 从map中获取result,根据result中的user的id查询user,将user放入result中
         // 根据result中的objectType与object的id查询object,将object放入result中
         Map<String,Object> resultMap = new HashMap<>();
-        List<AssessmentView> resultList = (List<AssessmentView>) map.get("result");
-        for(AssessmentView assessmentView : resultList){
+        List<Assessment> resultList = (List<Assessment>) map.get("result");
+        for(Assessment assessmentView : resultList){
             assessmentView.setUser(userService.getUserByUsername(assessmentView.getUsername()));
             if(assessmentView.getObjecttype().equals("book")){
                 Book book = bookService.getById(assessmentView.getObjectid());

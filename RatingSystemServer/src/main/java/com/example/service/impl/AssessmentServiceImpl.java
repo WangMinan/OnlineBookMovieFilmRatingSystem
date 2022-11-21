@@ -1,8 +1,7 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.domain.AssessmentView;
-import com.example.domain.Book;
+import com.example.domain.Assessment;
 import com.example.pojo.QueryInfo;
 import com.example.pojo.R;
 import com.example.service.*;
@@ -17,11 +16,11 @@ import java.util.Map;
 
 /**
 * @author wangminan
-* @description 针对表【AssessmentView】的数据库操作Service实现
+* @description 针对表【Assessment】的数据库操作Service实现
 * @createDate 2022-11-19 20:42:40
 */
 @Service
-public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, AssessmentView>
+public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessment>
     implements AssessmentService{
 
     @Autowired
@@ -46,8 +45,8 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
         // 根据result中的objectType与object的id查询object,将object放入result中
         Map<String,Object> resultMap = new HashMap<>();
         // 这玩意是个强转 但我也没法子
-        List<AssessmentView> resultList = (List<AssessmentView>) map.get("result");
-        for(AssessmentView assessmentView : resultList){
+        List<Assessment> resultList = (List<Assessment>) map.get("result");
+        for(Assessment assessmentView : resultList){
             assessmentView.setUser(userService.getUserByUsername(assessmentView.getUsername()));
             switch (assessmentView.getObjecttype()) {
                 case "book":
@@ -74,7 +73,7 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
     }
 
     @Override
-    public R addAssessment(AssessmentView assessmentView) {
+    public R addAssessment(Assessment assessmentView) {
         return assessmentMapper.insert(assessmentView) > 0 ? R.ok("添加评价成功") : R.error("添加评价失败");
     }
 }

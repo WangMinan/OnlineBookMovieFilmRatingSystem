@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.domain.AssessmentView;
+import com.example.domain.Assessment;
 import com.example.domain.User;
 import com.example.pojo.QueryInfo;
 import com.example.pojo.R;
@@ -136,7 +136,7 @@ public class UserController {
     @RequestMapping(value = "/assessments", method = RequestMethod.POST)
     @ResponseBody
     public R handleAssessment(HttpServletRequest request, HttpServletResponse response,
-                              @RequestBody AssessmentView assessmentView) throws IOException {
+                              @RequestBody Assessment assessmentView) throws IOException {
         checkSession(request, response);
         assessmentView.setUsername((String) request.getSession().getAttribute("username"));
         Date date = new Date();

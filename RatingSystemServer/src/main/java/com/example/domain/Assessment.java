@@ -4,20 +4,20 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 
-import com.example.pojo.Assessment;
+import com.example.pojo.AssessmentBase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  *
- * @TableName AssessmentView
+ * @TableName Assessment
  */
 @TableName(value ="Assessment")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AssessmentView extends Assessment implements Serializable {
+public class Assessment extends AssessmentBase implements Serializable {
     /**
      *
      */
@@ -58,7 +58,7 @@ public class AssessmentView extends Assessment implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    public AssessmentView(Book book, String assessment) {
+    public Assessment(Book book, String assessment) {
         this.username = user.getUsername();
         this.work = book;
         this.objectid = book.getId();
@@ -66,7 +66,7 @@ public class AssessmentView extends Assessment implements Serializable {
         this.assessment = assessment;
     }
 
-    public AssessmentView(Film film, String assessment) {
+    public Assessment(Film film, String assessment) {
         this.username = user.getUsername();
         this.work = film;
         this.objectid = film.getId();
@@ -74,7 +74,7 @@ public class AssessmentView extends Assessment implements Serializable {
         this.assessment = assessment;
     }
 
-    public AssessmentView(User user, Music music, String assessment) {
+    public Assessment(User user, Music music, String assessment) {
         this.username = user.getUsername();
         this.work = music;
         this.objectid = music.getId();
@@ -82,7 +82,7 @@ public class AssessmentView extends Assessment implements Serializable {
         this.assessment = assessment;
     }
 
-    public AssessmentView(Long objectid, String objecttype, String assessment) {
+    public Assessment(Long objectid, String objecttype, String assessment) {
         this.objectid = objectid;
         this.objecttype = objecttype;
         this.assessment = assessment;
@@ -99,7 +99,7 @@ public class AssessmentView extends Assessment implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        AssessmentView other = (AssessmentView) that;
+        Assessment other = (Assessment) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
             && (this.getObjectid() == null ? other.getObjectid() == null : this.getObjectid().equals(other.getObjectid()))
