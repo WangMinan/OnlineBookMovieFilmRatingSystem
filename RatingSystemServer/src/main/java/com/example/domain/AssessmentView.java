@@ -4,19 +4,20 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 
+import com.example.pojo.Assessment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  *
- * @TableName Assessment
+ * @TableName AssessmentView
  */
 @TableName(value ="Assessment")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Assessment implements Serializable {
+public class AssessmentView extends Assessment implements Serializable {
     /**
      *
      */
@@ -57,7 +58,31 @@ public class Assessment implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    public Assessment(Long objectid, String objecttype, String assessment) {
+    public AssessmentView(Book book, String assessment) {
+        this.username = user.getUsername();
+        this.work = book;
+        this.objectid = book.getId();
+        this.objecttype = book.getWorktype();;
+        this.assessment = assessment;
+    }
+
+    public AssessmentView(Film film, String assessment) {
+        this.username = user.getUsername();
+        this.work = film;
+        this.objectid = film.getId();
+        this.objecttype = film.getWorktype();
+        this.assessment = assessment;
+    }
+
+    public AssessmentView(User user, Music music, String assessment) {
+        this.username = user.getUsername();
+        this.work = music;
+        this.objectid = music.getId();
+        this.objecttype = music.getWorktype();
+        this.assessment = assessment;
+    }
+
+    public AssessmentView(Long objectid, String objecttype, String assessment) {
         this.objectid = objectid;
         this.objecttype = objecttype;
         this.assessment = assessment;
@@ -74,7 +99,7 @@ public class Assessment implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Assessment other = (Assessment) that;
+        AssessmentView other = (AssessmentView) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
             && (this.getObjectid() == null ? other.getObjectid() == null : this.getObjectid().equals(other.getObjectid()))
@@ -105,6 +130,8 @@ public class Assessment implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", user=").append(user);
+        sb.append(", work=").append(work);
         sb.append(", username=").append(username);
         sb.append(", objectid=").append(objectid);
         sb.append(", objecttype=").append(objecttype);

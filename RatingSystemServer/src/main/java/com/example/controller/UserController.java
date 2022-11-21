@@ -1,7 +1,6 @@
 package com.example.controller;
 
-import com.example.domain.Assessment;
-import com.example.domain.Music;
+import com.example.domain.AssessmentView;
 import com.example.domain.User;
 import com.example.pojo.QueryInfo;
 import com.example.pojo.R;
@@ -18,9 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author : [wangminan]
@@ -139,14 +136,14 @@ public class UserController {
     @RequestMapping(value = "/assessments", method = RequestMethod.POST)
     @ResponseBody
     public R handleAssessment(HttpServletRequest request, HttpServletResponse response,
-                              @RequestBody Assessment assessment) throws IOException {
+                              @RequestBody AssessmentView assessmentView) throws IOException {
         checkSession(request, response);
-        assessment.setUsername((String) request.getSession().getAttribute("username"));
+        assessmentView.setUsername((String) request.getSession().getAttribute("username"));
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = dateFormat.format(date);
-        assessment.setPostdate(time);
-        return assessmentService.addAssessment(assessment);
+        assessmentView.setPostdate(time);
+        return assessmentService.addAssessment(assessmentView);
     }
 
     // 修改个人信息

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.AssessmentMapper">
 
-    <resultMap id="BaseResultMap" type="com.example.domain.Assessment">
+    <resultMap id="BaseResultMap" type="com.example.domain.AssessmentView">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="objectid" column="objectId" jdbcType="BIGINT"/>

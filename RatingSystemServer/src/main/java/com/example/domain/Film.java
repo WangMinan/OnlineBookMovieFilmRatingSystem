@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 
+import com.example.pojo.Work;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,37 +17,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Film implements Serializable {
+public class Film extends Work implements Serializable {
     /**
      *
      */
     @TableId(type = IdType.AUTO)
     private Long id;
-
-    /**
-     *
-     */
-    private String name;
-
-    /**
-     *
-     */
-    private String type;
-
-    /**
-     *
-     */
-    private Integer publishyear;
-
-    /**
-     *
-     */
-    private String picurl;
-
-    /**
-     *
-     */
-    private String description;
 
     /**
      * 逻辑删除字段,0未删除,1已删除

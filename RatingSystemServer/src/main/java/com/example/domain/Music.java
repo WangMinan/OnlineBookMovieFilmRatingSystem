@@ -3,6 +3,8 @@ package com.example.domain;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
+
+import com.example.pojo.Work;
 import lombok.Data;
 
 /**
@@ -11,37 +13,12 @@ import lombok.Data;
  */
 @TableName(value ="Music")
 @Data
-public class Music implements Serializable {
+public class Music extends Work implements Serializable {
     /**
      *
      */
     @TableId(type = IdType.AUTO)
     private Long id;
-
-    /**
-     *
-     */
-    private String name;
-
-    /**
-     *
-     */
-    private String type;
-
-    /**
-     *
-     */
-    private String publishyear;
-
-    /**
-     *
-     */
-    private String description;
-
-    /**
-     *
-     */
-    private String picurl;
 
     /**
      * 逻辑删除字段,0未删除,1已删除

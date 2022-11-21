@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 
+import com.example.pojo.Work;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book implements Serializable {
+public class Book extends Work implements Serializable {
     /**
      *
      */
@@ -26,32 +27,7 @@ public class Book implements Serializable {
     /**
      *
      */
-    private String name;
-
-    /**
-     *
-     */
     private String isbn;
-
-    /**
-     *
-     */
-    private String type;
-
-    /**
-     * 出版年份
-     */
-    private String publishyear;
-
-    /**
-     *
-     */
-    private String description;
-
-    /**
-     * 前端需要注意文件名长度限制
-     */
-    private String picurl;
 
     /**
      * 逻辑删除字段,0未删除,1已删除
@@ -110,20 +86,15 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", isbn=").append(isbn);
-        sb.append(", type=").append(type);
-        sb.append(", publishyear=").append(publishyear);
-        sb.append(", description=").append(description);
-        sb.append(", picurl=").append(picurl);
-        sb.append(", isdeleted=").append(isdeleted);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Book{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", isdeleted=" + isdeleted +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", publishyear='" + publishyear + '\'' +
+                ", description='" + description + '\'' +
+                ", picurl='" + picurl + '\'' +
+                '}';
     }
 }
