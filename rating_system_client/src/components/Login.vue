@@ -7,7 +7,7 @@
     </div>
     <div class="login-box">
       <div class = "avatar-box">
-        <img src = "@/assets/logo.png"  alt="logo">
+        <img src = "@/assets/header.png"  alt="logo">
       </div>
       <!--      label-width用于左右对齐-->
       <el-form :model="loginForm" ref="loginFormRef" :rules="rules" label-width="0px" class = "login-form">

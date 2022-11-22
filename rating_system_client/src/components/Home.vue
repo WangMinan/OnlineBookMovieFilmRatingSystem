@@ -4,8 +4,8 @@
 <!--      头部区域-->
       <el-header>
         <div>
-          <img src="@/assets/octane.png" style="height: 50px;width: 50px" alt="logo">
-          <span>书影音管理系统</span>
+          <img src="@/assets/header.png" style="height: 50px;width: 50px" alt="logo">
+          <span>书影音评价后台管理系统</span>
         </div>
         <el-button type="info" @click = 'logout'>退出</el-button>
       </el-header>
@@ -130,7 +130,7 @@ export default options
 }
 
 .el-header{
-  background-color: rgb(64,158,255);
+  background-color: #41b883;
   display: flex;
   padding-left: 0;
   // 左右贴边对齐
