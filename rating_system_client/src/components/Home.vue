@@ -5,7 +5,7 @@
       <el-header>
         <div>
           <img src="@/assets/octane.png" style="height: 50px;width: 50px" alt="logo">
-          <span>电商后台管理系统</span>
+          <span>书影音管理系统</span>
         </div>
         <el-button type="info" @click = 'logout'>退出</el-button>
       </el-header>
@@ -31,19 +31,19 @@
 <!--              一级菜单模板区-->
               <template slot="title">
                 <i :class="iconsList[item.id]"></i>
-                <span>{{item.authName}}</span>
+                <span>{{item.authname}}</span>
               </template>
 <!--              二级菜单-->
               <el-menu-item
-                :index="'/' + subItem.path"
+                :index="subItem.path"
                 v-for="subItem in item.children"
                 :key="subItem.id"
-                @click="saveNavState('/' + subItem.path)"
+                @click="saveNavState(subItem.path)"
               >
 <!--                二级菜单模板-->
                 <template slot="title">
                   <i class="el-icon-cloudy"></i>
-                  <span>{{subItem.authName}}</span>
+                  <span>{{subItem.authname}}</span>
                 </template>
               </el-menu-item>
             </el-submenu>
@@ -59,8 +59,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-
+import axios from '@/utils/myAxios'
+import Cookies from 'js-cookie'
 const options = {
   created () {
     this.getMenuList()
@@ -71,11 +71,9 @@ const options = {
       // 左侧菜单数据
       menuList: [],
       iconsList: {
-        125: 'el-icon-s-custom',
-        103: 'el-icon-menu',
-        101: 'el-icon-s-goods',
-        102: 'el-icon-s-order',
-        145: 'el-icon-s-data'
+        101: 'el-icon-s-custom',
+        201: 'el-icon-menu',
+        301: 'el-icon-s-order'
       },
       isCollapse: false,
       buttonChars: '<<<',
@@ -87,6 +85,8 @@ const options = {
     logout () {
       try {
         window.sessionStorage.clear()
+        // manualExit修正为手动退出
+        Cookies.set('manualExit', 'true')
         this.$router.push('/login')
         this.$message.success('退出成功')
       } catch (e) {
@@ -96,11 +96,12 @@ const options = {
     // 获取菜单列表
     async getMenuList () {
       try {
-        const resp = await axios.get('menus')
-        if (resp.data.meta.status !== 200) {
-          this.$message.error('resp.data.meta.msg')
+        const resp = await axios.get('/admin/menus')
+        console.log(resp)
+        if (resp.data.code !== 200) {
+          this.$message.error('resp.data.msg')
         } else {
-          this.menuList = resp.data.data
+          this.menuList = resp.data.routes
         }
       } catch (e) {
         this.$message.error('获取菜单列表失败，请检查网络环境')
@@ -151,6 +152,10 @@ export default options
 
 .el-aside{
   background-color: white;
+}
+
+.el-aside::-webkit-scrollbar {
+  display: none;
 }
 
 .toggle-button{
