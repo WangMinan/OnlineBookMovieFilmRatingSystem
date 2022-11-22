@@ -31,7 +31,11 @@ public class VueRouteServiceImpl extends ServiceImpl<VueRouteMapper, VueRoute>
             route.setChildren(new ArrayList<>());
             if(route.getFather() == null){
                 routes.add(route);
-            } else {
+            }
+        }
+        // 递归添加子菜单
+        for(VueRoute route : tmpRoutes){
+            if(!(route.getFather() == null)){
                 // 其他节点根据father的id来找到父节点 并将自己加入到父节点的children中
                 for(VueRoute father : routes){
                     if(father.getId().equals(route.getFather())){
