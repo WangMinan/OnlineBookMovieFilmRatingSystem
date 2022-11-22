@@ -1,20 +1,16 @@
 package com.example.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- *
- * @TableName VueRoute
- */
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 @TableName(value ="VueRoute")
 @Data
 @NoArgsConstructor
@@ -28,8 +24,7 @@ public class VueRoute implements Serializable {
     /**
      *
      */
-    @TableId
-    private String authName;
+    private String authname;
 
     /**
      *
@@ -47,54 +42,45 @@ public class VueRoute implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    public VueRoute(String authName, String path, Long father) {
-        this.authName = authName;
+    public VueRoute(String authname, String path, Long father) {
+        this.authname = authname;
         this.path = path;
         this.father = father;
         this.children = new ArrayList<>();
     }
 
     @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        VueRoute other = (VueRoute) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getAuthName() == null ? other.getAuthName() == null : this.getAuthName().equals(other.getAuthName()))
-            && (this.getPath() == null ? other.getPath() == null : this.getPath().equals(other.getPath()))
-            && (this.getFather() == null ? other.getFather() == null : this.getFather().equals(other.getFather()));
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        VueRoute vueRoute = (VueRoute) o;
+
+        if (!Objects.equals(id, vueRoute.id)) return false;
+        if (!Objects.equals(authname, vueRoute.authname)) return false;
+        if (!Objects.equals(path, vueRoute.path)) return false;
+        if (!Objects.equals(father, vueRoute.father)) return false;
+        return Objects.equals(children, vueRoute.children);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getAuthName() == null) ? 0 : getAuthName().hashCode());
-        result = prime * result + ((getPath() == null) ? 0 : getPath().hashCode());
-        result = prime * result + ((getFather() == null) ? 0 : getFather().hashCode());
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (authname != null ? authname.hashCode() : 0);
+        result = 31 * result + (path != null ? path.hashCode() : 0);
+        result = 31 * result + (father != null ? father.hashCode() : 0);
+        result = 31 * result + (children != null ? children.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", authname=").append(authName);
-        sb.append(", path=").append(path);
-        sb.append(", father=").append(father);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "VueRoute{" +
+                "id=" + id +
+                ", authName='" + authname + '\'' +
+                ", path='" + path + '\'' +
+                ", father=" + father +
+                ", children=" + children +
+                '}';
     }
 }
