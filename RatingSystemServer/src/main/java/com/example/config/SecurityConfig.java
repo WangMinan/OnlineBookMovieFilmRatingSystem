@@ -33,7 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/admin/logout",
             //  这算是自己摸索出来的通配符
             "/user/**",
-            "/view/**"
+            "/view/**",
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/v3/**"
     };
 
     @Bean

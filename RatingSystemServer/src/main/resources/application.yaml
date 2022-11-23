@@ -30,3 +30,5 @@ spring:
     view:
       prefix: /WEB-INF/views
       suffix: .jsp
+    pathmatch:
+      matching-strategy: ant_path_matcher
