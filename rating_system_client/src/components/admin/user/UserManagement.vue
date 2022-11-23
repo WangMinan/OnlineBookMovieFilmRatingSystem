@@ -163,10 +163,7 @@ const options = {
           { validator: checkEmail, trigger: 'blur' }
         ]
       },
-      setRoleDialogVisible: false,
-      userInfo: '',
-      rolesList: [],
-      selectedRoleId: ''
+      userInfo: ''
     }
   },
   methods: {

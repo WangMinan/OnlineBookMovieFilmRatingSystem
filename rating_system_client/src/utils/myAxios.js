@@ -21,4 +21,21 @@ _axios.interceptors.request.use(
   }
 )
 
+_axios.interceptors.response.use({
+  // 如果返回的响应中的data.msg包含"过期",即token过期,须提醒用户并在3秒后跳转至登录页面
+  function (response) {
+    // 包含
+    if (response.data.msg != null) {
+      if (response.data.msg.indexOf('过期') !== -1) {
+        this.$message.error('登录过期,请重新登录')
+        window.sessionStorage.removeItem('token')
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 3000)
+      }
+    }
+    return response
+  }
+})
+
 export default _axios
