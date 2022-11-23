@@ -86,7 +86,7 @@ const options = {
       try {
         window.sessionStorage.clear()
         // manualExit修正为手动退出
-        Cookies.set('manualExit', 'true')
+        Cookies.set('manualExit', true, { expires: 30 })
         this.$router.push('/login')
         this.$message.success('退出成功')
       } catch (e) {

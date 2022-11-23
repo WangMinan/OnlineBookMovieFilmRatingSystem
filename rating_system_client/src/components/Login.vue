@@ -69,16 +69,16 @@ const options = {
   },
   mounted () {
     // 读取本地缓存中是否存在用户信息
-    if (Cookies.get('username') && Cookies.get('password') && Cookies.get('rememberMe') && Cookies.get('manualExit')) {
+    if (Cookies.get('username') && Cookies.get('password') && Cookies.get('rememberMe')) {
       this.loginForm.username = Cookies.get('username')
       this.loginForm.password = decrypt(Cookies.get('password'))
       if (Cookies.get('rememberMe') === 'true') {
         this.rememberMe = true
         // 若使用记住密码 且上一回为关闭浏览器退出 则本次尝试自动登录
-        if (Cookies.get('manualExit') === 'false') {
+        if (Cookies.get('manualExit' != null) && Cookies.get('manualExit') === 'false') {
           this.login()
         } else {
-          Cookies.set('manualExit', 'false')
+          Cookies.set('manualExit', false, { expires: 30 })
         }
       }
     } else if (Cookies.get('rememberMe') === undefined) {
