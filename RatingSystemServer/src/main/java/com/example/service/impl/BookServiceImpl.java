@@ -48,8 +48,12 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book>
         book.setId(id);
         return bookMapper.updateById(book) > 0 ? R.ok("更新图书成功") : R.error("更新图书失败");
     }
+
+    @Override
+    public R getBookById(long id) {
+        Book book = bookMapper.selectById(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("book", book);
+        return R.ok(map);
+    }
 }
-
-
-
-

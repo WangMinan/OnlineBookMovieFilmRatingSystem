@@ -31,5 +31,5 @@ public interface UserService extends IService<User> {
 
     User getUserByUsername(String username);
 
-    R getUserById(int id);
+    R getUserById(long id);
 }

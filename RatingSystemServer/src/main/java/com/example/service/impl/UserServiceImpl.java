@@ -96,7 +96,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public R getUserById(int id) {
+    public R getUserById(long id) {
         Map<String,Object> map = new HashMap<>();
         User user = userMapper.selectById(id);
         map.put("user", user);

@@ -68,7 +68,7 @@ public class AdminController {
 
     // 查询单个用户
     @GetMapping("/users/{id}")
-    public R handleGetUserById(@PathVariable("id") int id){
+    public R handleGetUserById(@PathVariable("id") long id){
         return userService.getUserById(id);
     }
 
@@ -98,6 +98,11 @@ public class AdminController {
         QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
         Map<String,Object> map = bookService.getAllBooks(queryInfo);
         return R.ok(map);
+    }
+
+    @GetMapping("/books/{id}")
+    public R handleGetBookById(@PathVariable("id") long id){
+        return bookService.getBookById(id);
     }
 
     @PostMapping("/books")

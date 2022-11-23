@@ -33,6 +33,15 @@ public class Film extends Work implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
+    public Film(String name, String type, String publishyear, String description, String picurl) {
+        this.name = name;
+        this.type = type;
+        this.publishyear = publishyear;
+        this.description = description;
+        this.picurl = picurl;
+        this.worktype = "film";
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {

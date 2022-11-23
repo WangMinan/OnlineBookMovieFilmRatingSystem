@@ -48,7 +48,9 @@ public class PageGetUtil {
             wrapper.like("objectType", queryInfo.getQuery());
             list = (Page) mapper.selectPage(page, wrapper);
         } else {
-            list = (Page) mapper.selectPage(page, null);
+            QueryWrapper wrapper = new QueryWrapper();
+            wrapper.like("name", queryInfo.getQuery());
+            list = (Page) mapper.selectPage(page, wrapper);
         }
         Map<String,Object> map = new HashMap<>();
         map.put("total", list.getTotal());

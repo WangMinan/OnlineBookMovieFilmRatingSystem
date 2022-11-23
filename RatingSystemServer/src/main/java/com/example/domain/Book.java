@@ -48,6 +48,7 @@ public class Book extends Work implements Serializable {
         this.publishyear = publishyear;
         this.description = description;
         this.picurl = picurl;
+        this.worktype = "book";
     }
 
     @Override
