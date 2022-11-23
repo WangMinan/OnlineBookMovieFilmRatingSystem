@@ -66,6 +66,12 @@ public class AdminController {
         return R.ok(map);
     }
 
+    // 查询单个用户
+    @GetMapping("/users/{id}")
+    public R handleGetUserById(@PathVariable("id") int id){
+        return userService.getUserById(id);
+    }
+
     @PostMapping("/users")
     public R handleAddUser(@RequestBody User user){
         return userService.addUser(user);

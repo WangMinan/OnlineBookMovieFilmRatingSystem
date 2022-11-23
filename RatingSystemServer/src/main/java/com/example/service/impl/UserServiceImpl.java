@@ -31,6 +31,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public Map<String,Object> getAllUsers(QueryInfo queryInfo) {
+        // 这里没有用既定的Util来处理 wise choice 这玩意和书影音不一样的
         Page<User> page = new Page<>(queryInfo.getPagenum(), queryInfo.getPagesize());
         Page<User> userList;
         if(Objects.equals(queryInfo.getQuery(), "") || queryInfo.getQuery() == null){
@@ -92,6 +93,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("username", username);
         return userMapper.selectOne(wrapper);
+    }
+
+    @Override
+    public R getUserById(int id) {
+        Map<String,Object> map = new HashMap<>();
+        User user = userMapper.selectById(id);
+        map.put("user", user);
+        return R.ok(map);
     }
 }
 

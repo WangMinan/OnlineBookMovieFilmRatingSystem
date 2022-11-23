@@ -24,15 +24,7 @@
         <!--        自动生成索引列-->
         <el-table-column type="index"></el-table-column>
         <el-table-column label="姓名" prop="username"></el-table-column>
-        <el-table-column label="邮箱" prop="email"></el-table-column>
-        <el-table-column label="电话" prop="mobile"></el-table-column>
-        <el-table-column label="角色" prop="role_name"></el-table-column>
-        <el-table-column label="状态">
-          <!--          作用域插槽数据使用slot-scope进行接收-->
-          <template slot-scope="scope">
-            <el-switch v-model="scope.row.mg_state" @change = "handleUserStateChange(scope.row)"></el-switch>
-          </template>
-        </el-table-column>
+        <el-table-column label="邮箱" prop="mail"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <!--            修改按钮-->
@@ -42,10 +34,6 @@
             <!--            删除按钮-->
             <el-tooltip effect="light" content="删除" placement="top" :enterable="false">
               <el-button type="danger" icon="el-icon-delete" circle size="small" @click="removeUserById(scope.row.id)"></el-button>
-            </el-tooltip>
-            <!--            分配角色按钮-->
-            <el-tooltip effect="light" content="分配角色" placement="top" :enterable="false">
-              <el-button type="warning" icon="el-icon-setting" circle size="small" @click="setRole(scope.row)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -75,11 +63,8 @@
         <el-form-item label="密码" prop="password">
           <el-input v-model="addForm.password" type="password" show-password></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="addForm.email"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号" prop="mobile">
-          <el-input v-model="addForm.mobile"></el-input>
+        <el-form-item label="邮箱" prop="mail">
+          <el-input v-model="addForm.mail"></el-input>
         </el-form-item>
       </el-form>
       <!--      底部按钮区 slot是vue框架下的插槽 可以用于替换屏幕上的组件 匿名组件由前后slot组成 具名slot、类似于footer 在特定位置占位-->
@@ -100,11 +85,8 @@
         <el-form-item label="用户名" prop="username">
           <el-input v-model="editForm.username" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="editForm.email"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号" prop="mobile">
-          <el-input v-model="editForm.mobile"></el-input>
+        <el-form-item label="邮箱" prop="mail">
+          <el-input v-model="editForm.mail"></el-input>
         </el-form-item>
       </el-form>
       <!--      底部按钮区 slot是vue框架下的插槽 可以用于替换屏幕上的组件 匿名组件由前后slot组成 具名slot、类似于footer 在特定位置占位-->
@@ -113,36 +95,12 @@
         <el-button @click="editUserDialogVisible = false">取消</el-button>
       </span>
     </el-dialog>
-    <el-dialog
-      title="分配角色"
-      :visible.sync="setRoleDialogVisible"
-      width="50%"
-    >
-      <span>
-        <p>当前用户: {{userInfo.username}}</p>
-        <p>用户角色: {{userInfo.role_name}}</p>
-        <p>
-          请选择新角色:
-          <el-select v-model="selectedRoleId" placeholder="请选择">
-            <el-option
-              v-for="item in rolesList"
-              :key="item.id"
-              :label="item.roleName"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </p>
-      </span>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
-        <el-button @click="setRoleDialogVisible = false">取 消</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '@/utils/myAxios'
+import { encrypt } from '@/utils/jsencrypt'
 
 const options = {
   created () {
@@ -156,20 +114,13 @@ const options = {
       }
       callback()
     }
-    const checkMobile = (rule, value, callback) => {
-      const reg = /^1[3456789]\d{9}$/
-      if (!reg.test(value)) {
-        callback(new Error('请输入有效的手机号码'))
-      }
-      callback()
-    }
     return {
       // 获取用户列表对象
       queryInfo: {
         query: '',
         // 当前页码
         pagenum: 1,
-        pagesize: 2
+        pagesize: 5
       },
       userList: [],
       total: 0,
@@ -177,46 +128,39 @@ const options = {
       addUserDialogVisible: false,
       // 表单内容
       addForm: {
-        username: '',
-        password: '',
-        email: '',
-        mobile: ''
+        // 初始值设置为null可以使表单预校验不通过效果在resetFields之后也被清除
+        username: null,
+        password: null,
+        mail: null
       },
       // 表单验证规则
       addFormRules: {
         username: [
+          // 验证密码是否合法
           { required: true, message: '请输入名称', trigger: 'blur' }, // 鼠标失去焦点时触发该检查
-          { min: 3, max: 30, message: '长度应当为 3 到 30 个字符', trigger: 'blur' }
+          { min: 3, max: 15, message: '长度应当为 3 到 15 个字符', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' }, // 鼠标失去焦点时触发该检查
+          { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, max: 15, message: '长度应当为 6 到 15 个字符', trigger: 'blur' }
         ],
-        email: [
+        mail: [
           { required: true, message: '请输入邮箱', trigger: 'blur' }, // 鼠标失去焦点时触发该检查
           { validator: checkEmail, trigger: 'blur' }
-        ],
-        mobile: [
-          { required: true, message: '请输入手机号', trigger: 'blur' }, // 鼠标失去焦点时触发该检查
-          { validator: checkMobile, trigger: 'blur' }
         ]
       },
       editUserDialogVisible: false,
       // 修改用户对话框
       editForm: {
-        id: '',
-        username: '',
-        email: '',
-        mobile: ''
+        id: null,
+        username: null,
+        password: null,
+        mail: null
       },
       editFormRules: {
-        email: [
+        mail: [
           { required: true, message: '请输入邮箱', trigger: 'blur' }, // 鼠标失去焦点时触发该检查
           { validator: checkEmail, trigger: 'blur' }
-        ],
-        mobile: [
-          { required: true, message: '请输入手机号', trigger: 'blur' }, // 鼠标失去焦点时触发该检查
-          { validator: checkMobile, trigger: 'blur' }
         ]
       },
       setRoleDialogVisible: false,
@@ -228,10 +172,15 @@ const options = {
   methods: {
     async getUserList () {
       try {
-        const resp = await axios.get('users', { params: this.queryInfo })
-        if (resp.data.meta.status === 200) {
-          this.userList = resp.data.data.users
-          this.total = resp.data.data.total
+        let query = this.queryInfo.query
+        if (query === '') {
+          query = 'AAA'
+        }
+        const resp =
+          await axios.get(`/admin/users/${query}/${this.queryInfo.pagenum}/${this.queryInfo.pagesize}`)
+        if (resp.data.code === 200) {
+          this.userList = resp.data.result
+          this.total = resp.data.total
         } else {
           this.$message.error('获取用户列表失败,请稍后重试')
         }
@@ -247,24 +196,6 @@ const options = {
       this.queryInfo.pagenum = newPage
       this.getUserList()
     },
-    async handleUserStateChange (userInfo) {
-      // 监听switch开关的变化
-      // console.log(userInfo)
-      // 发送put请求修改用户状态
-      // 注意 模板字符串用反引号包裹
-      try {
-        const resp = await axios.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
-        if (resp.data.meta.status === 200) {
-          // 如果成功可以无事发生
-          this.$message.success('修改用户状态成功')
-        } else {
-          userInfo.mg_state = !userInfo.mg_state
-          this.$message.error('修改用户状态失败,请稍后重试')
-        }
-      } catch (e) {
-        this.$message.error('修改用户状态失败,请检查后端服务器状态')
-      }
-    },
     handleAddUser () {
       this.addUserDialogVisible = true
     },
@@ -273,12 +204,15 @@ const options = {
     },
     async addUser () {
       await this.$refs.addFormRef.validate(async valid => {
+        // 先关掉窗口再加密 避免那一下下密码变长了非常吓人
+        this.addUserDialogVisible = false
         if (valid) {
           try {
-            const resp = await axios.post('users', this.addForm)
-            if (resp.data.meta.status === 201) {
+            // 密码这玩意是直塞的 后端也没有私钥用来解密 所以要这里加密好了塞到后端去
+            this.addForm.password = encrypt(this.addForm.password)
+            const resp = await axios.post('/admin/users', this.addForm)
+            if (resp.data.code === 200) {
               this.$message.success('添加用户成功')
-              this.addUserDialogVisible = false
               await this.getUserList()
             } else {
               this.$message.error('添加用户失败,请稍后重试')
@@ -294,15 +228,14 @@ const options = {
     async showEditDialog (id) {
       this.editUserDialogVisible = true
       try {
-        const resp = await axios.get(`users/${id}`)
-        if (resp.data.meta.status !== 200) {
+        const resp = await axios.get(`/admin/users/${id}`)
+        if (resp.data.code !== 200) {
           this.$message.error('获取用户信息失败,请稍后重试')
         } else {
-          this.editForm.id = resp.data.data.id
-          this.editForm.username = resp.data.data.username
-          this.editForm.email = resp.data.data.email
-          this.editForm.mobile = resp.data.data.mobile
-          console.log(this.editForm)
+          this.editForm.id = resp.data.user.id
+          this.editForm.username = resp.data.user.username
+          this.editForm.password = resp.data.user.password
+          this.editForm.mail = resp.data.user.mail
         }
       } catch (e) {
         this.$message.error('查询用户失败,请检查后端服务器状态')
@@ -316,14 +249,16 @@ const options = {
         this.$refs.editFormRef.validate(async valid => {
           if (!valid) return
           // 发起修改用户信息的数据请求
-          const { data: res } = await axios.put(
-            'users/' + this.editForm.id,
+          const res = await axios.put(
+            '/admin/users/' + this.editForm.id,
             {
-              email: this.editForm.email,
-              mobile: this.editForm.mobile
+              username: this.editForm.username,
+              password: this.editForm.password,
+              mail: this.editForm.mail
             }
           )
-          if (res.meta.status !== 200) {
+          console.log(res)
+          if (res.data.code !== 200) {
             return this.$message.error('更新用户信息失败,请稍后重试')
           }
           // 关闭对话框
@@ -351,9 +286,8 @@ const options = {
       } else {
         try {
           // 发起修改用户信息的数据请求
-          const { data: res } = await axios.delete('users/' + id)
-          if (res.meta.status !== 200) {
-            console.log(res)
+          const res = await axios.delete('/admin/users/' + id)
+          if (res.data.code !== 200) {
             return this.$message.error('删除用户信息失败,请稍后重试')
           }
           // 关闭对话框
@@ -365,40 +299,6 @@ const options = {
         } catch (e) {
           this.$message.error('删除用户信息失败,请检查后端服务器状态')
         }
-      }
-    },
-    async setRole (userInfo) {
-      this.userInfo = userInfo
-      // 在展示对话框之前, 先获取角色列表
-      try {
-        const resp = await axios.get('roles')
-        if (resp.data.meta.status !== 200) {
-          this.$message.error(resp.data.meta.message)
-        } else {
-          this.rolesList = resp.data.data
-        }
-      } catch (e) {
-        this.$message.error('获取角色列表失败,请检查后端服务器')
-      }
-      this.setRoleDialogVisible = true
-    },
-    async saveRoleInfo () {
-      if (this.selectedRoleId === '') {
-        return this.$message.error('请选择角色')
-      }
-      try {
-        const resp = await axios.put(`users/${this.userInfo.id}/role`, {
-          rid: this.selectedRoleId
-        })
-        if (resp.data.meta.status !== 200) {
-          this.$message.error(resp.data.meta.message)
-        } else {
-          this.$message.success('分配角色成功')
-          this.setRoleDialogVisible = false
-          await this.getUserList()
-        }
-      } catch (e) {
-        this.$message.error('分配角色失败,请检查后端服务器')
       }
     }
   }

@@ -30,4 +30,6 @@ public interface UserService extends IService<User> {
     boolean login(User user);
 
     User getUserByUsername(String username);
+
+    R getUserById(int id);
 }

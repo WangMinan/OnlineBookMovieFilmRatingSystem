@@ -97,7 +97,6 @@ const options = {
     async getMenuList () {
       try {
         const resp = await axios.get('/admin/menus')
-        console.log(resp)
         if (resp.data.code !== 200) {
           this.$message.error('resp.data.msg')
         } else {
