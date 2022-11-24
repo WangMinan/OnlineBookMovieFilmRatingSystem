@@ -23,4 +23,6 @@ public interface FilmService extends IService<Film> {
     R deleteFilm(long id);
 
     R updateFilm(long id, Film film);
+
+    R getFilmById(long id);
 }

@@ -49,6 +49,14 @@ public class FilmServiceImpl extends ServiceImpl<FilmMapper, Film>
         film.setId(id);
         return filmMapper.updateById(film) > 0 ? R.ok("修改电影成功") : R.error("修改电影失败");
     }
+
+    @Override
+    public R getFilmById(long id) {
+        Film film = filmMapper.selectById(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("film", film);
+        return R.ok(map);
+    }
 }
 
 

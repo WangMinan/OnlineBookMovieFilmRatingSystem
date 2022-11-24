@@ -32,3 +32,8 @@ spring:
       suffix: .jsp
     pathmatch:
       matching-strategy: ant_path_matcher
+
+# 设置SQL语句的日志级别
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

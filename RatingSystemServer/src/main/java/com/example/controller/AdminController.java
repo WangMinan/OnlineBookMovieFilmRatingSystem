@@ -133,6 +133,11 @@ public class AdminController {
         return R.ok(map);
     }
 
+    @GetMapping("/films/{id}")
+    public R handleGetMovieById(@PathVariable("id") long id){
+        return filmService.getFilmById(id);
+    }
+
     @PostMapping("/films")
     public R handleAddMovie(@RequestBody Film film){
         return filmService.addFilm(film);
@@ -159,6 +164,11 @@ public class AdminController {
         QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
         Map<String,Object> map = musicService.getAllMusics(queryInfo);
         return R.ok(map);
+    }
+
+    @GetMapping("/musics/{id}")
+    public R handleGetMusicById(@PathVariable("id") long id){
+        return musicService.getMusicById(id);
     }
 
     @PostMapping("/musics")

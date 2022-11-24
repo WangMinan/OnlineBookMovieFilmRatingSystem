@@ -30,12 +30,16 @@
         <el-table-column label="出版时间" prop="publishyear"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
+            <!--            查看按钮-->
+            <el-tooltip effect="light" content="书籍具体信息查看" placement="top" :enterable="false">
+              <el-button type="success" icon="el-icon-info" circle size="small" @click="showCheckDialog(scope.row.id)"></el-button>
+            </el-tooltip>
             <!--            修改按钮-->
-            <el-tooltip effect="light" content="信息查看与编辑" placement="top" :enterable="false">
+            <el-tooltip effect="light" content="书籍信息编辑" placement="top" :enterable="false">
               <el-button type="primary" icon="el-icon-edit" circle size="small" @click="showEditDialog(scope.row.id)"></el-button>
             </el-tooltip>
             <!--            删除按钮-->
-            <el-tooltip effect="light" content="删除" placement="top" :enterable="false">
+            <el-tooltip effect="light" content="删除书籍" placement="top" :enterable="false">
               <el-button type="danger" icon="el-icon-delete" circle size="small" @click="removeBookById(scope.row.id)"></el-button>
             </el-tooltip>
           </template>
@@ -52,6 +56,7 @@
         :total="total">
       </el-pagination>
     </el-card>
+<!--    查看书籍-->
     <el-dialog
       title="添加书籍"
       :visible.sync="addBookDialogVisible"
@@ -110,6 +115,49 @@
         <el-button @click="addBookDialogVisible = false">取消</el-button>
       </span>
     </el-dialog>
+<!--    修改书籍-->
+    <el-dialog
+      title="查看书籍"
+      :visible.sync="checkBookDialogVisible"
+      width="60%"
+      @close="handleCheckFormClose"
+      :close-on-click-modal="false"
+    >
+      <!--      内容主体区-->
+      <el-form :model="checkForm" status-icon ref="checkFormRef" label-width="100px">
+        <el-form-item label="书名" prop="name">
+          <el-input v-model="checkForm.name" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="图片">
+          <el-image
+            :src = currentPicUrl
+            style="width: 120px; height: 160px"
+          >
+          </el-image>
+        </el-form-item>
+        <el-form-item label="ISBN" prop="isbn">
+          <el-input v-model="checkForm.isbn" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="作者" prop="author">
+          <el-input v-model="checkForm.author" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="类别" prop="type">
+          <el-input v-model="checkForm.type" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="出版时间" prop="publishyear">
+          <el-input v-model="checkForm.publishyear" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="简介" prop="description">
+          <el-input type="textarea" maxlength="300" rows="5" v-model="checkForm.description" show-word-limit disabled>
+          </el-input>
+        </el-form-item>
+      </el-form>
+      <!--      底部按钮区 slot是vue框架下的插槽 可以用于替换屏幕上的组件 匿名组件由前后slot组成 具名slot、类似于footer 在特定位置占位-->
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="checkBookDialogVisible = false">确定</el-button>
+      </span>
+    </el-dialog>
+<!--    删除书籍-->
     <el-dialog
       title="修改书籍"
       :visible.sync="editBookDialogVisible"
@@ -228,7 +276,18 @@ const options = {
           { max: 300, message: '长度最多为300个字符', trigger: 'blur' }
         ]
       },
+      checkBookDialogVisible: false,
       editBookDialogVisible: false,
+      checkForm: {
+        id: null,
+        name: null,
+        isbn: null,
+        author: null,
+        type: null,
+        publishyear: null,
+        description: null,
+        picurl: null
+      },
       // 修改书籍对话框
       editForm: {
         id: null,
@@ -340,6 +399,27 @@ const options = {
         }
       })
     },
+    async showCheckDialog (id) {
+      this.checkBookDialogVisible = true
+      try {
+        const resp = await axios.get(`/admin/books/${id}`)
+        if (resp.data.code !== 200) {
+          this.$message.error('获取书籍信息失败,请稍后重试')
+        } else {
+          this.checkForm.id = resp.data.book.id
+          this.checkForm.name = resp.data.book.name
+          this.checkForm.isbn = resp.data.book.isbn
+          this.checkForm.author = resp.data.book.author
+          this.checkForm.type = resp.data.book.type
+          this.checkForm.publishyear = resp.data.book.publishyear
+          this.checkForm.description = resp.data.book.description
+          this.checkForm.picurl = resp.data.book.picurl
+          this.currentPicUrl = resp.data.book.picurl
+        }
+      } catch (e) {
+        this.$message.error('查询书籍失败,请检查后端服务器状态')
+      }
+    },
     async showEditDialog (id) {
       this.editBookDialogVisible = true
       try {
@@ -363,6 +443,9 @@ const options = {
     },
     handleEditFormClose () {
       this.$refs.editFormRef.resetFields()
+    },
+    handleCheckFormClose () {
+      this.$refs.checkFormRef.resetFields()
     },
     editBookInfo () {
       try {

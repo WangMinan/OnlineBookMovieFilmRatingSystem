@@ -23,4 +23,6 @@ public interface MusicService extends IService<Music> {
     R deleteMusic(long id);
 
     R updateMusic(long id, Music music);
+
+    R getMusicById(long id);
 }

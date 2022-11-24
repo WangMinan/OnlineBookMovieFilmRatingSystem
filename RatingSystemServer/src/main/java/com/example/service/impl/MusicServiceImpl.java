@@ -10,6 +10,7 @@ import com.example.util.PageGetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -43,6 +44,14 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
     public R updateMusic(long id, Music music) {
         music.setId(id);
         return musicMapper.updateById(music) > 0 ? R.ok("修改音乐成功") : R.error("修改音乐失败");
+    }
+
+    @Override
+    public R getMusicById(long id) {
+        Music music = musicMapper.selectById(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("music", music);
+        return R.ok(map);
     }
 }
 
