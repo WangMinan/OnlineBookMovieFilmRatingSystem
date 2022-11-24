@@ -20,4 +20,9 @@ public class VueController {
     public R handleGetMenus(){
         return vueRouteService.getMenus();
     }
+
+    @GetMapping("/admin/eChartsParams")
+    public R handleGetEChartsParams(){
+        return vueRouteService.getEChartsParams();
+    }
 }

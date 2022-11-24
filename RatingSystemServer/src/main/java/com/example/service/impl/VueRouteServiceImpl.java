@@ -3,7 +3,7 @@ package com.example.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.domain.VueRoute;
 import com.example.pojo.R;
-import com.example.service.VueRouteService;
+import com.example.service.*;
 import com.example.mapper.VueRouteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,18 @@ public class VueRouteServiceImpl extends ServiceImpl<VueRouteMapper, VueRoute>
 
     @Autowired
     private VueRouteMapper vueRouteMapper;
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private FilmService filmService;
+
+    @Autowired
+    private MusicService musicService;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public R getMenus() {
@@ -49,6 +61,25 @@ public class VueRouteServiceImpl extends ServiceImpl<VueRouteMapper, VueRoute>
         // 按照id大小对routes进行排序
         routes.sort(Comparator.comparing(VueRoute::getId));
         map.put("routes",routes);
+        return R.ok(map);
+    }
+
+    @Override
+    public R getEChartsParams() {
+        // 获取书籍总数
+        int bookCount = bookService.count();
+        // 获取电影总数
+        int filmCount = filmService.count();
+        // 获取音乐总数
+        int musicCount = musicService.count();
+        // 获取用户总数
+        int userCount = userService.count();
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("totalBook",bookCount);
+        map.put("totalFilm",filmCount);
+        map.put("totalMusic",musicCount);
+        map.put("totalUser",userCount);
         return R.ok(map);
     }
 }

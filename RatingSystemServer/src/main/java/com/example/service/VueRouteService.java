@@ -12,4 +12,6 @@ import com.example.pojo.R;
 public interface VueRouteService extends IService<VueRoute> {
 
     R getMenus();
+
+    R getEChartsParams();
 }
