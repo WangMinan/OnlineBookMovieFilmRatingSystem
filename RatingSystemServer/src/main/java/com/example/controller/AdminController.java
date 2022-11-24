@@ -199,6 +199,11 @@ public class AdminController {
         return R.ok(map);
     }
 
+    @GetMapping("/assessments/{id}")
+    public R handleGetAssessmentById(@PathVariable("id") long id){
+        return assessmentService.getAssessmentById(id);
+    }
+
     @DeleteMapping("/assessments/{id}")
     public R handleDeleteAssessment(@PathVariable("id") long id){
         return assessmentService.deleteAssessment(id);

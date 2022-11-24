@@ -21,4 +21,6 @@ public interface AssessmentService extends IService<Assessment> {
     R deleteAssessment(long id);
 
     R addAssessment(Assessment assessmentView);
+
+    R getAssessmentById(long id);
 }

@@ -75,10 +75,10 @@ const options = {
       if (Cookies.get('rememberMe') === 'true') {
         this.rememberMe = true
         // 若使用记住密码 且上一回为关闭浏览器退出 则本次尝试自动登录
-        if (Cookies.get('manualExit' != null) && Cookies.get('manualExit') === 'false') {
+        if (Cookies.get('manualExit') === 'false') {
           this.login()
         } else {
-          Cookies.set('manualExit', false, { expires: 30 })
+          Cookies.set('manualExit', 'false', { expires: 30 })
         }
       }
     } else if (Cookies.get('rememberMe') === undefined) {
@@ -125,7 +125,6 @@ const options = {
                   Cookies.remove('manualExit')
                 }
                 this.$message.success('登录成功')
-                console.log(resp.data.token)
                 sessionStorage.setItem('token', resp.data.token)
                 // 路由重定向
                 await this.$router.push('/home')
@@ -133,7 +132,6 @@ const options = {
                 this.$message.error(resp.data.msg)
               }
             } catch (e) {
-              console.log(e)
               if (e.message === 'Network Error') {
                 this.$message.error('登录失败,请检查后端服务器')
               }

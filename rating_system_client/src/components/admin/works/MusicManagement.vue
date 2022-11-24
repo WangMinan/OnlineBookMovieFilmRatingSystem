@@ -54,7 +54,7 @@
         :total="total">
       </el-pagination>
     </el-card>
-    <!--    查看音乐-->
+    <!--    添加音乐-->
     <el-dialog
       title="添加音乐"
       :visible.sync="addMusicDialogVisible"
@@ -107,7 +107,7 @@
         <el-button @click="addMusicDialogVisible = false">取消</el-button>
       </span>
     </el-dialog>
-    <!--    修改音乐-->
+    <!--    查看音乐-->
     <el-dialog
       title="查看音乐"
       :visible.sync="checkMusicDialogVisible"
@@ -143,7 +143,7 @@
         <el-button type="primary" @click="checkMusicDialogVisible = false">确定</el-button>
       </span>
     </el-dialog>
-    <!--    删除音乐-->
+    <!--    修改音乐-->
     <el-dialog
       title="修改音乐"
       :visible.sync="editMusicDialogVisible"

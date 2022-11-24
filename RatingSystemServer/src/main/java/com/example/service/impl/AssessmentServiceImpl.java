@@ -47,24 +47,28 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
         // 这玩意是个强转 但我也没法子
         List<Assessment> resultList = (List<Assessment>) map.get("result");
         for(Assessment assessmentView : resultList){
-            assessmentView.setUser(userService.getUserByUsername(assessmentView.getUsername()));
-            switch (assessmentView.getObjecttype()) {
-                case "book":
-                    assessmentView.setWork(bookService.getById(assessmentView.getObjectid()));
-                    break;
-                case "film":
-                    assessmentView.setWork(filmService.getById(assessmentView.getObjectid()));
-                    break;
-                case "music":
-                    assessmentView.setWork(musicService.getById(assessmentView.getObjectid()));
-                    break;
-                default:
-                    break;
-            }
+            getUserAndWorkOfAssessment(assessmentView);
         }
         resultMap.put("result", resultList);
         resultMap.put("total", map.get("total"));
         return resultMap;
+    }
+
+    private void getUserAndWorkOfAssessment(Assessment assessmentView) {
+        assessmentView.setUser(userService.getUserByUsername(assessmentView.getUsername()));
+        switch (assessmentView.getObjecttype()) {
+            case "book":
+                assessmentView.setWork(bookService.getById(assessmentView.getObjectid()));
+                break;
+            case "film":
+                assessmentView.setWork(filmService.getById(assessmentView.getObjectid()));
+                break;
+            case "music":
+                assessmentView.setWork(musicService.getById(assessmentView.getObjectid()));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -75,6 +79,15 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
     @Override
     public R addAssessment(Assessment assessmentView) {
         return assessmentMapper.insert(assessmentView) > 0 ? R.ok("添加评价成功") : R.error("添加评价失败");
+    }
+
+    @Override
+    public R getAssessmentById(long id) {
+        Assessment assessmentView = assessmentMapper.selectById(id);
+        getUserAndWorkOfAssessment(assessmentView);
+        Map<String,Object> map = new HashMap<>();
+        map.put("assessment", assessmentView);
+        return R.ok(map);
     }
 }
 

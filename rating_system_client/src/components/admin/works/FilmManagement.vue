@@ -54,7 +54,7 @@
         :total="total">
       </el-pagination>
     </el-card>
-    <!--    查看电影-->
+    <!--    添加电影-->
     <el-dialog
       title="添加电影"
       :visible.sync="addFilmDialogVisible"
@@ -107,7 +107,7 @@
         <el-button @click="addFilmDialogVisible = false">取消</el-button>
       </span>
     </el-dialog>
-    <!--    修改电影-->
+    <!--    查看电影-->
     <el-dialog
       title="查看电影"
       :visible.sync="checkFilmDialogVisible"
@@ -143,7 +143,7 @@
         <el-button type="primary" @click="checkFilmDialogVisible = false">确定</el-button>
       </span>
     </el-dialog>
-    <!--    删除电影-->
+    <!--    修改电影-->
     <el-dialog
       title="修改电影"
       :visible.sync="editFilmDialogVisible"

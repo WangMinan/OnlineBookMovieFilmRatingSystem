@@ -26,7 +26,7 @@ _axios.interceptors.response.use({
   function (response) {
     // 包含
     if (response.data.msg != null) {
-      if (response.data.msg === 'token过期') {
+      if (response.data.msg === 'token过期' || response.data.msg === 'token错误') {
         this.$message.error('登录过期,系统将根根据情况自动或请您重新登录,记住密码的自动登录将在3秒后进行')
         window.sessionStorage.removeItem('token')
         setTimeout(() => {
