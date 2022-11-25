@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author : [wangminan]
@@ -154,6 +155,54 @@ public class UserController {
         checkSession(request, response);
         long id = (long) request.getSession().getAttribute("id");
         return userService.updateUser(id,user);
+    }
+
+    @GetMapping("/books/{query}/{pagenum}/{pagesize}")
+    @ResponseBody
+    public R handleGetAllBooks(HttpServletRequest request,
+                               HttpServletResponse response,
+                               @PathVariable("query") String query,
+                               @PathVariable("pagenum") int pagenum,
+                               @PathVariable("pagesize") int pagesize) throws IOException {
+        checkSession(request, response);
+        if(query.equals(MEANINGLESS_QUERY)){
+            query="";
+        }
+        QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
+        Map<String,Object> map = bookService.getAllBooks(queryInfo);
+        return R.ok(map);
+    }
+
+    @GetMapping("/films/{query}/{pagenum}/{pagesize}")
+    @ResponseBody
+    public R handleGetAllMovies(HttpServletRequest request,
+                                HttpServletResponse response,
+                                @PathVariable("query") String query,
+                                @PathVariable("pagenum") int pagenum,
+                                @PathVariable("pagesize") int pagesize) throws IOException {
+        checkSession(request, response);
+        if(query.equals(MEANINGLESS_QUERY)){
+            query="";
+        }
+        QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
+        Map<String,Object> map = filmService.getAllFilms(queryInfo);
+        return R.ok(map);
+    }
+
+    @GetMapping("/musics/{query}/{pagenum}/{pagesize}")
+    @ResponseBody
+    public R handleGetAllMusics(HttpServletRequest request,
+                                HttpServletResponse response,
+                                @PathVariable("query") String query,
+                                @PathVariable("pagenum") int pagenum,
+                                @PathVariable("pagesize") int pagesize) throws IOException {
+        checkSession(request, response);
+        if(query.equals(MEANINGLESS_QUERY)){
+            query="";
+        }
+        QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
+        Map<String,Object> map = musicService.getAllMusics(queryInfo);
+        return R.ok(map);
     }
 
     private static void checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
