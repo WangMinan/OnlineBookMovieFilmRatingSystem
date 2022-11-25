@@ -1,6 +1,5 @@
 package com.example.service;
 
-import com.example.domain.Admin;
 import com.example.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.pojo.QueryInfo;
