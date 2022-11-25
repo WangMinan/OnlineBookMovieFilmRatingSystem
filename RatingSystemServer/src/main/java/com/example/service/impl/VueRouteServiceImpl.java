@@ -34,6 +34,9 @@ public class VueRouteServiceImpl extends ServiceImpl<VueRouteMapper, VueRoute>
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AssessmentService assessmentService;
+
     @Override
     public R getMenus() {
         List<VueRoute> tmpRoutes = vueRouteMapper.selectList(null);
@@ -75,11 +78,19 @@ public class VueRouteServiceImpl extends ServiceImpl<VueRouteMapper, VueRoute>
         // 获取用户总数
         int userCount = userService.count();
 
+        // 获取留言中按照书籍、电影、音乐分类的数量 输出在3个int里面
+        int bookAssessmentCount = assessmentService.countByType("book");
+        int filmAssessmentCount = assessmentService.countByType("film");
+        int musicAssessmentCount = assessmentService.countByType("music");
+
         Map<String,Object> map = new HashMap<>();
         map.put("totalBook",bookCount);
         map.put("totalFilm",filmCount);
         map.put("totalMusic",musicCount);
         map.put("totalUser",userCount);
+        map.put("totalBookAssessment",bookAssessmentCount);
+        map.put("totalFilmAssessment",filmAssessmentCount);
+        map.put("totalMusicAssessment",musicAssessmentCount);
         return R.ok(map);
     }
 }

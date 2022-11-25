@@ -6,14 +6,24 @@
         <h1>{{adminUserName}},欢迎您使用书影音评价后台管理系统</h1>
         <h5>本站当前总用户数量: {{totalUserNum}}</h5>
       </el-row>
-      <el-card>
-        <div slot="header">
-          <span>本站资源统计</span>
-        </div>
-        <div class="fatherCard">
-          <div id="main" style="width: 400px;height:300px;"></div>
-        </div>
-      </el-card>
+      <div class="cardBox">
+        <el-card>
+          <div slot="header">
+            <span>本站资源统计</span>
+          </div>
+          <div class="fatherCard">
+            <div id="line" style="width: 400px;height:300px;"></div>
+          </div>
+        </el-card>
+        <el-card>
+          <div slot="header">
+            <span>本站留言分布</span>
+          </div>
+          <div class="fatherCard">
+            <div id="round" style="width: 400px;height:300px;"></div>
+          </div>
+        </el-card>
+      </div>
     </div>
   </div>
 </template>
@@ -29,8 +39,7 @@ const options = {
     return {
       adminUserName: '',
       totalUserNum: 0,
-      options: {
-        tooltip: {},
+      optionsLine: {
         legend: {
           data: ['资源']
         },
@@ -43,6 +52,36 @@ const options = {
             name: '资源数量',
             type: 'bar',
             data: [2, 2, 3]
+          }
+        ]
+      },
+      optionsRound: {
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left'
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: '50%',
+            data: [
+              { value: 1048, name: 'Search Engine' },
+              { value: 735, name: 'Direct' },
+              { value: 580, name: 'Email' },
+              { value: 484, name: 'Union Ads' },
+              { value: 300, name: 'Video Ads' }
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
           }
         ]
       }
@@ -58,7 +97,7 @@ const options = {
       tmpData.push(resp.data.totalFilm)
       tmpData.push(resp.data.totalMusic)
       // 需要重置整个options.series 否则有数据更新但是图表不会更新的问题
-      this.options.series = [
+      this.optionsLine.series = [
         {
           name: '资源数量',
           type: 'bar',
@@ -67,10 +106,37 @@ const options = {
       ]
       this.totalUserNum = resp.data.totalUser
 
+      const tmpAssessmentData = []
+      tmpAssessmentData.push(resp.data.totalBookAssessment)
+      tmpAssessmentData.push(resp.data.totalFilmAssessment)
+      tmpAssessmentData.push(resp.data.totalMusicAssessment)
+      // 重写整个optionsRound的series
+      this.optionsRound.series = [
+        {
+          name: 'Access From',
+          type: 'pie',
+          radius: '50%',
+          data: [
+            { value: tmpAssessmentData[0], name: '书籍' },
+            { value: tmpAssessmentData[1], name: '电影' },
+            { value: tmpAssessmentData[2], name: '音乐' }
+          ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+
       // 使用刚指定的配置项和数据显示图表。
       // 需等待页面DOM加载完毕后执行
-      const myChart = echarts.init(document.getElementById('main'))
-      myChart.setOption(this.options)
+      const myChart = echarts.init(document.getElementById('line'))
+      myChart.setOption(this.optionsLine)
+      const myChart2 = echarts.init(document.getElementById('round'))
+      myChart2.setOption(this.optionsRound)
     } else {
       this.$message.error('获取图表数据失败')
     }
@@ -87,6 +153,11 @@ export default options
   margin-top: 0%;
   // 设置字号50
   font-size: 25px;
+}
+.cardBox{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 .fatherCard{
   display: flex;

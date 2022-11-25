@@ -1,5 +1,6 @@
 package com.example.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.domain.Assessment;
 import com.example.pojo.QueryInfo;
@@ -88,6 +89,13 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
         Map<String,Object> map = new HashMap<>();
         map.put("assessment", assessmentView);
         return R.ok(map);
+    }
+
+    @Override
+    public int countByType(String type) {
+        QueryWrapper<Assessment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("objectType", type);
+        return assessmentMapper.selectCount(queryWrapper);
     }
 }
 
