@@ -254,7 +254,6 @@ const options = {
               mail: this.editForm.mail
             }
           )
-          console.log(res)
           if (res.data.code !== 200) {
             return this.$message.error('更新用户信息失败,请稍后重试')
           }

@@ -414,7 +414,6 @@ const options = {
               picurl: this.currentPicUrl
             }
           )
-          console.log(res)
           if (res.data.code !== 200) {
             return this.$message.error('更新电影信息失败,请稍后重试')
           }

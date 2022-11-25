@@ -7,12 +7,14 @@
       <el-breadcrumb-item>留言列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
-      <el-table :data="spittleList" border stripe :formatter="stateFormat">
+      <el-table :data="spittleList" border stripe>
         <el-table-column type="index"></el-table-column>
         <el-table-column label="用户名" prop="user.username"></el-table-column>
         <el-table-column label="留言对象类型" prop="objecttype"></el-table-column>
         <el-table-column label="留言对象名称" prop="work.name"></el-table-column>
-        <el-table-column label="留言内容" prop="assessment"></el-table-column>
+        <el-table-column label="留言时间" prop="postdate"></el-table-column>
+        <!--  注意：formatter与scope不能混用，只能出现一个。所以formatter不可放在el-table，而要放在el-table-column  -->
+        <el-table-column label="留言内容" prop="assessment" :formatter="stateFormat"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <!--            查看按钮-->
@@ -61,6 +63,9 @@
         <el-form-item label="类别" prop="work.worktype">
           <el-input v-model="checkForm.worktype" disabled></el-input>
         </el-form-item>
+        <el-form-item label="留言时间" prop="work.postdate">
+          <el-input v-model="checkForm.postdate" disabled></el-input>
+        </el-form-item>
         <el-form-item label="留言内容" prop="assessment">
           <el-input type="textarea" rows="5" v-model="checkForm.assessment" disabled>
           </el-input>
@@ -93,7 +98,8 @@ const options = {
         username: null,
         worktype: null,
         workname: null,
-        assessment: null
+        assessment: null,
+        postdate: null
       }
     }
   },
@@ -160,6 +166,7 @@ const options = {
           this.checkForm.workname = resp.data.assessment.work.name
           this.checkForm.worktype = resp.data.assessment.work.worktype
           this.checkForm.assessment = resp.data.assessment.assessment
+          this.checkForm.postdate = resp.data.assessment.postdate
         }
       } catch (e) {
         this.$message.error('查询电影失败,请检查后端服务器状态')
