@@ -25,6 +25,11 @@ spring:
         max-wait: -1ms
         max-idle: 8
         min-idle: 0
+  mail:
+    host: smtp.qq.com
+    username: wangminan0811@qq.com
+    password: iodgebzbykbmdebc
+    port: 587
 ## jsp支持
   mvc:
     view:

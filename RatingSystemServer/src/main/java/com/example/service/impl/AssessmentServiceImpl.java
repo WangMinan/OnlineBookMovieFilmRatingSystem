@@ -1,14 +1,19 @@
 package com.example.service.impl;
 
+import cn.hutool.extra.mail.MailAccount;
+import cn.hutool.extra.mail.MailUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.domain.Assessment;
+import com.example.domain.User;
+import com.example.pojo.MailContent;
 import com.example.pojo.QueryInfo;
 import com.example.pojo.R;
 import com.example.service.*;
 import com.example.mapper.AssessmentMapper;
 import com.example.util.PageGetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -38,6 +43,9 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
 
     @Autowired
     private MusicService musicService;
+
+    @Autowired
+    private SendMailService sendMailService;
 
     @Override
     public Map<String, Object> getAllAssessments(QueryInfo queryInfo) {
@@ -74,7 +82,22 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
 
     @Override
     public R deleteAssessment(long id) {
-        return assessmentMapper.deleteById(id) > 0 ? R.ok("删除评价成功") : R.error("删除评价失败");
+        Assessment assessment = assessmentMapper.selectById(id);
+        String username = assessment.getUsername();
+        String content = assessment.getAssessment();
+        User user = userService.getUserByUsername(username);
+        String userMail = user.getMail();
+        int result = assessmentMapper.deleteById(id);
+
+        if(result == 1) {
+            MailContent mailContent = new MailContent();
+            mailContent.setSendTo(userMail);
+            mailContent.setText("您的评论已被管理员删除，评论内容为:" + content);
+            sendMailService.sendSimpleMail(mailContent);
+            return R.ok("删除成功,已通知用户");
+        } else {
+            return R.error("删除失败");
+        }
     }
 
     @Override
