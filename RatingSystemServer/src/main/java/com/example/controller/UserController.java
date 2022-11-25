@@ -98,7 +98,7 @@ public class UserController {
     // 接下来是书籍、电影、音乐查看与留言
     @RequestMapping(value = "/books")
     public String booksInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        checkSession(request, response);
+
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setQuery(MEANINGLESS_QUERY);
         queryInfo.setPagenum(MIN_PAGE_NUM);
@@ -110,7 +110,7 @@ public class UserController {
 
     @RequestMapping(value = "/films")
     public String filmsInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        checkSession(request, response);
+
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setQuery(MEANINGLESS_QUERY);
         queryInfo.setPagenum(MIN_PAGE_NUM);
@@ -122,7 +122,7 @@ public class UserController {
 
     @RequestMapping(value = "/musics")
     public String musicsInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        checkSession(request, response);
+        
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setQuery(MEANINGLESS_QUERY);
         queryInfo.setPagenum(MIN_PAGE_NUM);
