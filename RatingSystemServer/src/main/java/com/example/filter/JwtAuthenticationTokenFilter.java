@@ -1,5 +1,6 @@
 package com.example.filter;
 
+import com.example.exception.TokenException;
 import com.example.pojo.LoginAdmin;
 import com.example.util.JwtUtil;
 import com.example.util.RedisCache;
@@ -49,10 +50,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             } catch (Exception e) {
                 if(e instanceof io.jsonwebtoken.ExpiredJwtException){
                     // token过期
-                    throw new RuntimeException("token过期");
+                    throw new TokenException("token过期");
                 } else {
                     // token错误
-                    throw new RuntimeException("token错误");
+                    throw new TokenException("token错误");
                 }
             }
             // 从redis中获取LoginUser

@@ -13,15 +13,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = RuntimeException.class)
-    public R handler(RuntimeException e){
-        log.error("运行时异常:" + e.getMessage());
+    @ExceptionHandler(value = TokenException.class)
+    public R handler(TokenException e){
+        log.error("token异常:" + e.getMessage());
         return R.error(e.getMessage()); // 向前端返回500错误并传输异常message
     }
 
-    @ExceptionHandler(value = Exception.class)
-    public R handler(Exception e){
-        log.error("异常:" + e.getMessage());
+    // 只能收到Controller中抛出的异常 其他层中的异常需要自定义
+    @ExceptionHandler(value = RuntimeException.class)
+    public R handler(RuntimeException e){
+        log.error("运行时异常:" + e.getMessage());
         return R.error(e.getMessage()); // 向前端返回500错误并传输异常message
     }
 }

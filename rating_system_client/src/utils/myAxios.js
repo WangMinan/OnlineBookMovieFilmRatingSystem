@@ -1,5 +1,7 @@
 import axios from 'axios'
 // import store from '@/store'
+import { Message } from 'element-ui'
+import router from '@/router'
 
 const _axios = axios.create({
   baseURL: 'http://localhost:8080',
@@ -27,16 +29,13 @@ _axios.interceptors.response.use(
     return response
   },
   (error) => {
-    if (error.data.code === 50 && error.data.msg != null) {
-      if (error.data.msg === 'token过期' ||
-        error.data.msg === 'token错误' ||
-        error.data.msg === '无token或token未认证,请登录') {
-        this.$message.error('登录过期,系统将根根据情况自动或请您重新登录,如您选择自动登录则页面跳转将在3秒后进行')
-        window.sessionStorage.removeItem('token')
-        setTimeout(() => {
-          this.$router.push('/login')
-        }, 3000)
-      }
+    console.log(error.response.data.code)
+    if (error.response.data.code === 403) {
+      Message.error('登录过期,系统将根根据情况自动或请您重新登录,如您选择自动登录则页面跳转将在3秒后进行')
+      window.sessionStorage.removeItem('token')
+      setTimeout(() => {
+        router.push('/login')
+      }, 3000)
     }
     return error
   }
