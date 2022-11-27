@@ -516,23 +516,29 @@ const options = {
     },
     async uploadFile (params) {
       // 如果不是jpg,jpeg,png则不上传直接弹窗
-      const formData = new FormData()
-      formData.append('file', params.file)
-      formData.append('password', this.password)
-      const res = await axios.post('http://121.41.227.153:8081/uploadFile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      if (res.data.code === 200) {
-        this.$message.success('上传成功')
-        this.currentPicUrl = res.data.msg
-        this.addForm.picurl = res.data.msg
-        this.editForm.picurl = res.data.msg
-        this.addButtonDisabled = true
-        this.uploadButtonDisabled = true
+      if (!['image/jpeg', 'image/png', 'image/jpg'].includes(params.file.type)) {
+        this.$message.error('上传图片只能是 JPG/PNG 格式!')
+        // 重置fileList
+        this.fileList = []
       } else {
-        this.$message.error('上传失败,建议检查后端服务器')
+        const formData = new FormData()
+        formData.append('file', params.file)
+        formData.append('password', this.password)
+        const res = await axios.post('http://121.41.227.153:8081/uploadFile', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        if (res.data.code === 200) {
+          this.$message.success('上传成功')
+          this.currentPicUrl = res.data.msg
+          this.addForm.picurl = res.data.msg
+          this.editForm.picurl = res.data.msg
+          this.addButtonDisabled = true
+          this.uploadButtonDisabled = true
+        } else {
+          this.$message.error('上传失败,建议检查后端服务器')
+        }
       }
     }
   }
