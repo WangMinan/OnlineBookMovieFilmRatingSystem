@@ -91,7 +91,7 @@
                         <div class="modal-footer">
 
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <c:if test="${sessionScope.username==null}">
+                            <c:if test="${sessionScope.username!=null}">
                             <button type="button" class="btn btn-primary">提交评论</button>
                             </c:if>
                         </div>
