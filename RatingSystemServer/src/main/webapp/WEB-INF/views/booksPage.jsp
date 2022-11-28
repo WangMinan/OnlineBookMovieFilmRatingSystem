@@ -49,13 +49,14 @@
         </div><!--/.container-fluid -->
     </nav>
     <jsp:useBean id="books" scope="request" type="java.util.Map"/>
+    <jsp:useBean id="assessments" scope="request" type="java.util.Map"/>
     <!-- Main component for a primary marketing message or call to action -->
     <c:forEach var="book" items="${books.result}">
-
+        <c:if test="${book.isdeleted==0}">
         <div class="jumbotron">
             <div class="media">
                 <div class="media-left">
-                    <a href="#">
+                    <a data-toggle="modal" data-target="#myModal">
                         <img class="media-object" src="${book.picurl}" alt="..." width="268" height="403">
                     </a>
                 </div>
@@ -65,11 +66,39 @@
                     <p>描述:${book.description}</p>
                 </div>
             </div>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">《${book.name}》的书评</h4>
+                        </div>
+                        <c:forEach var="assessment" items="assessments">
+                            <c:if test="${assessment.objectid==book.id&&assessment.type=='book'}">
+                                <div class="modal-body">
+                                    <p>${assessment.username}</p>
+                                    <p>${assessment.assessment}</p>
+                                    <p>${assessment.postdate}</p>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <c:if test="${sessionScope.username==null}">
+                            <button type="button" class="btn btn-primary">提交评论</button>
+                            </c:if>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
         </div>
         <%
             System.out.println(books);
         %>
+        </c:if>
     </c:forEach>
+
 
 </div> <!-- /container -->
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
