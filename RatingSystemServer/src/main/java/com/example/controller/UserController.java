@@ -91,7 +91,10 @@ public class UserController {
     @ResponseBody
     public R handleUserLogout(HttpServletRequest request){
         // 清除Session
+        request.getSession().removeAttribute("id");
         request.getSession().removeAttribute("username"); // 强制过期
+        request.getSession().removeAttribute("password");
+        request.getSession().removeAttribute("mail");
         return R.ok("退出成功");
     }
 
@@ -122,7 +125,7 @@ public class UserController {
 
     @RequestMapping(value = "/musics")
     public String musicsInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
+
         QueryInfo queryInfo = new QueryInfo();
         queryInfo.setQuery(MEANINGLESS_QUERY);
         queryInfo.setPagenum(MIN_PAGE_NUM);
