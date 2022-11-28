@@ -73,12 +73,18 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title" id="myModalLabel">《${book.name}》的书评</h4>
                         </div>
-                        <c:forEach var="assessment" items="assessments">
-                            <c:if test="${assessment.objectid==book.id&&assessment.type=='book'}">
+                        <c:forEach var="assessment" items="${assessments.result}">
+                            <c:if test="${assessment.objectid==book.id&&assessment.objecttype=='book'}">
                                 <div class="modal-body">
-                                    <p>${assessment.username}</p>
-                                    <p>${assessment.assessment}</p>
-                                    <p>${assessment.postdate}</p>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">${assessment.username}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p>${assessment.assessment}</p>
+                                            <p>${assessment.postdate}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </c:if>
                         </c:forEach>
