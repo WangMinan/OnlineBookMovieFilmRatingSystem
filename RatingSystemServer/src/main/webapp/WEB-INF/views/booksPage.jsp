@@ -132,8 +132,20 @@
 </html>
 <script>
     $(document).ready(function () {
-        $("#").click(function () {
-
+        $("#submit").click(function () {
+            var message = $("#postmessage").val();
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/assessment",
+                data: {
+                    "message": message,
+                    "objecttype": "book",
+                    "objectid": 1
+                },
+                fail: function (data) {
+                    alert(data);
+                }
+            });
         });
     });
 </script>
