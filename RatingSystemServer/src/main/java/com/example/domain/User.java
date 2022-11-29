@@ -53,6 +53,11 @@ public class User implements Serializable {
         this.mail = mail;
     }
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {

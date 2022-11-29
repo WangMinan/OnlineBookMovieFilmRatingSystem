@@ -19,7 +19,7 @@ public class JspExportController {
      */
     @RequestMapping("/hello")
     public String hello(){
-        return "/HelloWorld";
+        return "/helloWorld";
     }
 
     @RequestMapping(value = "/loginPage", method = RequestMethod.GET)
