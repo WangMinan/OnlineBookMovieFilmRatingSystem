@@ -14,7 +14,7 @@
   Time: 16:34
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -35,14 +35,14 @@
                     <a class="navbar-brand" href="#">用户名称</a>
                 </c:if>
                 <c:if test="${sessionScope.username==null}">
-                    <a class="navbar-brand" href="http://localhost:8080/view/loginPage">登录/注册</a>
+                    <a class="navbar-brand" href="/view/loginPage">登录/注册</a>
                 </c:if>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">书籍</a></li>
-                    <li><a href="#">电影</a></li>
-                    <li><a href="#">音乐</a></li>
+                    <li class="active"><a href="/user/books">书籍</a></li>
+                    <li><a href="/user/films">电影</a></li>
+                    <li><a href="/user/musics">音乐</a></li>
                     <li><a href="#">关于</a></li>
                     <li><a href="#">联系我们</a></li>
                 </ul>
@@ -51,7 +51,9 @@
                     <li><a href="#">类别</a></li>
                 </ul>
                 <form class="navbar-form navbar-right">
-                    <input type="text" class="form-control" placeholder="搜索...">
+                    <label>
+                        <input type="text" class="form-control" placeholder="搜索...">
+                    </label>
                 </form>
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -103,7 +105,7 @@
                             <div class="modal-footer">
                                 <c:if test="${sessionScope.username!=null}">
                                     <div class="area">
-                                        <textarea rows="7" cols="60" name="message" id="postmessage"></textarea>
+                                        <label for="postmessage"></label><textarea rows="7" cols="60" name="message" id="postmessage"></textarea>
                                     </div>
                                 </c:if>
 
@@ -128,24 +130,36 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
         crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
 </body>
 </html>
 <script>
     $(document).ready(function () {
         $("#submit").click(function () {
-            var message = $("#postmessage").val();
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/assessment",
-                data: {
-                    "message": message,
-                    "objecttype": "book",
-                    "objectid": 1
-                },
-                fail: function (data) {
-                    alert(data);
+            const message = {
+                "id": 4,
+                "username": "wagnminan",
+                "objectid": 1,
+                "objecttype": "book",
+                "assessment": $("#postmessage").val(),
+                "postdate": "2022-11-29 23:46:00",
+                "isdeleted": 0
+            }
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/user/assessments', true);
+            // 设定传输格式 很重要 不然前端无法解析JSON
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(message));
+            xhr.onload = function () {
+                // 打印返回数据 {"msg":"登录成功","code":200}
+                console.log(xhr.responseText);
+                // 如果返回字符串中包括":200"则跳转
+                if (xhr.responseText.indexOf(":200") > 0) {
+
+                } else {
+                    alert(xhr.responseText)
                 }
-            });
+            }
         });
     });
 </script>
