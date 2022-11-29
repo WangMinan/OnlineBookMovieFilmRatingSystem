@@ -1,8 +1,12 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <!--输出,条件,迭代标签库-->
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fmt"%> <!--数据格式化标签库-->
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="sql"%> <!--数据库相关标签库-->
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fn"%> <!--常用函数标签库-->
-<%@ page isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!--输出,条件,迭代标签库-->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fmt" %>
+<!--数据格式化标签库-->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="sql" %>
+<!--数据库相关标签库-->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fn" %>
+<!--常用函数标签库-->
+<%@ page isELIgnored="false" %>
 <%--
   Created by IntelliJ IDEA.
   User: wangminan
@@ -16,8 +20,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <title>书籍影音评价网站|书籍</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
@@ -26,7 +31,12 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">用户名称</a>
+                <c:if test="${sessionScope.username!=null}">
+                    <a class="navbar-brand" href="#">用户名称</a>
+                </c:if>
+                <c:if test="${sessionScope.username==null}">
+                    <a class="navbar-brand" href="http://localhost:8080/view/loginPage">登录/注册</a>
+                </c:if>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -35,8 +45,6 @@
                     <li><a href="#">音乐</a></li>
                     <li><a href="#">关于</a></li>
                     <li><a href="#">联系我们</a></li>
-                    <li class="dropdown">
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">年份</a></li>
@@ -53,61 +61,89 @@
     <!-- Main component for a primary marketing message or call to action -->
     <c:forEach var="book" items="${books.result}">
         <c:if test="${book.isdeleted==0}">
-        <div class="jumbotron">
-            <div class="media">
-                <div class="media-left">
-                    <a data-toggle="modal" data-target="#myModal">
-                        <img class="media-object" src="${book.picurl}" alt="..." width="268" height="403">
-                    </a>
+            <div class="jumbotron">
+                <div class="media">
+                    <div class="media-left">
+                        <a data-toggle="modal" data-target="#myModal">
+                            <img class="media-object" src="${book.picurl}" alt="..." width="268" height="403">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h1 class="media-heading">${book.name}</h1>
+                        <p>作者:${book.author} 类型:${book.type} 出版时间:${book.publishyear}</p>
+                        <p>描述:${book.description}</p>
+                    </div>
                 </div>
-                <div class="media-body">
-                    <h1 class="media-heading">${book.name}</h1>
-                    <p>作者:${book.author} 类型:${book.type} 出版时间:${book.publishyear}</p>
-                    <p>描述:${book.description}</p>
-                </div>
-            </div>
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">《${book.name}》的书评</h4>
-                        </div>
-                        <c:forEach var="assessment" items="${assessments.result}">
-                            <c:if test="${assessment.objectid==book.id&&assessment.objecttype=='book'}">
-                                <div class="modal-body">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">${assessment.username}</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <p>${assessment.assessment}</p>
-                                            <p>${assessment.postdate}</p>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">《${book.name}》的书评</h4>
+                            </div>
+
+                            <c:forEach var="assessment" items="${assessments.result}">
+                                <c:if test="${assessment.isdeleted==0&&assessment.objecttype=='book'}">
+                                    <div class="modal-body">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">${assessment.username}</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <p>${assessment.assessment}</p>
+                                                <p>${assessment.postdate}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </c:if>
-                        </c:forEach>
-                        <div class="modal-footer">
+                                </c:if>
+                            </c:forEach>
 
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <c:if test="${sessionScope.username!=null}">
-                            <button type="button" class="btn btn-primary">提交评论</button>
-                            </c:if>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal -->
+                            <div class="modal-footer">
+                                <c:if test="${sessionScope.username!=null}">
+                                    <div class="area">
+                                        <textarea rows="7" cols="60" name="message" id="postmessage"></textarea>
+                                    </div>
+                                </c:if>
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <c:if test="${sessionScope.username!=null}">
+                                    <button id="submit" type="button" class="btn btn-primary">提交评论</button>
+                                </c:if>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
             </div>
-        </div>
-        <%
-            System.out.println(books);
-        %>
+            <%
+                System.out.println(books);
+            %>
         </c:if>
     </c:forEach>
 
 
 </div> <!-- /container -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $("#").click(function () {
+
+        });
+    });
+</script>
+
+<style>
+    textarea {
+        resize: none;
+        width: 550px;
+        height: 100px;
+        max-width: 550px;
+        max-height: 100px;
+    }
+</style>
