@@ -18,7 +18,7 @@
                 var repwd = document.getElementById("repassword").value;
                 var msg = document.getElementById("repasswordMsg");
                 var div = document.getElementById("repasswordDiv");
-                if(pwd==repwd) {
+                if(pwd===repwd) {
                     div.className="form-group";
                     msg.innerHTML="";
                     return true;
@@ -64,7 +64,7 @@
 <body>
     <div class="container">
         <!--注册页面主体-->
-        <div class="row" style="background-color: #3c3c3c">
+        <div class="row" style="background-color: white">
             <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
                 <!--表单标题-->
                 <div class="row">
@@ -112,12 +112,25 @@
                             <button type="submit" class="btn btn-default">注册</button>
                         </div>
                     </div>
+                    <div class="text-center">
+                        <a href="/view/loginPage">已有账号？点此登录</a>
+                    </div>
                 </form>
             </div>
-
         </div>
-
     </div>
 
 </body>
 </html>
+
+<style>
+    .container{
+        width: 800px;
+        height: 400px;
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+</style>
