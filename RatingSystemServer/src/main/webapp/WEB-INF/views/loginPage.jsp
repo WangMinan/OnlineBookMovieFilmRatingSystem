@@ -15,11 +15,8 @@
 <head>
     <title>用户登录</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <script>
-        $('#submit').on('click', function () {
-
-        })
-    </script>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -60,16 +57,14 @@
                             </div>
                         </div>
                     </div>
-                    <!--提交按钮-->
-                    <div class="form-group">
-                        <div class="text-center">
-                            <button type="submit" id="submit" class="btn btn-default">登录</button>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href="/view/register">没有账号？点此注册</a>
-                    </div>
                 </form>
+                <!--提交按钮-->
+                <div class="text-center">
+                    <button id="submitBtn">登录</button>
+                </div>
+                <div class="text-center">
+                    <a href="/view/register">没有账号？点此注册</a>
+                </div>
             </div>
 
         </div>
@@ -92,3 +87,36 @@
         transform: translate(-50%,-50%);
     }
 </style>
+
+<script>
+    // 请严格按照JSON格式进行书写
+    const loginUser= {
+        'user':{
+            'username' : 'wangminan',
+            'password' : '123456'
+        },
+        'rememberMe' : 'true'
+    }
+
+    $(function () {
+        $("#submitBtn").on("click", function () {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/user/login', true);
+            // 设定传输格式 很重要 不然前端无法解析JSON
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(loginUser));
+
+            // 定义回调函数
+            xhr.onload = function () {
+                // 打印返回数据 {"msg":"登录成功","code":200}
+                console.log(xhr.responseText);
+                // 如果返回字符串中包括":200"则跳转
+                if (xhr.responseText.indexOf(":200") > 0) {
+                    window.location.href = "/user/books";
+                } else {
+                    alert(xhr.responseText)
+                }
+            }
+        })
+    })
+</script>
