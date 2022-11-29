@@ -24,7 +24,7 @@
 <body>
     <div class="container">
         <!--登录页面主体-->
-        <div class="row" style="background-color: #3c3c3c">
+        <div class="row" style="background-color: white">
             <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
                 <!--表单标题-->
                 <div class="row">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <a href="<c:url value="/view/register" />">没有账号？点此注册</a>
+                        <a href="/view/register">没有账号？点此注册</a>
                     </div>
                 </form>
             </div>
@@ -77,3 +77,18 @@
     </div>
 </body>
 </html>
+
+<style>
+    body{
+        align-items: center;
+    }
+    .container{
+        width: 800px;
+        height: 400px;
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+</style>
