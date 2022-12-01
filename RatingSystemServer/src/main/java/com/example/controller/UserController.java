@@ -99,7 +99,7 @@ public class UserController {
     }
 
     // 接下来是书籍、电影、音乐查看与留言
-    @RequestMapping(value = "/books")
+    @RequestMapping(value = "/books", method = RequestMethod.GET)
     public String booksInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         QueryInfo queryInfo = new QueryInfo();
@@ -111,7 +111,7 @@ public class UserController {
         return "/booksPage";
     }
 
-    @RequestMapping(value = "/films")
+    @RequestMapping(value = "/films", method = RequestMethod.GET)
     public String filmsInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         QueryInfo queryInfo = new QueryInfo();
@@ -123,7 +123,7 @@ public class UserController {
         return "/filmsPage";
     }
 
-    @RequestMapping(value = "/musics")
+    @RequestMapping(value = "/musics", method = RequestMethod.GET)
     public String musicsInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         QueryInfo queryInfo = new QueryInfo();
@@ -160,7 +160,7 @@ public class UserController {
         return userService.updateUser(id,user);
     }
 
-    @GetMapping("/books/{query}/{pagenum}/{pagesize}")
+    @RequestMapping(value = "/books/{query}/{pagenum}/{pagesize}", method = RequestMethod.GET)
     @ResponseBody
     public R handleGetAllBooks(HttpServletRequest request,
                                HttpServletResponse response,
@@ -176,7 +176,7 @@ public class UserController {
         return R.ok(map);
     }
 
-    @GetMapping("/films/{query}/{pagenum}/{pagesize}")
+    @RequestMapping(value = "/films/{query}/{pagenum}/{pagesize}", method = RequestMethod.GET)
     @ResponseBody
     public R handleGetAllMovies(HttpServletRequest request,
                                 HttpServletResponse response,
@@ -192,7 +192,7 @@ public class UserController {
         return R.ok(map);
     }
 
-    @GetMapping("/musics/{query}/{pagenum}/{pagesize}")
+    @RequestMapping(value = "/musics/{query}/{pagenum}/{pagesize}", method = RequestMethod.GET)
     @ResponseBody
     public R handleGetAllMusics(HttpServletRequest request,
                                 HttpServletResponse response,
