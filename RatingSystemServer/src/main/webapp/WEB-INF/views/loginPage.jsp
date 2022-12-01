@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fmt"%> <!--数据格式化标签库-->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="sql"%> <!--数据库相关标签库-->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fn"%> <!--常用函数标签库-->
+<%@ taglib uri="MyTags" prefix="mytag"%>
 <%@ page isELIgnored="false"%>
 <%--
   Created by IntelliJ IDEA.
@@ -24,11 +25,12 @@
         <div class="row" style="background-color: white">
             <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
                 <!--表单标题-->
-                <div class="row">
+                <!--<div class="row">
                     <div class="text-center">
                         <h3>用户登录</h3>
                     </div>
-                </div>
+                </div>-->
+                <mytag:firstTag/>
                 <!--表单内容-->
                 <form class="form-horizontal">
                     <!--用户名-->
