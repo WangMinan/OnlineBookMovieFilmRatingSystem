@@ -31,4 +31,9 @@ public class JspExportController {
     public String register(){
         return "/register";
     }
+
+    @RequestMapping(value = "/userUpdate", method = RequestMethod.GET)
+    public String userUpdate(){
+        return "/userUpdate";
+    }
 }
