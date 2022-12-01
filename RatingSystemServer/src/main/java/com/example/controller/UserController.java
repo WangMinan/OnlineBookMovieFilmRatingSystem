@@ -59,14 +59,16 @@ public class UserController {
     public R handleUserLogin(HttpServletRequest request, HttpServletResponse response,
                              @RequestBody LoginUser loginUser){
         User user = loginUser.getUser();
+        String originalPassword = loginUser.getUser().getPassword();
         if(userService.login(user)){
             // 验证session已经写入
-             System.out.println(request.getSession().getAttribute("username"));
+//             System.out.println(request.getSession().getAttribute("username"));
 
             // 设置Cookie和Session
             Cookie nameCookie = new Cookie("username",user.getUsername());
             nameCookie.setMaxAge(60*60*24*7);
-            Cookie passwordCookie = new Cookie("password",user.getPassword());
+            // 需要存入原始密码而不是BCrypt后的密码
+            Cookie passwordCookie = new Cookie("password",originalPassword);
             passwordCookie.setMaxAge(60*60*24*7);
             Cookie rememberMeCookie = new Cookie("rememberme",String.valueOf(loginUser.getRememberMe()));
             rememberMeCookie.setMaxAge(60*60*24*7);
@@ -80,7 +82,7 @@ public class UserController {
             request.getSession().setAttribute("username",user.getUsername());
             request.getSession().setAttribute("password",user.getPassword());
             request.getSession().setAttribute("mail",user.getMail());
-            System.out.println(request.getSession());
+//            System.out.println(request.getSession());
             return R.ok("登录成功");
         } else {
             return R.error("用户名或密码错误,登陆失败");

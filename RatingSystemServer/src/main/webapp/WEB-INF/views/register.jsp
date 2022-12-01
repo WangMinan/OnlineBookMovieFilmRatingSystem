@@ -157,7 +157,8 @@
                     console.log(xhr.responseText);
                     // 如果返回字符串中包括":200"则跳转
                     if (xhr.responseText.indexOf(":200") > 0) {
-                        window.location.href = "/user/books";
+                        alert("注册成功");
+                        window.location.href = "/user/login";
                     } else {
                         alert("注册失败！用户名已存在");
                         window.location.href = "/view/register";

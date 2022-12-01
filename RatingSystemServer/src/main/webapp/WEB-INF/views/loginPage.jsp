@@ -38,7 +38,7 @@
                         <label for="username" class="col-sm-2 control-label">用户名</label>
                         <div class="col-sm-8">
                             <c:choose>
-                                <c:when test="${cookie.rememberme.value eq 'true'}">
+                                <c:when test="${cookie.rememberMe.value eq 'true'}">
                                     <input type="text" class="form-control" id="username" name="username" value="${cookie.username.value}">
                                 </c:when>
                                 <c:otherwise>
@@ -53,7 +53,7 @@
                         <label for="password" class="col-sm-2 control-label">密码</label>
                         <div class="col-sm-8">
                             <c:choose>
-                                <c:when test="${cookie.rememberme.value eq 'true'}">
+                                <c:when test="${cookie.rememberMe.value eq 'true'}">
                                     <input type="password" class="form-control" id="password" name="password" value="${cookie.password.value}">
                                 </c:when>
                                 <c:otherwise>
