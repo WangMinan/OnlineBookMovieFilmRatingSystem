@@ -160,13 +160,17 @@
     $(document).ready(function () {
         $("#submit").click(function () {
             const message = {
-                "id": 4,
-                "username": "wagnminan",
+                // id会auto-increment 不需要传入
+                // "id": 4,
+                // 没事的username也不用传 我已经机智的料到这会成为一个问题，所以很自觉的从session里面拿了
+                <%--"username": "${sessionScope.username}",--%>
+                // 具体参考Assessment里的第4个构造函数 只要传接下来的3个数据就可以了
                 "objectid": 1,
-                "objecttype": "book",
+                "objecttype": "book", // 这个确实可以写死
                 "assessment": $("#postmessage").val(),
-                "postdate": "2022-11-29 23:46:00",
-                "isdeleted": 0
+                // postdate与isDeleted会自动生成 不需要传入
+                // "postdate": "2022-11-29 23:46:00",
+                // "isdeleted": 0
             }
             let xhr = new XMLHttpRequest();
             xhr.open('POST', '/user/assessments', true);
@@ -178,13 +182,14 @@
                 console.log(xhr.responseText);
                 // 如果返回字符串中包括":200"则跳转
                 if (xhr.responseText.indexOf(":200") > 0) {
-
+                    alert("评论成功");
+                    // 刷新当前页面
+                    window.location.reload();
                 } else {
                     alert(xhr.responseText)
                 }
             }
         });
-    });
 </script>
 
 <style>
