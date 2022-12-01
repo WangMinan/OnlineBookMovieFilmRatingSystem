@@ -26,7 +26,8 @@
 </head>
 <body>
 <div class="container">
-
+    <jsp:useBean id="books" scope="request" type="java.util.Map"/>
+    <jsp:useBean id="assessments" scope="request" type="java.util.Map"/>
     <!-- Static navbar -->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -102,8 +103,7 @@
             </form>
         </div>
     </nav>
-    <jsp:useBean id="books" scope="request" type="java.util.Map"/>
-    <jsp:useBean id="assessments" scope="request" type="java.util.Map"/>
+
     <!-- Main component for a primary marketing message or call to action -->
     <c:forEach var="book" items="${books.result}">
         <c:if test="${book.isdeleted==0}">
