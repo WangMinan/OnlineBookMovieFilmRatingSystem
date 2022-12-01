@@ -189,7 +189,8 @@
                     alert(xhr.responseText)
                 }
             }
-        });
+        })
+    });
 </script>
 
 <style>
