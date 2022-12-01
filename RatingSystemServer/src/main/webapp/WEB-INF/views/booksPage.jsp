@@ -63,7 +63,7 @@
                                 <li><a href="/view/userUpdate">个人信息修改</a></li>
                                 <li><a href="#">查询发表的评价信息</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="/user/logout">退出</a></li>
+                                <li><a href="#" id="logoutBtn">退出</a></li>
                             </ul>
                         </li>
                     </c:if>
@@ -141,9 +141,6 @@
                     </div><!-- /.modal -->
                 </div>
             </div>
-            <%
-                System.out.println(books);
-            %>
         </c:if>
     </c:forEach>
 
@@ -183,6 +180,26 @@
                 // 如果返回字符串中包括":200"则跳转
                 if (xhr.responseText.indexOf(":200") > 0) {
                     alert("评论成功");
+                    // 刷新当前页面
+                    window.location.reload();
+                } else {
+                    alert(xhr.responseText)
+                }
+            }
+        })
+    });
+
+    $(document).ready(function () {
+        $("#logoutBtn").click(function () {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', '/user/logout', true);
+            xhr.send();
+            xhr.onload = function () {
+                // 打印返回数据 {"msg":"登录成功","code":200}
+                console.log(xhr.responseText);
+                // 如果返回字符串中包括":200"则跳转
+                if (xhr.responseText.indexOf(":200") > 0) {
+                    alert("退出成功");
                     // 刷新当前页面
                     window.location.reload();
                 } else {
