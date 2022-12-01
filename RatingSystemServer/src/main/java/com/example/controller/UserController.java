@@ -70,7 +70,7 @@ public class UserController {
             // 需要存入原始密码而不是BCrypt后的密码
             Cookie passwordCookie = new Cookie("password",originalPassword);
             passwordCookie.setMaxAge(60*60*24*7);
-            Cookie rememberMeCookie = new Cookie("rememberme",String.valueOf(loginUser.getRememberMe()));
+            Cookie rememberMeCookie = new Cookie("rememberMe",String.valueOf(loginUser.getRememberMe()));
             rememberMeCookie.setMaxAge(60*60*24*7);
             response.addCookie(nameCookie);
             response.addCookie(passwordCookie);
