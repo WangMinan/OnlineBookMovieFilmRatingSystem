@@ -31,7 +31,8 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -48,17 +49,12 @@
                     <li><a href="#">联系我们</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">搜索 <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">按年份搜索</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">按类别搜索</a></li>
-                        </ul>
-                    </li>
+
                     <c:if test="${sessionScope.username!=null}">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${sessionScope.username} <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">${sessionScope.username} <span
+                                    class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/view/userUpdate">个人信息修改</a></li>
                                 <li><a href="#">查询发表的评价信息</a></li>
@@ -72,14 +68,39 @@
                     </c:if>
 
                 </ul>
-                <form class="navbar-form navbar-right">
-                    <label>
-                        <input type="text" class="form-control" placeholder="搜索...">
-                    </label>
-                </form>
+
 
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
+    </nav>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">按年份搜索 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <c:forEach var="book" items="${books.result}">
+                            <li>${book.publishyear}</li>
+                        </c:forEach>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">按类别搜索 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <c:forEach var="book" items="${books.result}">
+                            <li>${book.type}</li>
+                        </c:forEach>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <label>
+                    <input type="text" class="form-control" placeholder="搜索...">
+                </label>
+            </form>
+        </div>
     </nav>
     <jsp:useBean id="books" scope="request" type="java.util.Map"/>
     <jsp:useBean id="assessments" scope="request" type="java.util.Map"/>
@@ -128,7 +149,8 @@
                             <div class="modal-footer">
                                 <c:if test="${sessionScope.username!=null}">
                                     <div class="area">
-                                        <label for="postmessage"></label><textarea rows="7" cols="60" name="message" id="postmessage"></textarea>
+                                        <label for="postmessage"></label><textarea rows="7" cols="60" name="message"
+                                                                                   id="postmessage"></textarea>
                                     </div>
                                 </c:if>
 
