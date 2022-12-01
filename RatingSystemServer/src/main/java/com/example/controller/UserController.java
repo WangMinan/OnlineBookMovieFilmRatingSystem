@@ -61,20 +61,65 @@ public class UserController {
         User user = loginUser.getUser();
         String originalPassword = loginUser.getUser().getPassword();
         if(userService.login(user)){
-            // 验证session已经写入
-//             System.out.println(request.getSession().getAttribute("username"));
+            boolean judgeName = true;
+            boolean judgePwd = true;
+            boolean judgeRememberMe = true;
+            Cookie[] cookies = request.getCookies();
 
-            // 设置Cookie和Session
-            Cookie nameCookie = new Cookie("username",user.getUsername());
-            nameCookie.setMaxAge(60*60*24*7);
-            // 需要存入原始密码而不是BCrypt后的密码
-            Cookie passwordCookie = new Cookie("password",originalPassword);
-            passwordCookie.setMaxAge(60*60*24*7);
-            Cookie rememberMeCookie = new Cookie("rememberMe",String.valueOf(loginUser.getRememberMe()));
-            rememberMeCookie.setMaxAge(60*60*24*7);
-            response.addCookie(nameCookie);
-            response.addCookie(passwordCookie);
-            response.addCookie(rememberMeCookie);
+            //如果cookies不为空
+            if (cookies != null) {
+                //遍历cookies，如果cookie的键为“name”，就把cookie的值设为输入的name
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("username")) {
+                        cookie.setValue(user.getUsername());
+                        // 延迟过期时间
+                        cookie.setMaxAge(60 * 60 * 24 * 7);
+                        // 设置全局可用
+                        cookie.setPath("/");
+                        response.addCookie(cookie);
+                        judgeName = false;
+                    }
+                    if (cookie.getName().equals("password")) {
+                        cookie.setValue(originalPassword);
+                        // 延迟过期时间
+                        cookie.setMaxAge(60 * 60 * 24 * 7);
+                        cookie.setPath("/");
+                        response.addCookie(cookie);
+                        judgePwd = false;
+                    }
+                    if (cookie.getName().equals("rememberMe")) {
+                        cookie.setValue(String.valueOf(loginUser.getRememberMe()));
+                        // 延迟过期时间
+                        cookie.setMaxAge(60 * 60 * 24 * 7);
+                        cookie.setPath("/");
+                        response.addCookie(cookie);
+                        judgeRememberMe = false;
+                    }
+                }
+            }
+
+            if (judgeName) {
+                Cookie cookieName = new Cookie("username", user.getUsername());
+                // 不设置的话，则cookies不写入硬盘,而是写在内存,只在当前页面有用,以秒为单位
+                cookieName.setMaxAge(60*60*24*7);
+                cookieName.setPath("/");
+                response.addCookie(cookieName);
+
+            }
+            //如果不存在名为password的cookie
+            if (judgePwd) {
+                Cookie cookiePwd = new Cookie("password", originalPassword);
+                // 不设置的话，则cookies不写入硬盘,而是写在内存,只在当前页面有用,以秒为单位
+                cookiePwd.setMaxAge(60*60*24*7);
+                cookiePwd.setPath("/");
+                response.addCookie(cookiePwd);
+            }
+            if(judgeRememberMe){
+                Cookie cookieRememberMe = new Cookie("rememberMe", String.valueOf(loginUser.getRememberMe()));
+                cookieRememberMe.setMaxAge(60*60*24*7);
+                cookieRememberMe.setPath("/");
+                response.addCookie(cookieRememberMe);
+            }
 
             // 这样的话随着用户登录他的个人信息就存在session里面了，修改个人信息的时候可以直接拿出来用不需要发送请求
             user = userService.getUserByUsername(user.getUsername());
