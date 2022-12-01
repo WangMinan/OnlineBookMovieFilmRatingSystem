@@ -80,7 +80,7 @@ public class UserController {
             user = userService.getUserByUsername(user.getUsername());
             request.getSession().setAttribute("id",user.getId());
             request.getSession().setAttribute("username",user.getUsername());
-            request.getSession().setAttribute("password",user.getPassword());
+            request.getSession().setAttribute("password",originalPassword);
             request.getSession().setAttribute("mail",user.getMail());
 //            System.out.println(request.getSession());
             return R.ok("登录成功");
