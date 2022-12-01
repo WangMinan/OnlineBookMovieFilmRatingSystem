@@ -21,11 +21,11 @@
 <script>
     // 请严格按照JSON格式进行书写
     const loginUser= {
-        'user':{
-            'username' : 'wangminan',
-            'password' : '123456'
+        "user":{
+            "username" : "wangminan",
+            "password" : "123456"
         },
-        'rememberMe' : 'true'
+        "rememberMe" : "true"
     }
 
     $(function () {

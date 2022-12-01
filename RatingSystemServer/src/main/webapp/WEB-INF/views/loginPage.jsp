@@ -35,7 +35,14 @@
                     <div id="usernameDiv" class="form-group">
                         <label for="username" class="col-sm-2 control-label">用户名</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
+                            <c:choose>
+                                <c:when test="${cookie.rememberme.value eq 'true'}">
+                                    <input type="text" class="form-control" id="username" name="username" value="${cookie.username.value}">
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                         <label id="usernameMsg" class="col-sm-2 control-label"></label>
                     </div>
@@ -43,16 +50,23 @@
                     <div id="passwordDiv" class="form-group">
                         <label for="password" class="col-sm-2 control-label">密码</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+                            <c:choose>
+                                <c:when test="${cookie.rememberme.value eq 'true'}">
+                                    <input type="password" class="form-control" id="password" name="password" value="${cookie.password.value}">
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入用户名">
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                         <label id="passwordMsg" class="col-sm-2 control-label"></label>
                     </div>
                     <!--记住我-->
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <div class="checkbox" name="rememberme">
+                            <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"> 记住我
+                                    <input type="checkbox"  id="rememberMe" name="rememberMe"> 记住我
                                 </label>
                             </div>
                         </div>
@@ -60,7 +74,7 @@
                 </form>
                 <!--提交按钮-->
                 <div class="text-center">
-                    <button id="submitBtn">登录</button>
+                    <button id="submitBtn" class="btn btn-default">登录</button><br><br>
                 </div>
                 <div class="text-center">
                     <a href="/view/register">没有账号？点此注册</a>
@@ -89,34 +103,62 @@
 </style>
 
 <script>
-    // 请严格按照JSON格式进行书写
-    const loginUser= {
-        'user':{
-            'username' : 'wangminan',
-            'password' : '123456'
-        },
-        'rememberMe' : 'true'
+    //验证表单元素是否为空
+    function checkFormNotNull(nid){
+        var nodex=document.getElementById(nid);
+        var msg=document.getElementById(nid+"Msg");
+        var div=document.getElementById(nid+"Div");
+        var reg=/^\s*$/;
+        if(reg.test(nodex.value)) {
+            div.className+=" has-error";
+            msg.innerHTML="不能为空";
+            return false;
+        } else {
+            div.className="form-group";
+            msg.innerHTML="";
+            return true;
+        }
+
+    }
+    //表单验证
+    function checkForm() {
+        var flag1 = checkFormNotNull("username");
+        var flag2 = checkFormNotNull("password");
+        return flag1 && flag2;
     }
 
     $(function () {
         $("#submitBtn").on("click", function () {
-            let xhr = new XMLHttpRequest();
-            xhr.open('POST', '/user/login', true);
-            // 设定传输格式 很重要 不然前端无法解析JSON
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify(loginUser));
+            if(checkForm()) {
+                const loginUser= {
+                    "user":{
+                        "username" : document.getElementById("username").value,
+                        "password" : document.getElementById("password").value
+                    },
+                    "rememberMe" : document.getElementById("rememberMe").checked
+                }
 
-            // 定义回调函数
-            xhr.onload = function () {
-                // 打印返回数据 {"msg":"登录成功","code":200}
-                console.log(xhr.responseText);
-                // 如果返回字符串中包括":200"则跳转
-                if (xhr.responseText.indexOf(":200") > 0) {
-                    window.location.href = "/user/books";
-                } else {
-                    alert(xhr.responseText)
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', '/user/login', true);
+                // 设定传输格式 很重要 不然前端无法解析JSON
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(loginUser));
+
+                // 定义回调函数
+                xhr.onload = function () {
+                    // 打印返回数据 {"msg":"登录成功","code":200}
+                    console.log(xhr.responseText);
+                    // 如果返回字符串中包括":200"则跳转
+                    if (xhr.responseText.indexOf(":200") > 0) {
+
+                        window.location.href = "/user/books";
+                    } else {
+                        alert("用户名或密码错误，请重新尝试");
+                        window.location.href = "/view/loginPage";
+                    }
                 }
             }
+
         })
     })
 </script>

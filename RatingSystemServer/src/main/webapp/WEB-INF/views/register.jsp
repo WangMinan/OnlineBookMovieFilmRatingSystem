@@ -10,56 +10,8 @@
 <head>
     <title>用户注册</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <!--表单校验-->
-    <script>
-        function checkPwdAndRepwd(f1,f2) {
-            if(f1&&f2) {
-                var pwd = document.getElementById("password").value;
-                var repwd = document.getElementById("repassword").value;
-                var msg = document.getElementById("repasswordMsg");
-                var div = document.getElementById("repasswordDiv");
-                if(pwd===repwd) {
-                    div.className="form-group";
-                    msg.innerHTML="";
-                    return true;
-                } else {
-                    div.className+=" has-error";
-                    msg.innerHTML="确认密码与密码不一致";
-                    return false;
-                }
-
-            } else {
-                return false;
-            }
-
-        }
-
-        function checkFormNotNull(nid){
-            var nodex=document.getElementById(nid);
-            var msg=document.getElementById(nid+"Msg");
-            var div=document.getElementById(nid+"Div");
-            var reg=/^\s*$/;
-            if(reg.test(nodex.value)) {
-                div.className+=" has-error";
-                msg.innerHTML="不能为空";
-                return false;
-            } else {
-                div.className="form-group";
-                msg.innerHTML="";
-                return true;
-            }
-
-        }
-
-        function checkForm() {
-            var flag1 = checkFormNotNull("username");
-            var flag2 = checkFormNotNull("password");
-            var flag3 = checkFormNotNull("repassword");
-            var flag4 = checkFormNotNull("email");
-            var flag5 = checkPwdAndRepwd(flag2,flag3);
-            return flag1 && flag2 && flag3 && flag4 && flag5;
-        }
-    </script>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -73,7 +25,7 @@
                     </div>
                 </div>
                 <!--表单内容-->
-                <form class="form-horizontal" onsubmit="return checkForm()">
+                <form class="form-horizontal">
                     <!-- 用户名-->
                     <div id="usernameDiv" class="form-group">
                         <label for="username" class="col-sm-2 control-label">用户名</label>
@@ -102,20 +54,18 @@
                     <div id="emailDiv" class="form-group">
                         <label for="email" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-8">
-                            <input type="email" class="form-control" id="email" name="mail" placeholder="请输入电子邮箱">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="请输入电子邮箱">
                         </div>
                         <label id="emailMsg" class="col-sm-2 control-label"></label>
                     </div>
-                    <!-- 提交按钮-->
-                    <div class="form-group">
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-default">注册</button>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href="/view/loginPage">已有账号？点此登录</a>
-                    </div>
                 </form>
+                <!--提交按钮-->
+                <div class="text-center">
+                    <button id="submitBtn" class="btn btn-default">注册</button><br><br>
+                </div>
+                <div class="text-center">
+                    <a href="/view/loginPage">已有账号？点此登录</a>
+                </div>
             </div>
         </div>
     </div>
@@ -134,3 +84,88 @@
         transform: translate(-50%,-50%);
     }
 </style>
+
+<!--表单校验-->
+<script>
+    //校验密码和确认密码是否一致
+    function checkPwdAndRepwd(f1,f2) {
+        if(f1&&f2) {
+            var pwd = document.getElementById("password").value;
+            var repwd = document.getElementById("repassword").value;
+            var msg = document.getElementById("repasswordMsg");
+            var div = document.getElementById("repasswordDiv");
+            if(pwd===repwd) {
+                div.className="form-group";
+                msg.innerHTML="";
+                return true;
+            } else {
+                div.className+=" has-error";
+                msg.innerHTML="确认密码与密码不一致";
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+
+    }
+    //校验表单元素是否为空
+    function checkFormNotNull(nid){
+        var nodex=document.getElementById(nid);
+        var msg=document.getElementById(nid+"Msg");
+        var div=document.getElementById(nid+"Div");
+        var reg=/^\s*$/;
+        if(reg.test(nodex.value)) {
+            div.className+=" has-error";
+            msg.innerHTML="不能为空";
+            return false;
+        } else {
+            div.className="form-group";
+            msg.innerHTML="";
+            return true;
+        }
+
+    }
+
+    function checkForm() {
+        var flag1 = checkFormNotNull("username");
+        var flag2 = checkFormNotNull("password");
+        var flag3 = checkFormNotNull("repassword");
+        var flag4 = checkFormNotNull("email");
+        var flag5 = checkPwdAndRepwd(flag2,flag3);
+        return flag1 && flag2 && flag3 && flag4 && flag5;
+    }
+
+    $(function () {
+        $("#submitBtn").on("click", function () {
+            if(checkForm()) {
+                const user= {
+                    "username" : document.getElementById("username").value,
+                    "password" : document.getElementById("password").value,
+                    "mail" : document.getElementById("email").value
+                }
+
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', '/user/register', true);
+                // 设定传输格式 很重要 不然前端无法解析JSON
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(user));
+
+                // 定义回调函数
+                xhr.onload = function () {
+                    // 打印返回数据 {"msg":"注册成功","code":200}
+                    console.log(xhr.responseText);
+                    // 如果返回字符串中包括":200"则跳转
+                    if (xhr.responseText.indexOf(":200") > 0) {
+                        window.location.href = "/user/books";
+                    } else {
+                        alert("注册失败！用户名已存在");
+                        window.location.href = "/view/register";
+                    }
+                }
+            }
+
+        })
+    })
+
+</script>
