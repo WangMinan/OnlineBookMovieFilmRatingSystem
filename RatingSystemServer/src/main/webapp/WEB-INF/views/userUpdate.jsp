@@ -42,7 +42,7 @@
           <div id="passwordDiv" class="form-group">
             <label for="password" class="col-sm-2 control-label">密码</label>
             <div class="col-sm-8">
-              <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+              <input type="password" class="form-control" id="password" name="password" value="${sessionScope.password}" placeholder="请输入密码">
             </div>
             <label id="passwordMsg" class="col-sm-2 control-label"></label>
           </div>
@@ -50,7 +50,7 @@
           <div id="repasswordDiv" class="form-group">
             <label for="repassword" class="col-sm-2 control-label">确认密码</label>
             <div class="col-sm-8">
-              <input type="password" class="form-control" id="repassword" placeholder="请再次输入密码">
+              <input type="password" class="form-control" id="repassword" value="${sessionScope.password}" placeholder="请再次输入密码">
             </div>
             <label id="repasswordMsg" class="col-sm-2 control-label"></label>
           </div>
@@ -69,7 +69,6 @@
           <button id="cancelBtn" class="btn btn-danger" onclick="window.location.href = '/user/books';">取消</button>
           <br><br>
         </div>
-        <c:out value="${sessionScope.password}"></c:out>
       </div>
     </div>
   </div>
