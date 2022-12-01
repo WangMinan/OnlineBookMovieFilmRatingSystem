@@ -57,7 +57,7 @@
                                     <input type="password" class="form-control" id="password" name="password" value="${cookie.password.value}">
                                 </c:when>
                                 <c:otherwise>
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入用户名">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
                                 </c:otherwise>
                             </c:choose>
                         </div>
@@ -68,7 +68,15 @@
                         <div class="col-sm-offset-2 col-sm-10">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"  id="rememberMe" name="rememberMe"> 记住我
+                                    <c:choose>
+                                        <c:when test="${cookie.rememberMe.value eq 'true'}">
+                                            <input type="checkbox" id="rememberMe" name="rememberMe" checked> 记住我
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="checkbox" id="rememberMe" name="rememberMe"> 记住我
+                                        </c:otherwise>
+                                    </c:choose>
+
                                 </label>
                             </div>
                         </div>
