@@ -118,6 +118,20 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
         queryWrapper.eq("objectType", type);
         return assessmentMapper.selectCount(queryWrapper);
     }
+
+    @Override
+    public R getAssessmentsByTypeAndId(String type, int id) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("objectType", type);
+        wrapper.eq("objectId", id);
+        List<Assessment> assessments = assessmentMapper.selectList(wrapper);
+        for(Assessment assessment : assessments) {
+            assessment.setUser(userService.getUserByUsername(assessment.getUsername()));
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("assessments", assessments);
+        return R.ok(map);
+    }
 }
 
 

@@ -186,7 +186,7 @@ public class UserController {
 
     @RequestMapping(value = "/assessments", method = RequestMethod.POST)
     @ResponseBody
-    public R handleAssessment(HttpServletRequest request, HttpServletResponse response,
+    public R handleAddAssessment(HttpServletRequest request, HttpServletResponse response,
                               @RequestBody Assessment assessmentView) throws IOException {
         checkSession(request, response);
         assessmentView.setUsername((String) request.getSession().getAttribute("username"));
@@ -195,6 +195,13 @@ public class UserController {
         String time = dateFormat.format(date);
         assessmentView.setPostdate(time);
         return assessmentService.addAssessment(assessmentView);
+    }
+
+    @RequestMapping(value = "/assessments/{type}/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public R handleGetAssessments(HttpServletRequest request, HttpServletResponse response,
+                                  @PathVariable("type") String type, @PathVariable("id") int id) throws IOException {
+        return assessmentService.getAssessmentsByTypeAndId(type, id);
     }
 
     // 修改个人信息
