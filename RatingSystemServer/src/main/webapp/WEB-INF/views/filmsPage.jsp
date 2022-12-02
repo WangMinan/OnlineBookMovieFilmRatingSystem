@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="shortcut icon" href="http://121.41.227.153:8081/file/header.png" type="image/x-icon"/>
 </head>
 <body>
 
