@@ -23,6 +23,8 @@
     <title>书籍影音评价网站|书籍</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <%--  设置网页图标  --%>
+    <link rel="shortcut icon" href="http://121.41.227.153:8081/file/header.png" type="image/x-icon"/>
 </head>
 <body>
     <div class="wrapper">
@@ -168,6 +170,8 @@
                     </div>
                 </c:if>
             </c:forEach>
+            <%--      曲线救国 增加一下和底部的距离      --%>
+            <div style="height: 15%;"></div>
         </div> <!-- /container -->
         <!--Footer-->
         <c:import url="footer.jsp" />
@@ -252,5 +256,4 @@
         max-width: 550px;
         max-height: 100px;
     }
-
 </style>
