@@ -12,7 +12,14 @@
     <title>Banner</title>
 </head>
 <body>
-    <div class="jumbotron" style="background-color: #41b883">
+    <div class="jumbotron"
+         style="background-color: #41b883;
+    /*     height小到一个特定值之后对这玩意就无效了 我也不知道为啥    */
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;"
+    >
         <c:choose>
             <c:when test="${sessionScope.username!=null}">
                 <h2 class="text-center" style="color: white">${sessionScope.username}您好，欢迎来到书影音评价系统！</h2>
@@ -24,3 +31,6 @@
     </div>
 </body>
 </html>
+
+<style>
+</style>
