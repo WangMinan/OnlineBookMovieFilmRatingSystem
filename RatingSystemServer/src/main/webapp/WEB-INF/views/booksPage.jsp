@@ -136,7 +136,12 @@
                                     </div>
 
                                     <c:forEach var="assessment" items="${assessments.result}">
-                                        <c:if test="${assessment.isdeleted==0&&assessment.objecttype=='book'}">
+                                        <c:if test="${
+                                        assessment.isdeleted==0
+                                            &&assessment.objecttype=='book'
+                                            &&assessment.objectid==book.id
+                                        }"
+                                        >
                                             <div class="modal-body">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
