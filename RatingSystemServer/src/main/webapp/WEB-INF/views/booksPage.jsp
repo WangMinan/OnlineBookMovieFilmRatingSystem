@@ -26,7 +26,7 @@
     <%--  设置网页图标  --%>
     <link rel="shortcut icon" href="http://121.41.227.153:8081/file/header.png" type="image/x-icon"/>
 </head>
-<body>
+<body style="overflow:Scroll;overflow-x:hidden">
     <div class="wrapper">
         <!--banner-->
         <c:import url="banner.jsp" />

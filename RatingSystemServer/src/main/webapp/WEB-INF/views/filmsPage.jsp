@@ -10,7 +10,7 @@
 <head>
     <title>Title</title>
 </head>
-<body>
+<body style="overflow:Scroll;overflow-x:hidden">
 
 </body>
 </html>

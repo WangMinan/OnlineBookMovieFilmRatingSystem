@@ -15,7 +15,7 @@
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
 </head>
-<body>
+<body style="overflow:Scroll;overflow-x:hidden">
     <div class="wrapper">
         <!--banner-->
         <c:import url="banner.jsp" />
