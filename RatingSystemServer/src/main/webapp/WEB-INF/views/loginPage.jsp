@@ -20,9 +20,12 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
 </head>
 <body>
+    <!--banner-->
+    <c:import url="banner.jsp" />
+
     <div class="container">
         <!--登录页面主体-->
-        <div class="row" style="background-color: white">
+        <div class="row">
             <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
                 <!--表单标题-->
                 <!--<div class="row">
@@ -92,8 +95,10 @@
             </div>
 
         </div>
-
     </div>
+
+    <!--Footer-->
+    <c:import url="footer.jsp" />
 </body>
 </html>
 
@@ -103,13 +108,14 @@
     }
     .container{
         width: 800px;
-        height: 400px;
+        height: 300px;
         margin: 0 auto;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
     }
+
 </style>
 
 <script>

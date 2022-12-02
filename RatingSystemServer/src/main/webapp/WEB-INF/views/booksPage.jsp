@@ -25,149 +25,153 @@
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <jsp:useBean id="books" scope="request" type="java.util.Map"/>
-    <jsp:useBean id="assessments" scope="request" type="java.util.Map"/>
-    <!-- Static navbar -->
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Brand</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/user/books">书籍</a></li>
-                    <li><a href="/user/films">电影</a></li>
-                    <li><a href="/user/musics">音乐</a></li>
-                    <li><a href="#">关于</a></li>
-                    <li><a href="#">联系我们</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
+    <div class="wrapper">
+        <!--banner-->
+        <c:import url="banner.jsp" />
+        <div class="container">
+            <jsp:useBean id="books" scope="request" type="java.util.Map"/>
+            <jsp:useBean id="assessments" scope="request" type="java.util.Map"/>
+            <!-- Static navbar -->
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Brand</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="/user/books">书籍</a></li>
+                            <li><a href="/user/films">电影</a></li>
+                            <li><a href="/user/musics">音乐</a></li>
+                            <li><a href="#">关于</a></li>
+                            <li><a href="#">联系我们</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
 
-                    <c:if test="${sessionScope.username!=null}">
+                            <c:if test="${sessionScope.username!=null}">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                       aria-haspopup="true" aria-expanded="false">${sessionScope.username} <span
+                                            class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/view/userUpdate">个人信息修改</a></li>
+                                        <li><a href="#">查询发表的评价信息</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" id="logoutBtn">退出</a></li>
+                                    </ul>
+                                </li>
+                            </c:if>
+                            <c:if test="${sessionScope.username==null}">
+                                <li><a href="/view/loginPage">登录/注册</a></li>
+                            </c:if>
+
+                        </ul>
+
+
+                    </div><!--/.nav-collapse -->
+                </div><!--/.container-fluid -->
+            </nav>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">${sessionScope.username} <span
-                                    class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">按年份搜索 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/view/userUpdate">个人信息修改</a></li>
-                                <li><a href="#">查询发表的评价信息</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" id="logoutBtn">退出</a></li>
+                                <c:forEach var="book" items="${books.result}">
+                                    <li>${book.publishyear}</li>
+                                </c:forEach>
                             </ul>
                         </li>
-                    </c:if>
-                    <c:if test="${sessionScope.username==null}">
-                        <li><a href="/view/loginPage">登录/注册</a></li>
-                    </c:if>
-
-                </ul>
-
-
-            </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-    </nav>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">按年份搜索 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <c:forEach var="book" items="${books.result}">
-                            <li>${book.publishyear}</li>
-                        </c:forEach>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">按类别搜索 <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <c:forEach var="book" items="${books.result}">
+                                    <li>${book.type}</li>
+                                </c:forEach>
+                            </ul>
+                        </li>
                     </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">按类别搜索 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <c:forEach var="book" items="${books.result}">
-                            <li>${book.type}</li>
-                        </c:forEach>
-                    </ul>
-                </li>
-            </ul>
-            <form class="navbar-form navbar-right">
-                <label>
-                    <input type="text" class="form-control" placeholder="搜索...">
-                </label>
-            </form>
-        </div>
-    </nav>
-
-    <!-- Main component for a primary marketing message or call to action -->
-    <c:forEach var="book" items="${books.result}">
-        <c:if test="${book.isdeleted==0}">
-            <div class="jumbotron">
-                <div class="media">
-                    <div class="media-left">
-                        <a data-toggle="modal" data-target="#myModal">
-                            <img class="media-object" src="${book.picurl}" alt="..." width="268" height="403">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h1 class="media-heading">${book.name}</h1>
-                        <p>作者:${book.author} 类型:${book.type} 出版时间:${book.publishyear}</p>
-                        <p>描述:${book.description}</p>
-                    </div>
+                    <form class="navbar-form navbar-right">
+                        <label>
+                            <input type="text" class="form-control" placeholder="搜索...">
+                        </label>
+                    </form>
                 </div>
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
-                                </button>
-                                <h4 class="modal-title" id="myModalLabel">《${book.name}》的书评</h4>
+            </nav>
+
+            <!-- Main component for a primary marketing message or call to action -->
+            <c:forEach var="book" items="${books.result}">
+                <c:if test="${book.isdeleted==0}">
+                    <div class="jumbotron">
+                        <div class="media">
+                            <div class="media-left">
+                                <a data-toggle="modal" data-target="#myModal">
+                                    <img class="media-object" src="${book.picurl}" alt="..." width="268" height="403">
+                                </a>
                             </div>
-
-                            <c:forEach var="assessment" items="${assessments.result}">
-                                <c:if test="${assessment.isdeleted==0&&assessment.objecttype=='book'}">
-                                    <div class="modal-body">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title">${assessment.username}</h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <p>${assessment.assessment}</p>
-                                                <p>${assessment.postdate}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </c:if>
-                            </c:forEach>
-
-                            <div class="modal-footer">
-                                <c:if test="${sessionScope.username!=null}">
-                                    <div class="area">
-                                        <label for="postmessage"></label><textarea rows="7" cols="60" name="message"
-                                                                                   id="postmessage"></textarea>
-                                    </div>
-                                </c:if>
-
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <c:if test="${sessionScope.username!=null}">
-                                    <button id="submit" type="button" class="btn btn-primary">提交评论</button>
-                                </c:if>
+                            <div class="media-body">
+                                <h1 class="media-heading">${book.name}</h1>
+                                <p>作者:${book.author} 类型:${book.type} 出版时间:${book.publishyear}</p>
+                                <p>描述:${book.description}</p>
                             </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal -->
-                </div>
-            </div>
-        </c:if>
-    </c:forEach>
+                        </div>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">《${book.name}》的书评</h4>
+                                    </div>
 
+                                    <c:forEach var="assessment" items="${assessments.result}">
+                                        <c:if test="${assessment.isdeleted==0&&assessment.objecttype=='book'}">
+                                            <div class="modal-body">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h3 class="panel-title">${assessment.username}</h3>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <p>${assessment.assessment}</p>
+                                                        <p>${assessment.postdate}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                    </c:forEach>
 
-</div> <!-- /container -->
+                                    <div class="modal-footer">
+                                        <c:if test="${sessionScope.username!=null}">
+                                            <div class="area">
+                                                <label for="postmessage"></label><textarea rows="7" cols="60" name="message"
+                                                                                           id="postmessage"></textarea>
+                                            </div>
+                                        </c:if>
+
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <c:if test="${sessionScope.username!=null}">
+                                            <button id="submit" type="button" class="btn btn-primary">提交评论</button>
+                                        </c:if>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal -->
+                        </div>
+                    </div>
+                </c:if>
+            </c:forEach>
+        </div> <!-- /container -->
+        <!--Footer-->
+        <c:import url="footer.jsp" />
+    </div>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
@@ -233,6 +237,14 @@
 </script>
 
 <style>
+    html, body {
+        height: 100%;  /* 1. 需要将页面的高度设置成浏览器可视区域的高度 */
+    }
+    .wrapper {
+        min-height: 100%; /* 2. 需要将容器的高度设置成100% */
+        position: relative; /* 3. 容器的position设置为relative，给子元素定位提供基点 */
+    }
+
     textarea {
         resize: none;
         width: 550px;
@@ -240,4 +252,5 @@
         max-width: 550px;
         max-height: 100px;
     }
+
 </style>
