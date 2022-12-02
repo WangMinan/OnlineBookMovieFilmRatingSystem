@@ -197,11 +197,11 @@ public class UserController {
         return assessmentService.addAssessment(assessmentView);
     }
 
-    @RequestMapping(value = "/assessments/{type}/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/assessments/{type}", method = RequestMethod.GET)
     @ResponseBody
     public R handleGetAssessments(HttpServletRequest request, HttpServletResponse response,
-                                  @PathVariable("type") String type, @PathVariable("id") int id) throws IOException {
-        return assessmentService.getAssessmentsByTypeAndId(type, id);
+                                  @PathVariable("type") String type) throws IOException {
+        return assessmentService.getAssessmentsByTypeAndId(type);
     }
 
     // 修改个人信息

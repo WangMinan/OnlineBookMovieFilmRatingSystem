@@ -79,6 +79,7 @@
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
             </nav>
+<%--            TODO 按年份搜索和按类别搜索的接口要另写          --%>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <ul class="nav navbar-nav navbar-right">
@@ -145,7 +146,7 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
                             </button>
-                            <h4 class="modal-title" id="myModalLabel">《${book.name}》的书评</h4>
+                            <h4 class="modal-title" id="myModalLabel"></h4>
                         </div>
 
                         <c:forEach var="assessment" items="${assessments.result}">
@@ -200,6 +201,24 @@
 </body>
 </html>
 <script>
+
+    const assessments = []
+
+    // 页面加载时调用函数
+    $().ready(function (){
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/user/assessments/book', true);
+        xhr.send();
+        xhr.onload = function () {
+            const resp = JSON.parse(xhr.responseText)
+            if (resp.code === 200) {
+                assessments.push(...resp.assessments)
+            } else{
+                alert(resp.message)
+            }
+        }
+    })
+
     $(document).ready(function () {
         $("#submit").click(function () {
             const message = {
@@ -254,18 +273,26 @@
             }
         })
     });
-    $('#myModal').on('show.bs.modal', function (event) {
+
+    // 展示模态框后的回调函数
+    $('#myModal').on('show.bs.modal', async function (event) {
         const a = $(event.relatedTarget) // 触发事件的按钮
-        const recipient = a.data('whatever') // 解析出data-whatever内容
-        console.log(recipient)
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', '/user/assessments/'+ 'book/' + recipient, true);
-        xhr.send();
-        xhr.onload = function () {
-            console.log(xhr.responseText);
-        }
+        const bookId = a.data('whatever') // 解析出data-whatever内容
         const modal = $(this)
-        modal.find('.modal-title').text(recipient)
+        // 需要清空模态框中的内容
+        modal.val("")
+        let flag = false;
+        for (i = 0; i < assessments.length; i++){
+            if (assessments[i].objectid === bookId){
+                flag = true
+                modal.find('.modal-title').text(assessments[i].work.name)
+                break;
+            }
+        }
+        if(!flag){
+            // 关闭模态框
+            modal.find('.modal-title').text('该书籍暂无评论')
+        }
     })
 </script>
 
