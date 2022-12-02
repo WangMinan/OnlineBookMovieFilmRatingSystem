@@ -31,7 +31,7 @@
         </ul><br>
         <ul class="list-inline">
           <li><span style="color: white">友情链接：</span></li>
-          <li><a href=""><strong style="color: white">管理员入口</strong></a></li>
+          <li><a href="http://localhost:82"><strong style="color: white">管理员入口</strong></a></li>
         </ul>
       </div>
       <div class="col-sm-4">
