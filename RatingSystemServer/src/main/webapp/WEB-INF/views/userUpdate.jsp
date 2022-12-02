@@ -20,56 +20,62 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <!--注册页面主体-->
-    <div class="row" style="background-color: white">
-      <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
-        <!--表单标题-->
-        <c:set var="title" scope="session" value="个人信息修改" />
-        <mytag:titleTag/>
-        <!--表单内容-->
-        <form class="form-horizontal">
-          <!-- 用户名-->
-          <div id="usernameDiv" class="form-group">
-            <label for="username" class="col-sm-2 control-label">用户名</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control" id="username" name="username" value="${sessionScope.username}" placeholder="请输入用户名">
+  <div class="wrapper">
+    <!--banner-->
+    <c:import url="banner.jsp" />
+    <div class="container">
+      <!--注册页面主体-->
+      <div class="row" style="background-color: white">
+        <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
+          <!--表单标题-->
+          <c:set var="title" scope="session" value="个人信息修改" />
+          <mytag:titleTag/>
+          <!--表单内容-->
+          <form class="form-horizontal">
+            <!-- 用户名-->
+            <div id="usernameDiv" class="form-group">
+              <label for="username" class="col-sm-2 control-label">用户名</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="username" name="username" value="${sessionScope.username}" placeholder="请输入用户名">
+              </div>
+              <label id="usernameMsg" class="col-sm-2 control-label"></label>
             </div>
-            <label id="usernameMsg" class="col-sm-2 control-label"></label>
-          </div>
-          <!-- 密码-->
-          <div id="passwordDiv" class="form-group">
-            <label for="password" class="col-sm-2 control-label">密码</label>
-            <div class="col-sm-8">
-              <input type="password" class="form-control" id="password" name="password" value="${sessionScope.password}" placeholder="请输入密码">
+            <!-- 密码-->
+            <div id="passwordDiv" class="form-group">
+              <label for="password" class="col-sm-2 control-label">密码</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="password" name="password" value="${sessionScope.password}" placeholder="请输入密码">
+              </div>
+              <label id="passwordMsg" class="col-sm-2 control-label"></label>
             </div>
-            <label id="passwordMsg" class="col-sm-2 control-label"></label>
-          </div>
-          <!-- 确认密码-->
-          <div id="repasswordDiv" class="form-group">
-            <label for="repassword" class="col-sm-2 control-label">确认密码</label>
-            <div class="col-sm-8">
-              <input type="password" class="form-control" id="repassword" value="${sessionScope.password}" placeholder="请再次输入密码">
+            <!-- 确认密码-->
+            <div id="repasswordDiv" class="form-group">
+              <label for="repassword" class="col-sm-2 control-label">确认密码</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="repassword" value="${sessionScope.password}" placeholder="请再次输入密码">
+              </div>
+              <label id="repasswordMsg" class="col-sm-2 control-label"></label>
             </div>
-            <label id="repasswordMsg" class="col-sm-2 control-label"></label>
-          </div>
-          <!-- 电子邮箱-->
-          <div id="emailDiv" class="form-group">
-            <label for="email" class="col-sm-2 control-label">Email</label>
-            <div class="col-sm-8">
-              <input type="email" class="form-control" id="email" name="email" value="${sessionScope.mail}" placeholder="请输入电子邮箱">
+            <!-- 电子邮箱-->
+            <div id="emailDiv" class="form-group">
+              <label for="email" class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-8">
+                <input type="email" class="form-control" id="email" name="email" value="${sessionScope.mail}" placeholder="请输入电子邮箱">
+              </div>
+              <label id="emailMsg" class="col-sm-2 control-label"></label>
             </div>
-            <label id="emailMsg" class="col-sm-2 control-label"></label>
+          </form>
+          <!--提交按钮-->
+          <div class="text-center">
+            <button id="submitBtn" class="btn btn-success">提交</button>
+            <button id="cancelBtn" class="btn btn-danger" onclick="window.location.href = '/user/books';">取消</button>
+            <br><br>
           </div>
-        </form>
-        <!--提交按钮-->
-        <div class="text-center">
-          <button id="submitBtn" class="btn btn-success">提交</button>
-          <button id="cancelBtn" class="btn btn-danger" onclick="window.location.href = '/user/books';">取消</button>
-          <br><br>
         </div>
       </div>
     </div>
+    <!--Footer-->
+    <c:import url="footer.jsp" />
   </div>
 
 </body>
@@ -84,6 +90,11 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+  }
+
+  .wrapper {
+    min-height: 100%; /* 2. 需要将容器的高度设置成100% */
+    position: relative; /* 3. 容器的position设置为relative，给子元素定位提供基点 */
   }
 </style>
 
