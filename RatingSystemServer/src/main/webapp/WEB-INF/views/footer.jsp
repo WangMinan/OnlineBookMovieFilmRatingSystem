@@ -23,11 +23,13 @@
         <br>
         <ul class="list-inline">
           <li><span style="color: white">快速入口：</span></li>
-          <li><a href="/user/books"><strong style="color: white">书籍</strong></a></li>
-          <li>|</li>
-          <li><a href="/user/films"><strong style="color: white">电影</strong></a></li>
-          <li>|</li>
-          <li><a href="/user/musics"><strong style="color: white">音乐</strong></a></li>
+          <!--展示入口-->
+          <%--@elvariable id="FooterEntranceList" type="java.util.List"--%>
+          <%--@elvariable id="Hrefs" type="java.util.List"--%>
+          <c:forEach var="entrance" items="${FooterEntranceList}" varStatus="state">
+            <li>|</li>
+            <li><a href=${Hrefs[state.count-1]}><strong style="color: white">${entrance}</strong></a></li>
+          </c:forEach>
         </ul><br>
         <ul class="list-inline">
           <li><span style="color: white">友情链接：</span></li>

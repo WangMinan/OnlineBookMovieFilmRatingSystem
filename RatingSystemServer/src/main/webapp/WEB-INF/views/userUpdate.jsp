@@ -1,7 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <!--输出,条件,迭代标签库-->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fmt"%> <!--数据格式化标签库-->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="sql"%> <!--数据库相关标签库-->
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fn"%> <!--常用函数标签库-->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fn"%>
+<%@ taglib prefix="mytag" uri="MyTags" %>
+<!--常用函数标签库-->
 <%--
   Created by IntelliJ IDEA.
   User: 85077
@@ -23,11 +25,8 @@
     <div class="row" style="background-color: white">
       <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
         <!--表单标题-->
-        <div class="row">
-          <div class="text-center">
-            <h3>个人信息修改</h3>
-          </div>
-        </div>
+        <c:set var="title" scope="session" value="个人信息修改" />
+        <mytag:titleTag/>
         <!--表单内容-->
         <form class="form-horizontal">
           <!-- 用户名-->

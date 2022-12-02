@@ -5,6 +5,9 @@ import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
+/**
+ * 用来设置footer快速入口相关属性的标签
+ */
 public class SetFooterEntrancesTag extends SimpleTagSupport {
 
     public void doTag() throws JspException {
@@ -17,6 +20,7 @@ public class SetFooterEntrancesTag extends SimpleTagSupport {
             hrefs[1] = "/user/films";
             footerEntranceList[2] = "音乐";
             hrefs[2] = "/user/musics";
+            //设置属性
             getJspContext().setAttribute("FooterEntranceList", footerEntranceList);
             getJspContext().setAttribute("Hrefs", hrefs);
         } catch (Exception e) {

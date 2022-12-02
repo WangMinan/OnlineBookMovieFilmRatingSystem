@@ -9,8 +9,8 @@
     <uri>MyTags</uri>
 
     <tag>
-        <name>firstTag</name>
-        <tag-class>com.example.tag.FirstTag</tag-class>
+        <name>titleTag</name>
+        <tag-class>com.example.tag.SetFormTitleTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 

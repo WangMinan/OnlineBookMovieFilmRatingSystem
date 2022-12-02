@@ -1,3 +1,5 @@
+<%@ taglib prefix="mytag" uri="MyTags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: wangminan
@@ -19,11 +21,8 @@
         <div class="row" style="background-color: white">
             <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
                 <!--表单标题-->
-                <div class="row">
-                    <div class="text-center">
-                        <h3>用户注册</h3>
-                    </div>
-                </div>
+                <c:set var="title" scope="session" value="用户注册" />
+                <mytag:titleTag/>
                 <!--表单内容-->
                 <form class="form-horizontal">
                     <!-- 用户名-->

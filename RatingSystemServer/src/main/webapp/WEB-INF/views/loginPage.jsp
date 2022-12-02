@@ -28,13 +28,8 @@
             <!--登录页面主体-->
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
-                    <!--表单标题-->
-                    <!--<div class="row">
-                        <div class="text-center">
-                            <h3>用户登录</h3>
-                        </div>
-                    </div>-->
-                    <mytag:firstTag/>
+                    <c:set var="title" scope="session" value="用户登录" />
+                    <mytag:titleTag/>
                     <!--表单内容-->
                     <form class="form-horizontal">
                         <!--用户名-->
