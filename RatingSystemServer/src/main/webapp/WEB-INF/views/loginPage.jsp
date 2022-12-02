@@ -20,85 +20,87 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
 </head>
 <body>
-    <!--banner-->
-    <c:import url="banner.jsp" />
+    <div class="wrapper">
+        <!--banner-->
+        <c:import url="banner.jsp" />
 
-    <div class="container">
-        <!--登录页面主体-->
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
-                <!--表单标题-->
-                <!--<div class="row">
-                    <div class="text-center">
-                        <h3>用户登录</h3>
-                    </div>
-                </div>-->
-                <mytag:firstTag/>
-                <!--表单内容-->
-                <form class="form-horizontal">
-                    <!--用户名-->
-                    <div id="usernameDiv" class="form-group">
-                        <label for="username" class="col-sm-2 control-label">用户名</label>
-                        <div class="col-sm-8">
-                            <c:choose>
-                                <c:when test="${cookie.rememberMe.value eq 'true'}">
-                                    <input type="text" class="form-control" id="username" name="username" value="${cookie.username.value}">
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
-                                </c:otherwise>
-                            </c:choose>
+        <div class="container">
+            <!--登录页面主体-->
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
+                    <!--表单标题-->
+                    <!--<div class="row">
+                        <div class="text-center">
+                            <h3>用户登录</h3>
                         </div>
-                        <label id="usernameMsg" class="col-sm-2 control-label"></label>
-                    </div>
-                    <!--密码-->
-                    <div id="passwordDiv" class="form-group">
-                        <label for="password" class="col-sm-2 control-label">密码</label>
-                        <div class="col-sm-8">
-                            <c:choose>
-                                <c:when test="${cookie.rememberMe.value eq 'true'}">
-                                    <input type="password" class="form-control" id="password" name="password" value="${cookie.password.value}">
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
-                                </c:otherwise>
-                            </c:choose>
+                    </div>-->
+                    <mytag:firstTag/>
+                    <!--表单内容-->
+                    <form class="form-horizontal">
+                        <!--用户名-->
+                        <div id="usernameDiv" class="form-group">
+                            <label for="username" class="col-sm-2 control-label">用户名</label>
+                            <div class="col-sm-8">
+                                <c:choose>
+                                    <c:when test="${cookie.rememberMe.value eq 'true'}">
+                                        <input type="text" class="form-control" id="username" name="username" value="${cookie.username.value}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                            <label id="usernameMsg" class="col-sm-2 control-label"></label>
                         </div>
-                        <label id="passwordMsg" class="col-sm-2 control-label"></label>
-                    </div>
-                    <!--记住我-->
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <div class="checkbox">
-                                <label>
-                                    <c:choose>
-                                        <c:when test="${cookie.rememberMe.value eq 'true'}">
-                                            <input type="checkbox" id="rememberMe" name="rememberMe" checked> 记住我
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" id="rememberMe" name="rememberMe"> 记住我
-                                        </c:otherwise>
-                                    </c:choose>
+                        <!--密码-->
+                        <div id="passwordDiv" class="form-group">
+                            <label for="password" class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-8">
+                                <c:choose>
+                                    <c:when test="${cookie.rememberMe.value eq 'true'}">
+                                        <input type="password" class="form-control" id="password" name="password" value="${cookie.password.value}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                            <label id="passwordMsg" class="col-sm-2 control-label"></label>
+                        </div>
+                        <!--记住我-->
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <c:choose>
+                                            <c:when test="${cookie.rememberMe.value eq 'true'}">
+                                                <input type="checkbox" id="rememberMe" name="rememberMe" checked> 记住我
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type="checkbox" id="rememberMe" name="rememberMe"> 记住我
+                                            </c:otherwise>
+                                        </c:choose>
 
-                                </label>
+                                    </label>
+                                </div>
                             </div>
                         </div>
+                    </form>
+                    <!--提交按钮-->
+                    <div class="text-center">
+                        <button id="submitBtn" class="btn btn-default">登录</button><br><br>
                     </div>
-                </form>
-                <!--提交按钮-->
-                <div class="text-center">
-                    <button id="submitBtn" class="btn btn-default">登录</button><br><br>
+                    <div class="text-center">
+                        <a href="/view/register">没有账号？点此注册</a>
+                    </div>
                 </div>
-                <div class="text-center">
-                    <a href="/view/register">没有账号？点此注册</a>
-                </div>
+
             </div>
-
         </div>
-    </div>
 
-    <!--Footer-->
-    <c:import url="footer.jsp" />
+        <!--Footer-->
+        <c:import url="footer.jsp" />
+    </div>
 </body>
 </html>
 
@@ -114,6 +116,10 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
+    }
+    .wrapper {
+        min-height: 100%; /* 2. 需要将容器的高度设置成100% */
+        position: relative; /* 3. 容器的position设置为relative，给子元素定位提供基点 */
     }
 
 </style>

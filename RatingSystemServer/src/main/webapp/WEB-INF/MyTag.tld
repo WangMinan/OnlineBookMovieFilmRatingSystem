@@ -13,4 +13,10 @@
         <tag-class>com.example.tag.FirstTag</tag-class>
         <body-content>empty</body-content>
     </tag>
+
+    <tag>
+        <name>footerTag</name>
+        <tag-class>com.example.tag.SetFooterEntrancesTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
 </taglib>
