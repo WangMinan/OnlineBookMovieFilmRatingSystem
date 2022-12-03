@@ -169,7 +169,7 @@
                     // 如果返回字符串中包括":200"则跳转
                     if (xhr.responseText.indexOf(":200") > 0) {
 
-                        window.location.href = "/user/books";
+                        window.location.href = "/user/books/AAA";
                     } else {
                         alert("用户名或密码错误，请重新尝试");
                         window.location.href = "/view/loginPage";

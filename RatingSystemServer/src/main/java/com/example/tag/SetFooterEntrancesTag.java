@@ -15,7 +15,7 @@ public class SetFooterEntrancesTag extends SimpleTagSupport {
             String[] footerEntranceList = new String[3];
             String[] hrefs = new String[3];
             footerEntranceList[0] = "书籍";
-            hrefs[0] = "/user/books";
+            hrefs[0] = "/user/books/AAA";
             footerEntranceList[1] = "电影";
             hrefs[1] = "/user/films";
             footerEntranceList[2] = "音乐";

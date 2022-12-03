@@ -47,7 +47,7 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="/user/books">书籍</a></li>
+                            <li class="active"><a href="/user/books/AAA">书籍</a></li>
                             <li><a href="/user/films">电影</a></li>
                             <li><a href="/user/musics">音乐</a></li>
                             <li><a href="#">关于</a></li>
@@ -98,7 +98,7 @@
                             <a>按年份搜索</a>
                         </li>
                         <li>
-                            <a href="/user/books">清空筛选</a>
+                            <a href="/user/books/AAA">清空筛选</a>
                         </li>
                     </ul>
                 </div>
@@ -108,7 +108,7 @@
                             <a>按类别搜索</a>
                         </li>
                         <li>
-                            <a href="/user/books">清空筛选</a>
+                            <a href="/user/books/AAA">清空筛选</a>
                         </li>
                     </ul>
                 </div>

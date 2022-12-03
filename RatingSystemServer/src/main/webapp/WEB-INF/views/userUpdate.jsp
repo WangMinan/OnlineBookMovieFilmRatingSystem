@@ -170,7 +170,7 @@
           console.log(xhr.responseText);
           // 如果返回字符串中包括":200"则跳转
           if (xhr.responseText.indexOf(":200") > 0) {
-            window.location.href = "/user/books";
+            window.location.href = "/user/books/AAA";
           } else {
             alert("个人信息修改失败！");
             window.location.href = "/view/userUpdate";
@@ -202,7 +202,7 @@
           console.log(xhr.responseText);
           // 如果返回字符串中包括":200"则跳转
           if (xhr.responseText.indexOf(":200") > 0) {
-            window.location.href = "/user/books";
+            window.location.href = "/user/books/AAA";
           } else {
             alert("个人信息修改失败！");
             window.location.href = "/view/userUpdate";

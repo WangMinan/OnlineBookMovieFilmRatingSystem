@@ -146,11 +146,17 @@ public class UserController {
     }
 
     // 接下来是书籍、电影、音乐查看与留言
-    @RequestMapping(value = "/books", method = RequestMethod.GET)
-    public String booksInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/books/{query}", method = RequestMethod.GET)
+    public String booksInit(HttpServletRequest request,
+                            HttpServletResponse response,
+                            @PathVariable String query) throws IOException {
 
         QueryInfo queryInfo = new QueryInfo();
-        queryInfo.setQuery(MEANINGLESS_QUERY);
+        if(query.equals("AAA")){
+            queryInfo.setQuery(MEANINGLESS_QUERY);
+        } else {
+            queryInfo.setQuery(query);
+        }
         queryInfo.setPagenum(MIN_PAGE_NUM);
         queryInfo.setPagesize(MAX_PAGE_SIZE);
         request.setAttribute("books", bookService.getAllBooks(queryInfo));
