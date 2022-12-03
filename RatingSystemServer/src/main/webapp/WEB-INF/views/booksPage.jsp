@@ -93,43 +93,31 @@
             </nav>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#"
-                               class="dropdown-toggle"
-                               data-toggle="dropdown"
-                               role="button"
-                               aria-haspopup="true"
-                               aria-expanded="false"
-                            >
-                                按年份搜索
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" id="yearSelect">
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#"
-                               class="dropdown-toggle"
-                               data-toggle="dropdown"
-                               role="button"
-                               aria-haspopup="true"
-                               aria-expanded="false">
-                                按类别搜索
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" id="typeSelect">
-                            </ul>
+                    <ul class="nav navbar-nav navbar-left" id="yearSelect">
+                        <li>
+                            <a>按年份搜索</a>
                         </li>
                         <li>
                             <a href="/user/books">清空筛选</a>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-right">
-                        <label>
-                            <input type="text" class="form-control" placeholder="搜索...">
-                        </label>
-                    </form>
+<%--                    <form class="navbar-form navbar-right">--%>
+<%--                        <label>--%>
+<%--                            <input type="text" class="form-control" placeholder="搜索...">--%>
+<%--                        </label>--%>
+<%--                    </form>--%>
+                </div>
+            </nav>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav navbar-left" id="typeSelect">
+                        <li>
+                            <a>按类别搜索</a>
+                        </li>
+                        <li>
+                            <a href="/user/books">清空筛选</a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
 
@@ -177,8 +165,16 @@
                         <div class="modal-footer">
                             <c:if test="${sessionScope.username!=null}">
                                 <div class="area">
-                                    <label for="postmessage"></label><textarea rows="7" cols="60" name="message"
-                                                                               id="postmessage"></textarea>
+                                    <label for="postmessage"></label>
+                                    <textarea
+                                        rows="7"
+                                        cols="60"
+                                        name="message"
+                                        id="postmessage"
+                                        maxlength="500"
+                                        placeholder="请输入评价内容"
+                                    >
+                                    </textarea>
                                 </div>
                             </c:if>
                             <br>
@@ -333,12 +329,15 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">`
-                                + assessments[i].username +
+                                + `来自:`
+                                + assessments[i].username
+                                + `的留言` +
                             `</h3>
                         </div>
                         <div class="panel-body">`
                             + assessments[i].assessment +
-                            `<br>`
+                            `<br><br>`
+                            + `发布时间:`
                             + assessments[i].postdate +
                         `</div>
                     </div>
