@@ -48,8 +48,8 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="/user/books/AAA">书籍</a></li>
-                            <li><a href="/user/films">电影</a></li>
-                            <li><a href="/user/musics">音乐</a></li>
+                            <li><a href="/user/films/AAA">电影</a></li>
+                            <li><a href="/user/musics/AAA">音乐</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
 

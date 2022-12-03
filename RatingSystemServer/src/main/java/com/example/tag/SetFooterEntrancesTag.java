@@ -17,9 +17,9 @@ public class SetFooterEntrancesTag extends SimpleTagSupport {
             footerEntranceList[0] = "书籍";
             hrefs[0] = "/user/books/AAA";
             footerEntranceList[1] = "电影";
-            hrefs[1] = "/user/films";
+            hrefs[1] = "/user/films/AAA";
             footerEntranceList[2] = "音乐";
-            hrefs[2] = "/user/musics";
+            hrefs[2] = "/user/musics/AAA";
             //设置属性
             getJspContext().setAttribute("FooterEntranceList", footerEntranceList);
             getJspContext().setAttribute("Hrefs", hrefs);
