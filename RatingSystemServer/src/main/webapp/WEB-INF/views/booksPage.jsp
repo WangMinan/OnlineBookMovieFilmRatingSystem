@@ -151,28 +151,10 @@
                             <h4 class="modal-title" id="myModalLabel"></h4>
                         </div>
                         <div class="modal-body">
-<%--                                jquery在这个位置做插入语句--%>
+<%--                            插入代码的位置--%>
                         </div>
                         <div class="modal-footer">
-                            <c:if test="${sessionScope.username!=null}">
-                                <div class="area">
-                                    <label for="postmessage"></label>
-                                    <textarea
-                                        rows="7"
-                                        cols="60"
-                                        name="message"
-                                        id="postmessage"
-                                        maxlength="500"
-                                        placeholder="请输入评价内容"
-                                    >
-                                    </textarea>
-                                </div>
-                            </c:if>
-                            <br>
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <c:if test="${sessionScope.username!=null}">
-                                <button id="submit" type="button" class="btn btn-primary">提交评论</button>
-                            </c:if>
                         </div>
                     </div>
                 </div><!-- /.modal-content -->
@@ -369,6 +351,32 @@
         // 清空modal-body中的内容
         $(this).find('.modal-title').text('')
         $(this).find('.modal-body').empty()
+        $(this).find('.modal-body').append(
+            `<c:if test="${sessionScope.username!=null}">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class='panel-title'>
+                            留言区
+                        </h3>
+                    </div>
+                    <div class='panel-body'>
+                        <div class='area'>
+                            <label for='postmessage"></label>
+                            <textarea
+                                    rows='"'7"
+                                    cols='60'
+                                    name='message'
+                                    id='postmessage'
+                                    maxlength='500'
+                                    placeholder='请输入评价内容'
+                            >
+                            </textarea>
+                        </div>
+                        <button id='submit' type='button' class='btn btn-primary'>提交评论</button>
+                    </div>
+                </div>
+            </c:if>`
+        )
     });
 
     // UTF8编码转成汉字字符串
