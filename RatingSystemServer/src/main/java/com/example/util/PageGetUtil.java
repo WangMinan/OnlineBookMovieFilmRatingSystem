@@ -24,7 +24,7 @@ public class PageGetUtil {
      */
     public static Map<String,Object> getPage(BaseMapper mapper, QueryInfo queryInfo){
         Page<Book> page = new Page<>(queryInfo.getPagenum(), queryInfo.getPagesize());
-        Page list;
+        Page list = new Page();
         if(Objects.equals(queryInfo.getQuery(), "") || queryInfo.getQuery() == null){
             list = (Page) mapper.selectPage(page, null);
         } else if(queryInfo.getQuery().startsWith("name")){
@@ -47,9 +47,27 @@ public class PageGetUtil {
             queryInfo.setQuery(queryInfo.getQuery().substring(10));
             wrapper.like("objectType", queryInfo.getQuery());
             list = (Page) mapper.selectPage(page, wrapper);
-        } else {
+        } else if(queryInfo.getQuery().startsWith("indistinct")){
+            // 模糊搜索
             QueryWrapper wrapper = new QueryWrapper();
+            queryInfo.setQuery(queryInfo.getQuery().substring(10));
             wrapper.like("name", queryInfo.getQuery());
+            wrapper.or();
+            wrapper.like("type", queryInfo.getQuery());
+            wrapper.or();
+            wrapper.like("publishYear", queryInfo.getQuery());
+            wrapper.or();
+            wrapper.like("objectType", queryInfo.getQuery());
+            wrapper.or();
+            wrapper.like("author", queryInfo.getQuery());
+            wrapper.or();
+            wrapper.like("assessment", queryInfo.getQuery());
+            wrapper.or();
+            wrapper.like("description", queryInfo.getQuery());
+            wrapper.or();
+            wrapper.like("username", queryInfo.getQuery());
+            wrapper.or();
+            wrapper.like("postDate", queryInfo.getQuery());
             list = (Page) mapper.selectPage(page, wrapper);
         }
         Map<String,Object> map = new HashMap<>();
