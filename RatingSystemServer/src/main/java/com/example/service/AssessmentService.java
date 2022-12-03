@@ -25,4 +25,6 @@ public interface AssessmentService extends IService<Assessment> {
     R getAssessmentById(long id);
 
     int countByType(String type);
+
+    R getAssessmentsByTypeAndId(String type);
 }

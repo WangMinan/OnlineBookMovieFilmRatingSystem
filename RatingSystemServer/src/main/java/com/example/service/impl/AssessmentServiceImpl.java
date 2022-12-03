@@ -11,7 +11,6 @@ import com.example.service.*;
 import com.example.mapper.AssessmentMapper;
 import com.example.util.PageGetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -117,6 +116,40 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
         QueryWrapper<Assessment> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("objectType", type);
         return assessmentMapper.selectCount(queryWrapper);
+    }
+
+    @Override
+    public R getAssessmentsByTypeAndId(String type) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("objectType", type);
+        List<Assessment> assessments = assessmentMapper.selectList(wrapper);
+        switch (type) {
+            case "book":
+                for (Assessment assessment : assessments) {
+                    assessment.setWork(bookService.getById(assessment.getObjectid()));
+                }
+                break;
+            case "film":
+                for (Assessment assessment : assessments) {
+                    assessment.setWork(filmService.getById(assessment.getObjectid()));
+                }
+                break;
+            case "music":
+                for (Assessment assessment : assessments) {
+                    assessment.setWork(musicService.getById(assessment.getObjectid()));
+                }
+                break;
+            default:
+                break;
+        }
+        if(assessments != null){
+            for(Assessment assessment : assessments) {
+                assessment.setUser(userService.getUserByUsername(assessment.getUsername()));
+            }
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("assessments", assessments);
+        return R.ok(map);
     }
 }
 

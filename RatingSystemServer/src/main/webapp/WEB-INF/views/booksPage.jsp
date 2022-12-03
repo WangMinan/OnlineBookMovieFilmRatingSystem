@@ -79,6 +79,7 @@
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
             </nav>
+<%--            TODO 按年份搜索和按类别搜索的接口要另写          --%>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <ul class="nav navbar-nav navbar-right">
@@ -115,66 +116,77 @@
                     <div class="jumbotron">
                         <div class="media">
                             <div class="media-left">
-                                <a data-toggle="modal" data-target="#myModal">
-                                    <img class="media-object" src="${book.picurl}" alt="..." width="268" height="403">
+                                <a data-toggle="modal" data-target="#myModal" data-whatever="${book.id}">
+                                    <img class="media-object"
+                                         src="${book.picurl}"
+                                         alt="..." width="268"
+                                         height="403"
+                                    >
                                 </a>
                             </div>
-                            <div class="media-body">
+                            <div class="media-body" id="mediaBody">
                                 <h1 class="media-heading">${book.name}</h1>
                                 <p>作者:${book.author} 类型:${book.type} 出版时间:${book.publishyear}</p>
                                 <p>描述:${book.description}</p>
                             </div>
                         </div>
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">《${book.name}》的书评</h4>
-                                    </div>
+                    </div>
+                </c:if>
+            </c:forEach>
 
-                                    <c:forEach var="assessment" items="${assessments.result}">
-                                        <c:if test="${
+            <div class="modal focus"
+                 id="myModal"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel"></h4>
+                        </div>
+
+                        <c:forEach var="assessment" items="${assessments.result}">
+                            <c:if test="${
                                         assessment.isdeleted==0
                                             &&assessment.objecttype=='book'
                                             &&assessment.objectid==book.id
                                         }"
-                                        >
-                                            <div class="modal-body">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h3 class="panel-title">${assessment.username}</h3>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <p>${assessment.assessment}</p>
-                                                        <p>${assessment.postdate}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </c:if>
-                                    </c:forEach>
-
-                                    <div class="modal-footer">
-                                        <c:if test="${sessionScope.username!=null}">
-                                            <div class="area">
-                                                <label for="postmessage"></label><textarea rows="7" cols="60" name="message"
-                                                                                           id="postmessage"></textarea>
-                                            </div>
-                                        </c:if>
-
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                        <c:if test="${sessionScope.username!=null}">
-                                            <button id="submit" type="button" class="btn btn-primary">提交评论</button>
-                                        </c:if>
+                            >
+                                <div class="modal-body">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">${assessment.username}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p>${assessment.assessment}</p>
+                                            <p>${assessment.postdate}</p>
+                                        </div>
                                     </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal -->
+                                </div>
+                            </c:if>
+                        </c:forEach>
+
+                        <div class="modal-footer">
+                            <c:if test="${sessionScope.username!=null}">
+                                <div class="area">
+                                    <label for="postmessage"></label><textarea rows="7" cols="60" name="message"
+                                                                               id="postmessage"></textarea>
+                                </div>
+                            </c:if>
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <c:if test="${sessionScope.username!=null}">
+                                <button id="submit" type="button" class="btn btn-primary">提交评论</button>
+                            </c:if>
                         </div>
                     </div>
-                </c:if>
-            </c:forEach>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+
             <%--      曲线救国 增加一下和底部的距离      --%>
             <div style="height: 15%;"></div>
         </div> <!-- /container -->
@@ -189,6 +201,24 @@
 </body>
 </html>
 <script>
+
+    const assessments = []
+
+    // 页面加载时调用函数
+    $().ready(function (){
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/user/assessments/book', true);
+        xhr.send();
+        xhr.onload = function () {
+            const resp = JSON.parse(xhr.responseText)
+            if (resp.code === 200) {
+                assessments.push(...resp.assessments)
+            } else{
+                alert(resp.message)
+            }
+        }
+    })
+
     $(document).ready(function () {
         $("#submit").click(function () {
             const message = {
@@ -243,6 +273,27 @@
             }
         })
     });
+
+    // 展示模态框后的回调函数
+    $('#myModal').on('show.bs.modal', async function (event) {
+        const a = $(event.relatedTarget) // 触发事件的按钮
+        const bookId = a.data('whatever') // 解析出data-whatever内容
+        const modal = $(this)
+        // 需要清空模态框中的内容
+        modal.val("")
+        let flag = false;
+        for (i = 0; i < assessments.length; i++){
+            if (assessments[i].objectid === bookId){
+                flag = true
+                modal.find('.modal-title').text(assessments[i].work.name)
+                break;
+            }
+        }
+        if(!flag){
+            // 关闭模态框
+            modal.find('.modal-title').text('该书籍暂无评论')
+        }
+    })
 </script>
 
 <style>
