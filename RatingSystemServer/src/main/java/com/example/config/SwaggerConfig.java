@@ -39,7 +39,7 @@ public class SwaggerConfig {
                 ,"书影音评价系统API文档"
                 ,"3.0"
                 ,"http://wangminan.me"
-                ,new Contact("王旻安", "http://www.wangminan.me",
+                ,new Contact("王旻安", "http://wangminan.me",
                 "wangminan0811@hotmail.com")
                 ,"Apache 2.0"
                 ,"http://www.apache.org/licenses/LICENSE-2.0"

@@ -17,9 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -231,28 +229,15 @@ public class UserController {
      * @throws IOException
      */
     @RequestMapping(value = "/getMyAssessments/{query}", method = RequestMethod.GET)
-    public String handleGetMyAssessmentsByQuery(HttpServletRequest request, HttpServletResponse response,
+    @ResponseBody
+    public R handleGetMyAssessmentsByQuery(HttpServletRequest request, HttpServletResponse response,
                                @PathVariable("query") String query) throws IOException {
         checkSession(request, response);
         QueryInfo queryInfo = new QueryInfo();
-        if(query.equals("AAA")){
-            queryInfo.setQuery(MEANINGLESS_QUERY);
-        } else {
-            queryInfo.setQuery(query);
-        }
+        queryInfo.setQuery(query);
         queryInfo.setPagenum(MIN_PAGE_NUM);
         queryInfo.setPagesize(MAX_PAGE_SIZE);
-        Map<String,Object> map = assessmentService.getAllAssessments(queryInfo);
-        List<Assessment> assessments = new ArrayList<>();
-        // 用户名筛选
-        String username = (String) request.getSession().getAttribute("username");
-        for(Assessment assessment : (List<Assessment>) map.get("result")){
-            if(assessment.getUsername().equals(username)){
-                assessments.add(assessment);
-            }
-        }
-        request.setAttribute("assessments", assessments);
-        return "/myAssessments";
+        return R.ok(assessmentService.getAllAssessments(queryInfo));
     }
 
     @RequestMapping(value = "/assessments/{type}", method = RequestMethod.GET)
@@ -260,6 +245,14 @@ public class UserController {
     public R handleGetAssessments(HttpServletRequest request, HttpServletResponse response,
                                   @PathVariable("type") String type) throws IOException {
         return assessmentService.getAssessmentsByType(type);
+    }
+
+    @RequestMapping(value = "/getMyAssessments", method = RequestMethod.GET)
+    public String handleGetMyAssessments(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        checkSession(request, response);
+        String username = (String) request.getSession().getAttribute("username");
+        request.setAttribute("assessments", assessmentService.getAssessmentsByUsername(username));
+        return "/myAssessments";
     }
 
     // 修改个人信息
