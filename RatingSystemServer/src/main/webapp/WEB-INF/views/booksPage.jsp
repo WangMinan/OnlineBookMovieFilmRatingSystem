@@ -32,7 +32,6 @@
         <c:import url="banner.jsp" />
         <div class="container">
             <jsp:useBean id="books" scope="request" type="java.util.Map"/>
-            <jsp:useBean id="assessments" scope="request" type="java.util.Map"/>
             <!-- Static navbar -->
             <nav class="navbar navbar-default">
                 <div class="container-fluid">

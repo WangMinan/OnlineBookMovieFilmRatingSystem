@@ -154,7 +154,6 @@ public class UserController {
         queryInfo.setPagenum(MIN_PAGE_NUM);
         queryInfo.setPagesize(MAX_PAGE_SIZE);
         request.setAttribute("books", bookService.getAllBooks(queryInfo));
-        request.setAttribute("assessments", assessmentService.getAllAssessments(queryInfo));
         return "/booksPage";
     }
 
@@ -166,7 +165,6 @@ public class UserController {
         queryInfo.setPagenum(MIN_PAGE_NUM);
         queryInfo.setPagesize(MAX_PAGE_SIZE);
         request.setAttribute("films", filmService.getAllFilms(queryInfo));
-        request.setAttribute("assessments", assessmentService.getAllAssessments(queryInfo));
         return "/filmsPage";
     }
 
@@ -178,7 +176,6 @@ public class UserController {
         queryInfo.setPagenum(MIN_PAGE_NUM);
         queryInfo.setPagesize(MAX_PAGE_SIZE);
         request.setAttribute("musics", musicService.getAllMusics(queryInfo));
-        request.setAttribute("assessments", assessmentService.getAllAssessments(queryInfo));
         return "/musicsPage";
     }
 
