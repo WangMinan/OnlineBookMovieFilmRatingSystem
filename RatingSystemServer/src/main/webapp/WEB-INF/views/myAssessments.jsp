@@ -25,6 +25,7 @@
         <!--banner-->
         <c:import url="banner.jsp" />
         <div class="container">
+            <a class="btn btn-primary" href="/user/books/AAA">返回首页</a><br><br>
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">查询我发表的评价</h3>
