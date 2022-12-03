@@ -130,7 +130,7 @@
             //var id= parseInt(dataid);
 
             let xhr = new XMLHttpRequest();
-            xhr.open('DELETE', 'assessments/delete/' + id, true);
+            xhr.open('DELETE', `http://localhost:8080/user/assessments/delete/` + id, true);
             // 设定传输格式 很重要 不然前端无法解析JSON
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify(id));
@@ -138,7 +138,6 @@
             // 定义回调函数
             xhr.onload = function () {
                 // 打印返回数据 {"msg":"登录成功","code":200}
-                console.log(xhr.responseText);
                 // 如果返回字符串中包括":200"则跳转
                 if (xhr.responseText.indexOf(":200") > 0) {
                     alert("删除成功！");
@@ -157,8 +156,6 @@
             const assessment = $(this).attr('data-assessment')
             //var dataid = $(this).attr('data-id');
             //var id= parseInt(dataid);
-            console.log(id);
-            console.log(assessment)
 
             const modal = $('#myModal');
             modal.find('.modal-body').append(
@@ -181,14 +178,13 @@
                 //var dataid = $(this).attr('data-id');
                 //var id= parseInt(dataid);
 
-                //console.log(id);
                 const assessmentUpdate= {
                     "id" : id,
                     "assessment" : $("#postmessage").val()
                 }
 
                 let xhr = new XMLHttpRequest();
-                xhr.open('PUT', 'assessments/update/' + id, true);
+                xhr.open('PUT', `http://localhost:8080/user/assessments/update/` + id, true);
                 // 设定传输格式 很重要 不然前端无法解析JSON
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify(assessmentUpdate));
@@ -196,10 +192,8 @@
                 // 定义回调函数
                 xhr.onload = function () {
                     // 打印返回数据 {"msg":"登录成功","code":200}
-                    console.log(xhr.responseText);
                     // 如果返回字符串中包括":200"则跳转
                     if (xhr.responseText.indexOf(":200") > 0) {
-                        alert("修改成功！");
                         window.location.href = "/user/getMyAssessments/AAA";
                     } else {
                         alert("修改失败！");
@@ -210,7 +204,6 @@
         })
 
         $('#myModal').on('hidden.bs.modal', function () {
-            console.log("关闭模态框");
             // 隐藏模态框后的回调函数
             // 清空modal-body中的内容
             $(this).find('.modal-body').empty()
@@ -219,8 +212,7 @@
         $("#searchBtn").on("click", function () {
             // 从id为name的框中获取值
             const text = $("#name").val();
-            console.log(text);
-            if(text == ""){
+            if(text === ""){
                 window.location.href = `/user/getMyAssessments/AAA`
             } else {
                 window.location.href = `/user/getMyAssessments/indistinct` + text

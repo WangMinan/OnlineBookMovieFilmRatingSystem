@@ -165,7 +165,6 @@
                 // 定义回调函数
                 xhr.onload = function () {
                     // 打印返回数据 {"msg":"登录成功","code":200}
-                    console.log(xhr.responseText);
                     // 如果返回字符串中包括":200"则跳转
                     if (xhr.responseText.indexOf(":200") > 0) {
 
