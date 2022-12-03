@@ -101,14 +101,7 @@
                             <a href="/user/books">清空筛选</a>
                         </li>
                     </ul>
-<%--                    <form class="navbar-form navbar-right">--%>
-<%--                        <label>--%>
-<%--                            <input type="text" class="form-control" placeholder="搜索...">--%>
-<%--                        </label>--%>
-<%--                    </form>--%>
                 </div>
-            </nav>
-            <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <ul class="nav navbar-nav navbar-left" id="typeSelect">
                         <li>
