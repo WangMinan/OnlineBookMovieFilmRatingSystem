@@ -201,6 +201,13 @@ public class UserController {
         return assessmentService.getAssessmentsByTypeAndId(type);
     }
 
+    @RequestMapping(value = "/getMyAssessments/{username", method = RequestMethod.GET)
+    @ResponseBody
+    public R handleGetMyAssessments(HttpServletRequest request, HttpServletResponse response,
+                                  @PathVariable("username") String username) throws IOException {
+        return assessmentService.getAssessmentsByUsername(username);
+    }
+
     // 修改个人信息
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     @ResponseBody

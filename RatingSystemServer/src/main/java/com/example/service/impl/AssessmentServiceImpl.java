@@ -60,23 +60,6 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
         return resultMap;
     }
 
-    private void getUserAndWorkOfAssessment(Assessment assessmentView) {
-        assessmentView.setUser(userService.getUserByUsername(assessmentView.getUsername()));
-        switch (assessmentView.getObjecttype()) {
-            case "book":
-                assessmentView.setWork(bookService.getById(assessmentView.getObjectid()));
-                break;
-            case "film":
-                assessmentView.setWork(filmService.getById(assessmentView.getObjectid()));
-                break;
-            case "music":
-                assessmentView.setWork(musicService.getById(assessmentView.getObjectid()));
-                break;
-            default:
-                break;
-        }
-    }
-
     @Override
     public R deleteAssessment(long id) {
         Assessment assessment = assessmentMapper.selectById(id);
@@ -123,33 +106,42 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("objectType", type);
         List<Assessment> assessments = assessmentMapper.selectList(wrapper);
-        switch (type) {
-            case "book":
-                for (Assessment assessment : assessments) {
-                    assessment.setWork(bookService.getById(assessment.getObjectid()));
-                }
-                break;
-            case "film":
-                for (Assessment assessment : assessments) {
-                    assessment.setWork(filmService.getById(assessment.getObjectid()));
-                }
-                break;
-            case "music":
-                for (Assessment assessment : assessments) {
-                    assessment.setWork(musicService.getById(assessment.getObjectid()));
-                }
-                break;
-            default:
-                break;
-        }
-        if(assessments != null){
-            for(Assessment assessment : assessments) {
-                assessment.setUser(userService.getUserByUsername(assessment.getUsername()));
-            }
+        for(Assessment assessment : assessments){
+            getUserAndWorkOfAssessment(assessment);
         }
         Map<String,Object> map = new HashMap<>();
         map.put("assessments", assessments);
         return R.ok(map);
+    }
+
+    @Override
+    public R getAssessmentsByUsername(String username) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("username", username);
+        List<Assessment> assessments = assessmentMapper.selectList(wrapper);
+        for(Assessment assessment : assessments){
+            getUserAndWorkOfAssessment(assessment);
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("assessments", assessments);
+        return R.ok(map);
+    }
+
+    private void getUserAndWorkOfAssessment(Assessment assessmentView) {
+        assessmentView.setUser(userService.getUserByUsername(assessmentView.getUsername()));
+        switch (assessmentView.getObjecttype()) {
+            case "book":
+                assessmentView.setWork(bookService.getById(assessmentView.getObjectid()));
+                break;
+            case "film":
+                assessmentView.setWork(filmService.getById(assessmentView.getObjectid()));
+                break;
+            case "music":
+                assessmentView.setWork(musicService.getById(assessmentView.getObjectid()));
+                break;
+            default:
+                break;
+        }
     }
 }
 
