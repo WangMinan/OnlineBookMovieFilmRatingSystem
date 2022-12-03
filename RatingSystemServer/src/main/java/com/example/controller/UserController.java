@@ -201,10 +201,11 @@ public class UserController {
         return assessmentService.getAssessmentsByTypeAndId(type);
     }
 
-    @RequestMapping(value = "/getMyAssessments/{username", method = RequestMethod.GET)
+    @RequestMapping(value = "/getMyAssessments/{username}", method = RequestMethod.GET)
     @ResponseBody
     public R handleGetMyAssessments(HttpServletRequest request, HttpServletResponse response,
                                   @PathVariable("username") String username) throws IOException {
+//        checkSession(request, response);
         return assessmentService.getAssessmentsByUsername(username);
     }
 
