@@ -115,16 +115,14 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
     }
 
     @Override
-    public R getAssessmentsByUsername(String username) {
+    public List<Assessment> getAssessmentsByUsername(String username) {
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("username", username);
         List<Assessment> assessments = assessmentMapper.selectList(wrapper);
         for(Assessment assessment : assessments){
             getUserAndWorkOfAssessment(assessment);
         }
-        Map<String,Object> map = new HashMap<>();
-        map.put("assessments", assessments);
-        return R.ok(map);
+        return assessments;
     }
 
     private void getUserAndWorkOfAssessment(Assessment assessmentView) {

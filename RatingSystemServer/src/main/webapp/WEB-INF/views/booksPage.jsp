@@ -57,12 +57,25 @@
 
                             <c:if test="${sessionScope.username!=null}">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                       aria-haspopup="true" aria-expanded="false">${sessionScope.username} <span
-                                            class="caret"></span></a>
+                                    <a
+                                        href="#"
+                                        class="dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        role="button"
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                            ${sessionScope.username}
+                                            <span class="caret"></span>
+                                    </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="/view/userUpdate">个人信息修改</a></li>
-                                        <li><a href="#">查询发表的评价信息</a></li>
+                                        <li>
+                                            <a href="/view/userUpdate">个人信息修改</a>
+                                        </li>
+                                        <li>
+                                            <a href="/user/getMyAssessments">
+                                                查询发表的评价信息
+                                            </a>
+                                        </li>
                                         <li role="separator" class="divider"></li>
                                         <li><a href="#" id="logoutBtn">退出</a></li>
                                     </ul>
@@ -178,6 +191,7 @@
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
         crossorigin="anonymous"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 </body>
 </html>
 <script>
@@ -294,6 +308,7 @@
     }).on('hidden.bs.modal', function () {
         // 隐藏模态框后的回调函数
         // 清空modal-body中的内容
+        $(this).find('.modal-title').text('')
         $(this).find('.modal-body').empty()
     });
 </script>

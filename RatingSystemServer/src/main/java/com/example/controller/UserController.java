@@ -201,12 +201,12 @@ public class UserController {
         return assessmentService.getAssessmentsByTypeAndId(type);
     }
 
-    @RequestMapping(value = "/getMyAssessments/{username}", method = RequestMethod.GET)
-    @ResponseBody
-    public R handleGetMyAssessments(HttpServletRequest request, HttpServletResponse response,
-                                  @PathVariable("username") String username) throws IOException {
-//        checkSession(request, response);
-        return assessmentService.getAssessmentsByUsername(username);
+    @RequestMapping(value = "/getMyAssessments", method = RequestMethod.GET)
+    public String handleGetMyAssessments(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        checkSession(request, response);
+        String username = (String) request.getSession().getAttribute("username");
+        request.setAttribute("assessments", assessmentService.getAssessmentsByUsername(username));
+        return "/myAssessments";
     }
 
     // 修改个人信息

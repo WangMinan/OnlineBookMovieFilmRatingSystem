@@ -6,6 +6,7 @@ import com.example.pojo.QueryInfo;
 import com.example.pojo.R;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,5 +29,5 @@ public interface AssessmentService extends IService<Assessment> {
 
     R getAssessmentsByTypeAndId(String type);
 
-    R getAssessmentsByUsername(String username);
+    List<Assessment> getAssessmentsByUsername(String username);
 }
