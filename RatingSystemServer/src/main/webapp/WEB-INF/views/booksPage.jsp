@@ -154,32 +154,32 @@
 <%--                            插入代码的位置--%>
                         </div>
                         <div class="modal-footer">
-                            <c:if test="${sessionScope.username!=null}">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class='panel-title'>
-                                            留言区
-                                        </h3>
-                                    </div>
-                                    <div class='panel-body'>
-                                        <div class='area'>
-                                            <label for='postmessage'></label>
-                                            <textarea
-                                                rows='7'
-                                                cols='60'
-                                                name='message'
-                                                id='postmessage'
-                                                maxlength='500'
-                                                placeholder='请输入评价内容'
-                                            >
-                                            </textarea>
-                                        </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class='panel-title text-left'>
+                                        评价区
+                                    </h3>
+                                </div>
+                                <div class='panel-body'>
+                                    <div class='area'>
+                                        <label for='postmessage'></label>
+                                        <textarea
+                                            rows='7'
+                                            cols='60'
+                                            name='message'
+                                            id='postmessage'
+                                            maxlength='500'
+                                            placeholder='请输入评价内容'
+                                        >
+                                        </textarea>
                                     </div>
                                 </div>
-                            </c:if>
-                            <c:if test="${sessionScope.username!=null}">
-                                <button id='submit' type='button' class='btn btn-primary'>提交评论</button>
-                            </c:if>
+                            </div>
+
+
+                            <button id='submit' type='button' class='btn btn-primary'>提交评论</button>
+
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         </div>
                     </div>
@@ -301,14 +301,15 @@
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify(message));
             xhr.onload = function () {
-                // 打印返回数据 {"msg":"登录成功","code":200}
+                // 打印返回数据 {"msg":"评论成功","code":200}
                 // 如果返回字符串中包括":200"则跳转
-                if (xhr.responseText.indexOf(":200") > 0) {
+                if (xhr.responseText.indexOf(":200") > 0 && ${sessionScope.username!=null}) {
                     alert("评论成功");
                     // 刷新当前页面
                     window.location.reload();
                 } else {
-                    alert(xhr.responseText)
+                    alert("请您先登录");
+                    window.location.href = "/user/assessments";
                 }
             }
         })
@@ -347,7 +348,7 @@
                 break;
             }
         }
-        // 将留言内容放入modal-body中
+        // 将评价内容放入modal-body中
         for(let i = 0; i < assessments.length; i++){
             if (assessments[i].objectid === bookId){
                 modal.find('.modal-body').append(`
@@ -356,7 +357,7 @@
                             <h3 class="panel-title">`
                                 + `来自:`
                                 + assessments[i].username
-                                + `的留言` +
+                                + `的评价` +
                             `</h3>
                         </div>
                         <div class="panel-body">`
