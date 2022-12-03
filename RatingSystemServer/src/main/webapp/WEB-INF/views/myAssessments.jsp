@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="assessments" scope="request" type="java.util.List"/>
 <html>
 <head>
     <title>我的评价</title>
@@ -53,17 +54,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <jsp:useBean id="assessments" scope="request" type="java.util.List"/>
                     <c:forEach var="item" items="${assessments}">
                         <tr>
-                            <td>${item.objectid}</td>
+                            <td id="${item.id}">${item.id}</td>
                             <td>${item.work.name}</td>
                             <td>${item.assessment}</td>
                             <td class="text-nowrap">${item.postdate}</td>
                             <td>
                                 <ul class="list-inline text-nowrap">
                                     <li><a class="btn btn-info" href="">修改</a></li>
-                                    <li><a class="btn btn-danger" href="">删除</a></li>
+                                    <li><button class="btn btn-danger" data-id="'+${item.id}+'">删除</button></li>
                                 </ul>
                             </td>
                         </tr>
@@ -87,3 +87,33 @@
         position: relative; /* 3. 容器的position设置为relative，给子元素定位提供基点 */
     }
 </style>
+
+<script>
+    $(function () {
+        $('tbody').on('click', '.btn btn-danger', function () {
+            var id = $(this).attr('data-id')
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('DELETE', 'user/assessments/{id}', true);
+            // 设定传输格式 很重要 不然前端无法解析JSON
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(id));
+
+            // 定义回调函数
+            xhr.onload = function () {
+                // 打印返回数据 {"msg":"登录成功","code":200}
+                console.log(xhr.responseText);
+                // 如果返回字符串中包括":200"则跳转
+                if (xhr.responseText.indexOf(":200") > 0) {
+                    alert("删除成功！");
+                    window.location.href = "/user/getMyAssessments";
+                } else {
+                    alert("删除失败！" + id);
+                    window.location.href = "/user/getMyAssessments";
+                }
+            }
+
+
+        })
+    })
+</script>
