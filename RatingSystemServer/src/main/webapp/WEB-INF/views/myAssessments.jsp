@@ -34,7 +34,7 @@
                         <form class="col-sm-10">
                             <input id="name" type="text" class="form-control" placeholder="根据书影音名称查询">
                         </form>
-                        <button class="btn btn-info col-sm-offset-1">查询</button>
+                        <button class="btn btn-info col-sm-offset-1" id="searchBtn">查询</button>
                     </div>
 
                 </div>
@@ -46,7 +46,7 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr class="text-nowrap">
-                        <th>id</th>
+                        <th>类型</th>
                         <th>书、影、音名</th>
                         <th>评价内容</th>
                         <th>时间</th>
@@ -56,20 +56,43 @@
                 <tbody>
                     <c:forEach var="item" items="${assessments}">
                         <tr>
-                            <td id="${item.id}">${item.id}</td>
+                            <td>${item.objecttype}</td>
                             <td>${item.work.name}</td>
                             <td>${item.assessment}</td>
                             <td class="text-nowrap">${item.postdate}</td>
                             <td>
                                 <ul class="list-inline text-nowrap">
-                                    <li><a class="btn btn-info" href="">修改</a></li>
-                                    <li><button class="btn btn-danger" data-id="'+${item.id}+'">删除</button></li>
+                                    <li><button class="btn-info" data-toggle="modal" data-target="#myModal" data-id="${item.id}" data-assessment="${item.assessment}">修改</button></li>
+                                    <li><button class="btn-danger" data-id="${item.id}">删除</button></li>
                                 </ul>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-id="">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">评价内容</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <label for="postmessage"></label>
+                                <textarea rows="7" cols="70" name="message" id="postmessage" maxlength="500" placeholder="请输入评价内容"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" id="submitBtn" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div style="height: 15%;"></div>
         </div>
         <c:import url="footer.jsp" />
@@ -89,12 +112,17 @@
 </style>
 
 <script>
+    let id;
+
     $(function () {
-        $('tbody').on('click', '.btn btn-danger', function () {
-            var id = $(this).attr('data-id')
+        $('tbody').on('click', '.btn-danger', function () {
+            id= parseInt($(this).attr('data-id'));
+            //var dataid = $(this).attr('data-id');
+            //var id= parseInt(dataid);
+            console.log(id);
 
             let xhr = new XMLHttpRequest();
-            xhr.open('DELETE', 'user/assessments/{id}', true);
+            xhr.open('DELETE', 'assessments/delete/' + id, true);
             // 设定传输格式 很重要 不然前端无法解析JSON
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify(id));
@@ -108,12 +136,87 @@
                     alert("删除成功！");
                     window.location.href = "/user/getMyAssessments";
                 } else {
-                    alert("删除失败！" + id);
+                    alert("删除失败！");
                     window.location.href = "/user/getMyAssessments";
                 }
             }
 
 
         })
+
+        $('tbody').on('click', '.btn-info', function () {
+            id= parseInt($(this).attr('data-id'));
+            const assessment = $(this).attr('data-assessment')
+            //var dataid = $(this).attr('data-id');
+            //var id= parseInt(dataid);
+            console.log(id);
+
+            $('#submitBtn').on('click', function () {
+                //var dataid = $(this).attr('data-id');
+                //var id= parseInt(dataid);
+
+                //console.log(id);
+                const assessmentUpdate= {
+                    "id" : id,
+                    "assessment" : $("#postmessage").val()
+                }
+
+                let xhr = new XMLHttpRequest();
+                xhr.open('PUT', 'assessments/update/' + id, true);
+                // 设定传输格式 很重要 不然前端无法解析JSON
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(assessmentUpdate));
+
+                // 定义回调函数
+                xhr.onload = function () {
+                    // 打印返回数据 {"msg":"登录成功","code":200}
+                    console.log(xhr.responseText);
+                    // 如果返回字符串中包括":200"则跳转
+                    if (xhr.responseText.indexOf(":200") > 0) {
+                        alert("修改成功！");
+                        window.location.href = "/user/getMyAssessments";
+                    } else {
+                        alert("修改失败！");
+                        window.location.href = "/user/getMyAssessments";
+                    }
+                }
+
+
+            })
+
+        })
+/*
+        $("#searchBtn").on("click", function () {
+            if(checkForm()) {
+                const user= {
+                    "username" : document.getElementById("username").value,
+                    "password" : document.getElementById("password").value,
+                    "mail" : document.getElementById("email").value
+                }
+
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', '/user/register', true);
+                // 设定传输格式 很重要 不然前端无法解析JSON
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(user));
+
+                // 定义回调函数
+                xhr.onload = function () {
+                    // 打印返回数据 {"msg":"注册成功","code":200}
+                    console.log(xhr.responseText);
+                    // 如果返回字符串中包括":200"则跳转
+                    if (xhr.responseText.indexOf(":200") > 0) {
+                        alert("注册成功");
+                        window.location.href = "/user/books/AAA";
+                    } else {
+                        alert("注册失败！用户名已存在");
+                        window.location.href = "/view/register";
+                    }
+                }
+            }
+
+        })*/
+
+
     })
 </script>

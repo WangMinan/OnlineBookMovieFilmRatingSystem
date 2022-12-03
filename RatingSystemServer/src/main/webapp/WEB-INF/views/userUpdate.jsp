@@ -68,7 +68,7 @@
           <!--提交按钮-->
           <div class="text-center">
             <button id="submitBtn" class="btn btn-success">提交</button>
-            <button id="cancelBtn" class="btn btn-danger" onclick="window.location.href = '/user/books';">取消</button>
+            <button id="cancelBtn" class="btn btn-danger" onclick="window.location.href = '/user/books/AAA';">取消</button>
             <br><br>
           </div>
         </div>

@@ -88,6 +88,11 @@ public class Assessment extends AssessmentBase implements Serializable {
         this.assessment = assessment;
     }
 
+    public Assessment(Long id, String assessment) {
+        this.id = id;
+        this.assessment = assessment;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {

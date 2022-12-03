@@ -200,7 +200,7 @@ public class UserController {
         return assessmentService.addAssessment(assessmentView);
     }
 
-    @RequestMapping(value = "/assessments/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/assessments/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public R handleDeleteAssessment(HttpServletRequest request, HttpServletResponse response,
                                  @PathVariable("id") int id) throws IOException {
@@ -208,7 +208,7 @@ public class UserController {
         return assessmentService.deleteAssessment(id);
     }
 
-    @RequestMapping(value = "/assessments/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/assessments/update/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public R handleUpdateAssessment(HttpServletRequest request, HttpServletResponse response,
                                  @PathVariable("id") long id, @RequestBody Assessment assessmentView) throws IOException {
