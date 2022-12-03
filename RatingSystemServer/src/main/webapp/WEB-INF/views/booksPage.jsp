@@ -43,15 +43,13 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">Brand</a>
+                        <a class="navbar-brand" href="#">R</a>
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="/user/books/AAA">书籍</a></li>
                             <li><a href="/user/films">电影</a></li>
                             <li><a href="/user/musics">音乐</a></li>
-                            <li><a href="#">关于</a></li>
-                            <li><a href="#">联系我们</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
 
@@ -91,7 +89,7 @@
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
             </nav>
-            <nav class="navbar navbar-default">
+            <nav class="navbar navbar-default" id="selectYearAndTypeBar">
                 <div class="container-fluid">
                     <ul class="nav navbar-nav navbar-left" id="yearSelect">
                         <li>
@@ -239,12 +237,38 @@
             })
             years.sort((a, b) => a - b)
             // 使用jquery的id选择器动态添加years与books到下拉菜单
+            // 注意 动态生成的话，需要在生成后再绑定事件
             for(let i = 0; i < years.length;i++){
-                $('#yearSelect').append('<li><a href="#">'+years[i]+'</a></li>')
+                $('#yearSelect').append(
+                    '<li>' +
+                        '<a href="' + `/user/books/year` + years[i] + '">'
+                            + years[i] +
+                        '</a>' +
+                    '</li>')
             }
             for(let i = 0; i < types.length;i++){
-                $('#typeSelect').append('<li><a href="#">'+types[i]+'</a></li>')
+                $('#typeSelect').append(
+                    '<li>' +
+                        '<a href="' + `/user/books/type` + types[i] + '">'
+                            + types[i] +
+                        '</a>' +
+                    '</li>')
             }
+
+            // 解决路径中的中文被UTF-8编码的问题
+            const currentLocation = revertUTF8(location.pathname)
+
+            // 绑定事件
+            $('#selectYearAndTypeBar').find('li').each(function () {
+                const a = $(this).find('a:first')[0];
+                if(currentLocation === '/user/books/AAA'){
+                    $(this).removeClass('active')
+                }else if (currentLocation === $(a).attr('href')) {
+                    $(this).addClass('active'); // this.className = 'active';
+                } else {
+                    $(this).removeClass('active');
+                }
+            })
         }
     })
 
@@ -346,6 +370,39 @@
         $(this).find('.modal-title').text('')
         $(this).find('.modal-body').empty()
     });
+
+    // UTF8编码转成汉字字符串
+    function revertUTF8(szInput) {
+        let x, wch, wch1, wch2, uch = "", szRet = "";
+        for (x=0; x<szInput.length; x++) {
+            if (szInput.charAt(x)==="%") {
+                wch =parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+                if (!wch) {break;}
+                if (!(wch & 0x80)) {
+                    wch = wch;
+                } else if (!(wch & 0x20)) {
+                    x++;
+                    wch1 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+                    wch  = (wch & 0x1F)<< 6;
+                    wch1 = wch1 & 0x3F;
+                    wch  = wch + wch1;
+                } else {
+                    x++;
+                    wch1 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+                    x++;
+                    wch2 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+                    wch  = (wch & 0x0F)<< 12;
+                    wch1 = (wch1 & 0x3F)<< 6;
+                    wch2 = (wch2 & 0x3F);
+                    wch  = wch + wch1 + wch2;
+                }
+                szRet += String.fromCharCode(wch);
+            } else {
+                szRet += szInput.charAt(x);
+            }
+        }
+        return(szRet);
+    }
 </script>
 
 <style>
