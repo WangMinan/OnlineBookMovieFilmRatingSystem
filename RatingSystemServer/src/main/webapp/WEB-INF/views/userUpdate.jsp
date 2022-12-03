@@ -68,7 +68,7 @@
           <!--提交按钮-->
           <div class="text-center">
             <button id="submitBtn" class="btn btn-success">提交</button>
-            <button id="cancelBtn" class="btn btn-danger" onclick="window.location.href = '/user/books/AAA';">取消</button>
+            <button id="cancelBtn" class="btn btn-danger" onclick="window.location.href = 'http://localhost:8080/user/books/AAA';">取消</button>
             <br><br>
           </div>
         </div>
@@ -159,7 +159,7 @@
         }
 
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/user/users', true);
+        xhr.open('POST', 'http://localhost:8080/user/users', true);
         // 设定传输格式 很重要 不然前端无法解析JSON
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify(user));
@@ -169,10 +169,10 @@
           // 打印返回数据 {"msg":"注册成功","code":200}
           // 如果返回字符串中包括":200"则跳转
           if (xhr.responseText.indexOf(":200") > 0) {
-            window.location.href = "/user/books/AAA";
+            window.location.href = "http://localhost:8080/user/books/AAA";
           } else {
             alert("个人信息修改失败！");
-            window.location.href = "/view/userUpdate";
+            window.location.href = "http://localhost:8080/view/userUpdate";
           }
         }
       }
@@ -190,7 +190,7 @@
         }
 
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/user/users', true);
+        xhr.open('POST', 'http://localhost:8080/user/users', true);
         // 设定传输格式 很重要 不然前端无法解析JSON
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify(user));
@@ -200,10 +200,10 @@
           // 打印返回数据 {"msg":"注册成功","code":200}
           // 如果返回字符串中包括":200"则跳转
           if (xhr.responseText.indexOf(":200") > 0) {
-            window.location.href = "/user/books/AAA";
+            window.location.href = "http://localhost:8080/user/books/AAA";
           } else {
             alert("个人信息修改失败！");
-            window.location.href = "/view/userUpdate";
+            window.location.href = "http://localhost:8080/view/userUpdate";
           }
         }
       }

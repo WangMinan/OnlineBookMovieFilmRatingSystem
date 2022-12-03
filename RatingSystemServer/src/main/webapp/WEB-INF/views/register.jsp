@@ -156,7 +156,7 @@
                 }
 
                 let xhr = new XMLHttpRequest();
-                xhr.open('POST', '/user/register', true);
+                xhr.open('POST', 'http://localhost:8080/user/register', true);
                 // 设定传输格式 很重要 不然前端无法解析JSON
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify(user));
@@ -167,10 +167,10 @@
                     // 如果返回字符串中包括":200"则跳转
                     if (xhr.responseText.indexOf(":200") > 0) {
                         alert("注册成功");
-                        window.location.href = "/user/books/AAA";
+                        window.location.href = "http://localhost:8080/user/books/AAA";
                     } else {
                         alert("注册失败！用户名已存在");
-                        window.location.href = "/view/register";
+                        window.location.href = "http://localhost:8080/view/register";
                     }
                 }
             }

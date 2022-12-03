@@ -47,9 +47,9 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/user/books/AAA">书籍</a></li>
+                        <li><a href="http://localhost:8080/user/books/AAA">书籍</a></li>
                         <li class="active"><a href="/user/films/AAA">电影</a></li>
-                        <li><a href="/user/musics/AAA">音乐</a></li>
+                        <li><a href="http://localhost:8080/user/musics/AAA">音乐</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
 
@@ -70,7 +70,7 @@
                                         <a href="/view/userUpdate">个人信息修改</a>
                                     </li>
                                     <li>
-                                        <a href="/user/getMyAssessments/AAA">
+                                        <a href="http://localhost:8080/user/getMyAssessments/AAA">
                                             查询发表的评价信息
                                         </a>
                                     </li>
@@ -96,7 +96,7 @@
                         <a>按年份搜索</a>
                     </li>
                     <li>
-                        <a href="/user/films/AAA">清空筛选</a>
+                        <a href="http://localhost:8080/user/films/AAA">清空筛选</a>
                     </li>
                 </ul>
             </div>
@@ -106,7 +106,7 @@
                         <a>按类别搜索</a>
                     </li>
                     <li>
-                        <a href="/user/films/AAA">清空筛选</a>
+                        <a href="http://localhost:8080/user/films/AAA">清空筛选</a>
                     </li>
                 </ul>
             </div>
@@ -209,7 +209,7 @@
     // 页面加载时调用函数
     $().ready(function (){
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', '/user/assessments/film', true);
+        xhr.open('GET', 'http://localhost:8080/user/assessments/film', true);
         xhr.send();
         xhr.onload = function () {
             const resp = JSON.parse(xhr.responseText)
@@ -224,7 +224,7 @@
     // 页面加载时调用函数
     $().ready(function (){
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', '/user/films/AAA/1/999999', true);
+        xhr.open('GET', 'http://localhost:8080/user/films/AAA/1/999999', true);
         xhr.send();
         xhr.onload = function () {
             const resp = JSON.parse(xhr.responseText)
@@ -249,7 +249,7 @@
             for(let i = 0; i < years.length;i++){
                 $('#yearSelect').append(
                     '<li>' +
-                    '<a href="' + `/user/films/year` + years[i] + '">'
+                    '<a href="' + `http://localhost:8080/user/films/year` + years[i] + '">'
                     + years[i] +
                     '</a>' +
                     '</li>')
@@ -257,7 +257,7 @@
             for(let i = 0; i < types.length;i++){
                 $('#typeSelect').append(
                     '<li>' +
-                    '<a href="' + `/user/films/type` + types[i] + '">'
+                    '<a href="' + `http://localhost:8080/user/films/type` + types[i] + '">'
                     + types[i] +
                     '</a>' +
                     '</li>')
@@ -269,7 +269,9 @@
             // 绑定事件
             $('#selectYearAndTypeBar').find('li').each(function () {
                 const a = $(this).find('a:first')[0];
-                if(currentLocation === '/user/films/AAA'){
+                if(currentLocation === 'http://localhost:8080/user/films/AAA'
+                    || currentLocation === 'http://ratingclient.wangminan.me/user/films/AAA'
+                ){
                     $(this).removeClass('active')
                 }else if (currentLocation === $(a).attr('href')) {
                     $(this).addClass('active'); // this.className = 'active';
@@ -295,8 +297,12 @@
                 // "postdate": "2022-11-29 23:46:00",
                 // "isdeleted": 0
             }
+            if (message.assessment.trim() === '') {
+                alert('评论不能为空')
+                return
+            }
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', '/user/assessments', true);
+            xhr.open('POST', 'http://localhost:8080/user/assessments', true);
             // 设定传输格式 很重要 不然前端无法解析JSON
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify(message));
@@ -309,7 +315,7 @@
                     window.location.reload();
                 } else {
                     alert("请您先登录");
-                    window.location.href = "/user/assessments";
+                    window.location.href = "http://localhost:8080/user/assessments";
                 }
             }
         })
@@ -318,7 +324,7 @@
     $(document).ready(function () {
         $("#logoutBtn").click(function () {
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', '/user/logout', true);
+            xhr.open('GET', 'http://localhost:8080/user/logout', true);
             xhr.send();
             xhr.onload = function () {
                 // 打印返回数据 {"msg":"登录成功","code":200}

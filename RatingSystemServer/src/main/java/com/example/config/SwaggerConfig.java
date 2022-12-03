@@ -27,7 +27,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.example.controller"))
                 .build()
                 .apiInfo(createApiInfo())
-                .enable(true); // 不需要使用swagger时在这个位置做全局关闭;
+                .enable(false); // 不需要使用swagger时在这个位置做全局关闭;
     }
     /**
      * 配置swagger的ApiInfo bean

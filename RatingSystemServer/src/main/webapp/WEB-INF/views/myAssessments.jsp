@@ -33,7 +33,11 @@
                 <div class="panel-body">
                     <div class="row">
                         <form class="col-sm-10">
-                            <input id="name" type="text" class="form-control" placeholder="根据书影音名称查询">
+                            <input id="name"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="根据书影音名称、留言发布时间等模糊查询"
+                            >
                         </form>
                         <button class="btn btn-info col-sm-offset-1" id="searchBtn">查询</button>
                     </div>
@@ -141,10 +145,10 @@
                 // 如果返回字符串中包括":200"则跳转
                 if (xhr.responseText.indexOf(":200") > 0) {
                     alert("删除成功！");
-                    window.location.href = "/user/getMyAssessments/AAA";
+                    window.location.href = "http://localhost:8080/user/getMyAssessments/AAA";
                 } else {
                     alert("删除失败！");
-                    window.location.href = "/user/getMyAssessments/AAA";
+                    window.location.href = "http://localhost:8080/user/getMyAssessments/AAA";
                 }
             }
 
@@ -194,10 +198,10 @@
                     // 打印返回数据 {"msg":"登录成功","code":200}
                     // 如果返回字符串中包括":200"则跳转
                     if (xhr.responseText.indexOf(":200") > 0) {
-                        window.location.href = "/user/getMyAssessments/AAA";
+                        window.location.href = "http://localhost:8080/user/getMyAssessments/AAA";
                     } else {
                         alert("修改失败！");
-                        window.location.href = "/user/getMyAssessments/AAA";
+                        window.location.href = "http://localhost:8080/user/getMyAssessments/AAA";
                     }
                 }
             })
@@ -213,9 +217,9 @@
             // 从id为name的框中获取值
             const text = $("#name").val();
             if(text === ""){
-                window.location.href = `/user/getMyAssessments/AAA`
+                window.location.href = `http://localhost:8080/user/getMyAssessments/AAA`
             } else {
-                window.location.href = `/user/getMyAssessments/indistinct` + text
+                window.location.href = `http://localhost:8080/user/getMyAssessments/indistinct` + text
             }
         })
     })
