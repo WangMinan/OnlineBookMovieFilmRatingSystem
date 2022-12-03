@@ -194,11 +194,51 @@ public class UserController {
         return assessmentService.addAssessment(assessmentView);
     }
 
+    @RequestMapping(value = "/assessments/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public R handleDeleteAssessment(HttpServletRequest request, HttpServletResponse response,
+                                 @PathVariable("id") int id) throws IOException {
+        checkSession(request, response);
+        return assessmentService.deleteAssessment(id);
+    }
+
+    @RequestMapping(value = "/assessments/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public R handleUpdateAssessment(HttpServletRequest request, HttpServletResponse response,
+                                 @PathVariable("id") long id, @RequestBody Assessment assessmentView) throws IOException {
+        checkSession(request, response);
+        assessmentView.setUsername((String) request.getSession().getAttribute("username"));
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = dateFormat.format(date);
+        assessmentView.setPostdate(time);
+        return assessmentService.updateAssessment(id, assessmentView);
+    }
+
+    /**
+     * 查看留言
+     * @param request 请求
+     * @param response 响应
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/getMyAssessments/{query}", method = RequestMethod.GET)
+    @ResponseBody
+    public R handleGetMyAssessmentsByQuery(HttpServletRequest request, HttpServletResponse response,
+                               @PathVariable("query") String query) throws IOException {
+        checkSession(request, response);
+        QueryInfo queryInfo = new QueryInfo();
+        queryInfo.setQuery(query);
+        queryInfo.setPagenum(MIN_PAGE_NUM);
+        queryInfo.setPagesize(MAX_PAGE_SIZE);
+        return R.ok(assessmentService.getAllAssessments(queryInfo));
+    }
+
     @RequestMapping(value = "/assessments/{type}", method = RequestMethod.GET)
     @ResponseBody
     public R handleGetAssessments(HttpServletRequest request, HttpServletResponse response,
                                   @PathVariable("type") String type) throws IOException {
-        return assessmentService.getAssessmentsByTypeAndId(type);
+        return assessmentService.getAssessmentsByType(type);
     }
 
     @RequestMapping(value = "/getMyAssessments", method = RequestMethod.GET)

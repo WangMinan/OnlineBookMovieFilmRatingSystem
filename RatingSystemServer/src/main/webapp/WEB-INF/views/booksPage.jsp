@@ -91,27 +91,38 @@
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
             </nav>
-<%--            TODO 按年份搜索和按类别搜索的接口要另写          --%>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">按年份搜索 <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <c:forEach var="book" items="${books.result}">
-                                    <li>${book.publishyear}</li>
-                                </c:forEach>
+                            <a href="#"
+                               class="dropdown-toggle"
+                               data-toggle="dropdown"
+                               role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false"
+                            >
+                                按年份搜索
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" id="yearSelect">
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">按类别搜索 <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <c:forEach var="book" items="${books.result}">
-                                    <li>${book.type}</li>
-                                </c:forEach>
+                            <a href="#"
+                               class="dropdown-toggle"
+                               data-toggle="dropdown"
+                               role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                按类别搜索
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" id="typeSelect">
                             </ul>
+                        </li>
+                        <li>
+                            <a href="/user/books">清空筛选</a>
                         </li>
                     </ul>
                     <form class="navbar-form navbar-right">
@@ -227,8 +238,25 @@
             } else{
                 alert(resp.message)
             }
+            let years= []
+            let types = []
+            books.forEach(book => {
+                if (!years.includes(book.publishyear)) {
+                    years.push(book.publishyear)
+                }
+                if (!types.includes(book.type)) {
+                    types.push(book.type)
+                }
+            })
+            years.sort((a, b) => a - b)
+            // 使用jquery的id选择器动态添加years与books到下拉菜单
+            for(let i = 0; i < years.length;i++){
+                $('#yearSelect').append('<li><a href="#">'+years[i]+'</a></li>')
+            }
+            for(let i = 0; i < types.length;i++){
+                $('#typeSelect').append('<li><a href="#">'+types[i]+'</a></li>')
+            }
         }
-        console.log(books)
     })
 
     $(document).ready(function () {
@@ -253,7 +281,6 @@
             xhr.send(JSON.stringify(message));
             xhr.onload = function () {
                 // 打印返回数据 {"msg":"登录成功","code":200}
-                console.log(xhr.responseText);
                 // 如果返回字符串中包括":200"则跳转
                 if (xhr.responseText.indexOf(":200") > 0) {
                     alert("评论成功");
@@ -273,7 +300,6 @@
             xhr.send();
             xhr.onload = function () {
                 // 打印返回数据 {"msg":"登录成功","code":200}
-                console.log(xhr.responseText);
                 // 如果返回字符串中包括":200"则跳转
                 if (xhr.responseText.indexOf(":200") > 0) {
                     alert("退出成功");

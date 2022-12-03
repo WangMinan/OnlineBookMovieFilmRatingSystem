@@ -72,7 +72,7 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
         if(result == 1) {
             MailContent mailContent = new MailContent();
             mailContent.setSendTo(userMail);
-            mailContent.setText("您的评论已被管理员删除，评论内容为:" + content);
+            mailContent.setText("您的评论已被删除，评论内容为:" + content);
             sendMailService.sendSimpleMail(mailContent);
             return R.ok("删除成功,已通知用户");
         } else {
@@ -102,7 +102,7 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
     }
 
     @Override
-    public R getAssessmentsByTypeAndId(String type) {
+    public R getAssessmentsByType(String type) {
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("objectType", type);
         List<Assessment> assessments = assessmentMapper.selectList(wrapper);
@@ -123,6 +123,12 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
             getUserAndWorkOfAssessment(assessment);
         }
         return assessments;
+    }
+
+    @Override
+    public R updateAssessment(long id, Assessment assessmentView) {
+        assessmentView.setId(id);
+        return assessmentMapper.updateById(assessmentView) > 0 ? R.ok("修改评价成功") : R.error("修改评价失败");
     }
 
     private void getUserAndWorkOfAssessment(Assessment assessmentView) {
