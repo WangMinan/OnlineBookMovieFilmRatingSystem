@@ -128,7 +128,7 @@
                         </div>
                         <div class="media-body" id="mediaBody">
                             <h1 class="media-heading">${film.name}</h1>
-                            <p>作者:${film.author} 类型:${film.type} 出版时间:${film.publishyear}</p>
+                            <p>类型:${film.type} 出版时间:${film.publishyear}</p>
                             <p>描述:${film.description}</p>
                         </div>
                     </div>

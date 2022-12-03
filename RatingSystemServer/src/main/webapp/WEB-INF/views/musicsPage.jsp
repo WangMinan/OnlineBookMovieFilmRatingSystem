@@ -128,7 +128,7 @@
                         </div>
                         <div class="media-body" id="mediaBody">
                             <h1 class="media-heading">${music.name}</h1>
-                            <p>作者:${music.author} 类型:${music.type} 出版时间:${music.publishyear}</p>
+                            <p>类型:${music.type} 出版时间:${music.publishyear}</p>
                             <p>描述:${music.description}</p>
                         </div>
                     </div>
