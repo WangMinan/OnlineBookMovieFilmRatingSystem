@@ -148,28 +148,9 @@
                             </button>
                             <h4 class="modal-title" id="myModalLabel"></h4>
                         </div>
-
-                        <c:forEach var="assessment" items="${assessments.result}">
-                            <c:if test="${
-                                        assessment.isdeleted==0
-                                            &&assessment.objecttype=='book'
-                                            &&assessment.objectid==book.id
-                                        }"
-                            >
-                                <div class="modal-body">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">${assessment.username}</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <p>${assessment.assessment}</p>
-                                            <p>${assessment.postdate}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:if>
-                        </c:forEach>
-
+                        <div class="modal-body">
+<%--                                jquery在这个位置做插入语句--%>
+                        </div>
                         <div class="modal-footer">
                             <c:if test="${sessionScope.username!=null}">
                                 <div class="area">
@@ -177,7 +158,7 @@
                                                                                id="postmessage"></textarea>
                                 </div>
                             </c:if>
-
+                            <br>
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             <c:if test="${sessionScope.username!=null}">
                                 <button id="submit" type="button" class="btn btn-primary">提交评论</button>
@@ -203,6 +184,7 @@
 <script>
 
     const assessments = []
+    let currentBookId = 0
 
     // 页面加载时调用函数
     $().ready(function (){
@@ -227,7 +209,7 @@
                 // 没事的username也不用传 我已经机智的料到这会成为一个问题，所以很自觉的从session里面拿了
                 <%--"username": "${sessionScope.username}",--%>
                 // 具体参考Assessment里的第4个构造函数 只要传接下来的3个数据就可以了
-                "objectid": 1,
+                "objectid": currentBookId,
                 "objecttype": "book", // 这个确实可以写死
                 "assessment": $("#postmessage").val(),
                 // postdate与isDeleted会自动生成 不需要传入
@@ -278,22 +260,43 @@
     $('#myModal').on('show.bs.modal', async function (event) {
         const a = $(event.relatedTarget) // 触发事件的按钮
         const bookId = a.data('whatever') // 解析出data-whatever内容
+        currentBookId = bookId
         const modal = $(this)
-        // 需要清空模态框中的内容
-        modal.val("")
         let flag = false;
-        for (i = 0; i < assessments.length; i++){
+        for (let i = 0; i < assessments.length; i++){
             if (assessments[i].objectid === bookId){
                 flag = true
                 modal.find('.modal-title').text(assessments[i].work.name)
                 break;
             }
         }
+        // 将留言内容放入modal-body中
+        for(let i = 0; i < assessments.length; i++){
+            if (assessments[i].objectid === bookId){
+                modal.find('.modal-body').append(`
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">`
+                                + assessments[i].username +
+                            `</h3>
+                        </div>
+                        <div class="panel-body">`
+                            + assessments[i].assessment +
+                            `<br>`
+                            + assessments[i].postdate +
+                        `</div>
+                    </div>
+                `)
+            }
+        }
         if(!flag){
-            // 关闭模态框
             modal.find('.modal-title').text('该书籍暂无评论')
         }
-    })
+    }).on('hidden.bs.modal', function () {
+        // 隐藏模态框后的回调函数
+        // 清空modal-body中的内容
+        $(this).find('.modal-body').empty()
+    });
 </script>
 
 <style>
