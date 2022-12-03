@@ -47,7 +47,6 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     @Override
     public R login(Admin admin) {
         // 获取AuthenticationManager的方法 authenticate(Authentication authentication) 进行认证
-        // TODO 这里的密码需要进行解密
         RSA rsa = new RSA(privateKey, null);
         String password = new String(rsa.decrypt(admin.getPassword(), KeyType.PrivateKey));
         admin.setPassword(password);
