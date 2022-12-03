@@ -226,9 +226,9 @@ public class UserController {
                                @PathVariable("query") String query,
                                @PathVariable("pagenum") int pagenum,
                                @PathVariable("pagesize") int pagesize) throws IOException {
-        checkSession(request, response);
-        if(query.equals(MEANINGLESS_QUERY)){
-            query="";
+//        checkSession(request, response);
+        if(query.equals("AAA")){
+            query=MEANINGLESS_QUERY;
         }
         QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
         Map<String,Object> map = bookService.getAllBooks(queryInfo);
@@ -243,8 +243,8 @@ public class UserController {
                                 @PathVariable("pagenum") int pagenum,
                                 @PathVariable("pagesize") int pagesize) throws IOException {
         checkSession(request, response);
-        if(query.equals(MEANINGLESS_QUERY)){
-            query="";
+        if(query.equals("AAA")){
+            query=MEANINGLESS_QUERY;
         }
         QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
         Map<String,Object> map = filmService.getAllFilms(queryInfo);
@@ -259,8 +259,8 @@ public class UserController {
                                 @PathVariable("pagenum") int pagenum,
                                 @PathVariable("pagesize") int pagesize) throws IOException {
         checkSession(request, response);
-        if(query.equals(MEANINGLESS_QUERY)){
-            query="";
+        if(query.equals("AAA")){
+            query=MEANINGLESS_QUERY;
         }
         QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
         Map<String,Object> map = musicService.getAllMusics(queryInfo);

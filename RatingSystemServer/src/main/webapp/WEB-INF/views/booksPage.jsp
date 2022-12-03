@@ -198,6 +198,7 @@
 
     const assessments = []
     let currentBookId = 0
+    const books = []
 
     // 页面加载时调用函数
     $().ready(function (){
@@ -212,6 +213,22 @@
                 alert(resp.message)
             }
         }
+    })
+
+    // 页面加载时调用函数
+    $().ready(function (){
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/user/books/AAA/1/999999', true);
+        xhr.send();
+        xhr.onload = function () {
+            const resp = JSON.parse(xhr.responseText)
+            if (resp.code === 200) {
+                books.push(...resp.result)
+            } else{
+                alert(resp.message)
+            }
+        }
+        console.log(books)
     })
 
     $(document).ready(function () {
