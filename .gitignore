@@ -34,3 +34,4 @@ npm-debug.log
 
 ### VS Code ###
 .vscode/
+package-lock.json
