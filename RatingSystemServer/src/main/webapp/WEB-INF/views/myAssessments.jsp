@@ -63,7 +63,17 @@
                             <td class="text-nowrap">${item.postdate}</td>
                             <td>
                                 <ul class="list-inline text-nowrap">
-                                    <li><button class="btn-info" data-toggle="modal" data-target="#myModal" data-id="${item.id}" data-assessment="${item.assessment}">修改</button></li>
+                                    <li>
+                                        <button
+                                            class="btn-info"
+                                            data-toggle="modal"
+                                            data-target="#myModal"
+                                            data-id="${item.id}"
+                                            data-assessment="${item.assessment}"
+                                        >
+                                            修改
+                                        </button>
+                                    </li>
                                     <li><button class="btn-danger" data-id="${item.id}">删除</button></li>
                                 </ul>
                             </td>
@@ -77,14 +87,12 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                             <h4 class="modal-title" id="myModalLabel">评价内容</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="text-center">
-                                <label for="postmessage"></label>
-                                <textarea rows="7" cols="70" name="message" id="postmessage" maxlength="500" placeholder="请输入评价内容"></textarea>
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -120,7 +128,6 @@
             id= parseInt($(this).attr('data-id'));
             //var dataid = $(this).attr('data-id');
             //var id= parseInt(dataid);
-            console.log(id);
 
             let xhr = new XMLHttpRequest();
             xhr.open('DELETE', 'assessments/delete/' + id, true);
@@ -135,10 +142,10 @@
                 // 如果返回字符串中包括":200"则跳转
                 if (xhr.responseText.indexOf(":200") > 0) {
                     alert("删除成功！");
-                    window.location.href = "/user/getMyAssessments";
+                    window.location.href = "/user/getMyAssessments/AAA";
                 } else {
                     alert("删除失败！");
-                    window.location.href = "/user/getMyAssessments";
+                    window.location.href = "/user/getMyAssessments/AAA";
                 }
             }
 
@@ -151,6 +158,24 @@
             //var dataid = $(this).attr('data-id');
             //var id= parseInt(dataid);
             console.log(id);
+            console.log(assessment)
+
+            const modal = $('#myModal');
+            modal.find('.modal-body').append(
+                `<div class="text-center">
+                    <label for="postmessage"></label>
+                        <textarea
+                            rows="7"
+                            cols="70"
+                            name="message"
+                            id="postmessage"
+                            maxlength="500"
+                            placeholder="请输入评价内容"
+                        >`
+                            + assessment +
+                    `</textarea>
+                </div>`
+            )
 
             $('#submitBtn').on('click', function () {
                 //var dataid = $(this).attr('data-id');
@@ -175,49 +200,31 @@
                     // 如果返回字符串中包括":200"则跳转
                     if (xhr.responseText.indexOf(":200") > 0) {
                         alert("修改成功！");
-                        window.location.href = "/user/getMyAssessments";
+                        window.location.href = "/user/getMyAssessments/AAA";
                     } else {
                         alert("修改失败！");
-                        window.location.href = "/user/getMyAssessments";
+                        window.location.href = "/user/getMyAssessments/AAA";
                     }
                 }
-
-
             })
-
         })
-/*
+
+        $('#myModal').on('hidden.bs.modal', function () {
+            console.log("关闭模态框");
+            // 隐藏模态框后的回调函数
+            // 清空modal-body中的内容
+            $(this).find('.modal-body').empty()
+        });
+
         $("#searchBtn").on("click", function () {
-            if(checkForm()) {
-                const user= {
-                    "username" : document.getElementById("username").value,
-                    "password" : document.getElementById("password").value,
-                    "mail" : document.getElementById("email").value
-                }
-
-                let xhr = new XMLHttpRequest();
-                xhr.open('POST', '/user/register', true);
-                // 设定传输格式 很重要 不然前端无法解析JSON
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(JSON.stringify(user));
-
-                // 定义回调函数
-                xhr.onload = function () {
-                    // 打印返回数据 {"msg":"注册成功","code":200}
-                    console.log(xhr.responseText);
-                    // 如果返回字符串中包括":200"则跳转
-                    if (xhr.responseText.indexOf(":200") > 0) {
-                        alert("注册成功");
-                        window.location.href = "/user/books/AAA";
-                    } else {
-                        alert("注册失败！用户名已存在");
-                        window.location.href = "/view/register";
-                    }
-                }
+            // 从id为name的框中获取值
+            const text = $("#name").val();
+            console.log(text);
+            if(text == ""){
+                window.location.href = `/user/getMyAssessments/AAA`
+            } else {
+                window.location.href = `/user/getMyAssessments/indistinct` + text
             }
-
-        })*/
-
-
+        })
     })
 </script>
