@@ -165,22 +165,34 @@ public class UserController {
         return "/booksPage";
     }
 
-    @RequestMapping(value = "/films", method = RequestMethod.GET)
-    public String filmsInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/films/{query}", method = RequestMethod.GET)
+    public String filmsInit(HttpServletRequest request,
+                            HttpServletResponse response,
+                            @PathVariable String query) throws IOException {
 
         QueryInfo queryInfo = new QueryInfo();
-        queryInfo.setQuery(MEANINGLESS_QUERY);
+        if(query.equals("AAA")){
+            queryInfo.setQuery(MEANINGLESS_QUERY);
+        } else {
+            queryInfo.setQuery(query);
+        }
         queryInfo.setPagenum(MIN_PAGE_NUM);
         queryInfo.setPagesize(MAX_PAGE_SIZE);
         request.setAttribute("films", filmService.getAllFilms(queryInfo));
         return "/filmsPage";
     }
 
-    @RequestMapping(value = "/musics", method = RequestMethod.GET)
-    public String musicsInit(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/musics/{query}", method = RequestMethod.GET)
+    public String musicsInit(HttpServletRequest request,
+                             HttpServletResponse response,
+                             @PathVariable String query) throws IOException {
 
         QueryInfo queryInfo = new QueryInfo();
-        queryInfo.setQuery(MEANINGLESS_QUERY);
+        if(query.equals("AAA")){
+            queryInfo.setQuery(MEANINGLESS_QUERY);
+        } else {
+            queryInfo.setQuery(query);
+        }
         queryInfo.setPagenum(MIN_PAGE_NUM);
         queryInfo.setPagesize(MAX_PAGE_SIZE);
         request.setAttribute("musics", musicService.getAllMusics(queryInfo));
