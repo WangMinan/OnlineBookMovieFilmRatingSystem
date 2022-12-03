@@ -51,21 +51,9 @@ public class PageGetUtil {
             // 模糊搜索
             QueryWrapper wrapper = new QueryWrapper();
             queryInfo.setQuery(queryInfo.getQuery().substring(10));
-            wrapper.like("name", queryInfo.getQuery());
-            wrapper.or();
-            wrapper.like("type", queryInfo.getQuery());
-            wrapper.or();
-            wrapper.like("publishYear", queryInfo.getQuery());
-            wrapper.or();
             wrapper.like("objectType", queryInfo.getQuery());
             wrapper.or();
-            wrapper.like("author", queryInfo.getQuery());
-            wrapper.or();
             wrapper.like("assessment", queryInfo.getQuery());
-            wrapper.or();
-            wrapper.like("description", queryInfo.getQuery());
-            wrapper.or();
-            wrapper.like("username", queryInfo.getQuery());
             wrapper.or();
             wrapper.like("postDate", queryInfo.getQuery());
             list = (Page) mapper.selectPage(page, wrapper);
