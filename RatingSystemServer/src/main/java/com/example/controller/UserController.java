@@ -193,7 +193,7 @@ public class UserController {
     @ResponseBody
     public R handleAddAssessment(HttpServletRequest request, HttpServletResponse response,
                               @RequestBody Assessment assessmentView) throws IOException {
-        checkSession(request, response);
+        //checkSession(request, response);
         assessmentView.setUsername((String) request.getSession().getAttribute("username"));
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -206,7 +206,7 @@ public class UserController {
     @ResponseBody
     public R handleDeleteAssessment(HttpServletRequest request, HttpServletResponse response,
                                  @PathVariable("id") int id) throws IOException {
-        checkSession(request, response);
+        //checkSession(request, response);
         return assessmentService.deleteAssessment(id);
     }
 
@@ -214,7 +214,7 @@ public class UserController {
     @ResponseBody
     public R handleUpdateAssessment(HttpServletRequest request, HttpServletResponse response,
                                  @PathVariable("id") long id, @RequestBody Assessment assessmentView) throws IOException {
-        checkSession(request, response);
+        //checkSession(request, response);
         assessmentView.setUsername((String) request.getSession().getAttribute("username"));
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -233,7 +233,7 @@ public class UserController {
     @RequestMapping(value = "/getMyAssessments/{query}", method = RequestMethod.GET)
     public String handleGetMyAssessmentsByQuery(HttpServletRequest request, HttpServletResponse response,
                                @PathVariable("query") String query) throws IOException {
-        checkSession(request, response);
+        //checkSession(request, response);
         QueryInfo queryInfo = new QueryInfo();
         if(query.equals("AAA")){
             queryInfo.setQuery(MEANINGLESS_QUERY);
@@ -267,7 +267,7 @@ public class UserController {
     @ResponseBody
     public R handleUserUpdate(HttpServletRequest request, HttpServletResponse response,
                               @RequestBody User user) throws IOException {
-        checkSession(request, response);
+        //checkSession(request, response);
         long id = (long) request.getSession().getAttribute("id");
         return userService.updateUser(id,user);
     }
@@ -295,7 +295,7 @@ public class UserController {
                                 @PathVariable("query") String query,
                                 @PathVariable("pagenum") int pagenum,
                                 @PathVariable("pagesize") int pagesize) throws IOException {
-        checkSession(request, response);
+        //checkSession(request, response);
         if(query.equals("AAA")){
             query=MEANINGLESS_QUERY;
         }
@@ -311,20 +311,13 @@ public class UserController {
                                 @PathVariable("query") String query,
                                 @PathVariable("pagenum") int pagenum,
                                 @PathVariable("pagesize") int pagesize) throws IOException {
-        checkSession(request, response);
+        //checkSession(request, response);
         if(query.equals("AAA")){
             query=MEANINGLESS_QUERY;
         }
         QueryInfo queryInfo = new QueryInfo(query, pagenum, pagesize);
         Map<String,Object> map = musicService.getAllMusics(queryInfo);
         return R.ok(map);
-    }
-
-    private static void checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // 检查Session 如果没有登录则跳转到登录页面
-        if(request.getSession().getAttribute("username") == null){
-            response.sendRedirect("/view/loginPage");
-        }
     }
 
     @Data
