@@ -13,9 +13,7 @@ import com.example.util.PageGetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
 * @author wangminan
@@ -46,6 +44,15 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
 
     @Override
     public Map<String, Object> getAllAssessments(QueryInfo queryInfo) {
+        boolean flag = false;
+        String query = "";
+        if(queryInfo.getQuery().equals("")){
+            flag = true;
+        } else {
+            // 取出第10个之后的部分
+            query = queryInfo.getQuery().substring(10);
+        }
+        queryInfo.setQuery("");
         Map<String,Object> map = PageGetUtil.getPage(assessmentMapper, queryInfo);
         // 从map中获取result,根据result中的user的id查询user,将user放入result中
         // 根据result中的objectType与object的id查询object,将object放入result中
@@ -54,6 +61,28 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
         List<Assessment> resultList = (List<Assessment>) map.get("result");
         for(Assessment assessmentView : resultList){
             getUserAndWorkOfAssessment(assessmentView);
+        }
+        if (!flag){
+            // 模糊查询
+            // 深拷贝resultList到另一个list
+            List<Assessment> resultListCopy = new ArrayList<>(resultList);
+            Iterator<Assessment> iterator = resultListCopy.iterator();
+            // 对于List中元素的删除一定要使用迭代器
+            // 直接使用list.remove()会出现空指针异常
+            while (iterator.hasNext()){
+                Assessment assessmentView = iterator.next();
+                if(!assessmentView.getWork().getName().contains(query)
+                        && !assessmentView.getUser().getUsername().contains(query)
+                        && !assessmentView.getWork().getDescription().contains(query)
+                        && !assessmentView.getWork().getPublishyear().contains(query)
+                        && !assessmentView.getWork().getType().contains(query)
+                        && !assessmentView.getAssessment().contains(query)
+                        && !assessmentView.getPostdate().contains(query)
+                ){
+                    iterator.remove();
+                }
+            }
+            resultList = resultListCopy;
         }
         resultMap.put("result", resultList);
         resultMap.put("total", map.get("total"));

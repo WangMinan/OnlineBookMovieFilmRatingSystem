@@ -70,7 +70,7 @@
                                             <a href="/view/userUpdate">个人信息修改</a>
                                         </li>
                                         <li>
-                                            <a href="/user/getMyAssessments">
+                                            <a href="/user/getMyAssessments/AAA">
                                                 查询发表的评价信息
                                             </a>
                                         </li>
