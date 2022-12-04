@@ -48,11 +48,10 @@
                                         maxlength='500'
                                         placeholder='请输入评价内容'
                                 >
-                                            </textarea>
+                                </textarea>
                             </div>
                         </div>
                     </div>
-
 
                     <button id='submit' type='button' class='btn btn-primary'>提交评论</button>
 

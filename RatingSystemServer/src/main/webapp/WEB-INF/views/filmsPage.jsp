@@ -143,9 +143,7 @@
             // 绑定事件
             $('#selectYearAndTypeBar').find('li').each(function () {
                 const a = $(this).find('a:first')[0];
-                if(currentLocation === '/user/films/AAA'
-                    || currentLocation === '/user/films/AAA'
-                ){
+                if(currentLocation === '/user/films/AAA'){
                     $(this).removeClass('active')
                 }else if (currentLocation === $(a).attr('href')) {
                     $(this).addClass('active'); // this.className = 'active';
@@ -258,8 +256,6 @@
         // 清空modal-body中的内容
         $(this).find('.modal-title').text('')
         $(this).find('.modal-body').empty()
-        // 清空modal-footer下的textarea中的内容
-        $(this).find('.modal-footer').find('.assessment-area').text('')
     });
 
     // UTF8编码转成汉字字符串

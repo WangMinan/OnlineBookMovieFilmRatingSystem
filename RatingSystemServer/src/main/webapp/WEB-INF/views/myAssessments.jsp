@@ -127,43 +127,41 @@
 <script>
     let id;
 
-    $(function () {
-        $('tbody').on('click', '.btn-danger', function () {
-            id= parseInt($(this).attr('data-id'));
-            //var dataid = $(this).attr('data-id');
-            //var id= parseInt(dataid);
+    $(document).ready(function () {
+        $('tbody')
+            .on('click', '.btn-danger', function () {
+                id = parseInt($(this).attr('data-id'));
+                //var dataid = $(this).attr('data-id');
+                //var id= parseInt(dataid);
 
-            let xhr = new XMLHttpRequest();
-            xhr.open('DELETE', `/user/assessments/delete/` + id, true);
-            // 设定传输格式 很重要 不然前端无法解析JSON
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify(id));
+                let xhr = new XMLHttpRequest();
+                xhr.open('DELETE', `/user/assessments/delete/` + id, true);
+                // 设定传输格式 很重要 不然前端无法解析JSON
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(id));
 
-            // 定义回调函数
-            xhr.onload = function () {
-                // 打印返回数据 {"msg":"登录成功","code":200}
-                // 如果返回字符串中包括":200"则跳转
-                if (xhr.responseText.indexOf(":200") > 0) {
-                    alert("删除成功！");
-                    window.location.href = "/user/getMyAssessments/AAA";
-                } else {
-                    alert("删除失败！");
-                    window.location.href = "/user/getMyAssessments/AAA";
+                // 定义回调函数
+                xhr.onload = function () {
+                    // 打印返回数据 {"msg":"登录成功","code":200}
+                    // 如果返回字符串中包括":200"则跳转
+                    if (xhr.responseText.indexOf(":200") > 0) {
+                        alert("删除成功！");
+                        window.location.href = "/user/getMyAssessments/AAA";
+                    } else {
+                        alert("删除失败！");
+                        window.location.href = "/user/getMyAssessments/AAA";
+                    }
                 }
-            }
+            })
+            .on('click', '.btn-info', function () {
+                id = parseInt($(this).attr('data-id'));
+                const assessment = $(this).attr('data-assessment')
+                //var dataid = $(this).attr('data-id');
+                //var id= parseInt(dataid);
 
-
-        })
-
-        $('tbody').on('click', '.btn-info', function () {
-            id= parseInt($(this).attr('data-id'));
-            const assessment = $(this).attr('data-assessment')
-            //var dataid = $(this).attr('data-id');
-            //var id= parseInt(dataid);
-
-            const modal = $('#myModal');
-            modal.find('.modal-body').append(
-                `<div class="text-center">
+                const modal = $('#myModal');
+                modal.find('.modal-body').append(
+                    `<div class="text-center">
                     <label for="postmessage"></label>
                         <textarea
                             rows="7"
@@ -173,43 +171,44 @@
                             maxlength="500"
                             placeholder="请输入评价内容"
                         >`
-                            + assessment +
+                    + assessment +
                     `</textarea>
                 </div>`
-            )
-
-            $('#submitBtn').on('click', function () {
-                //var dataid = $(this).attr('data-id');
-                //var id= parseInt(dataid);
-
-                const assessmentUpdate= {
-                    "id" : id,
-                    "assessment" : $("#postmessage").val()
-                }
-
-                if (assessmentUpdate.assessment.trim() === '') {
-                    alert('评论不能为空')
-                    return
-                }
-
-                let xhr = new XMLHttpRequest();
-                xhr.open('PUT', `/user/assessments/update/` + id, true);
-                // 设定传输格式 很重要 不然前端无法解析JSON
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(JSON.stringify(assessmentUpdate));
-
-                // 定义回调函数
-                xhr.onload = function () {
-                    // 打印返回数据 {"msg":"登录成功","code":200}
-                    // 如果返回字符串中包括":200"则跳转
-                    if (xhr.responseText.indexOf(":200") > 0) {
-                        window.location.href = "/user/getMyAssessments/AAA";
-                    } else {
-                        alert("修改失败！");
-                        window.location.href = "/user/getMyAssessments/AAA";
-                    }
-                }
+                )
             })
+
+        $('#submitBtn').on('click', function () {
+            //var dataid = $(this).attr('data-id');
+            //var id= parseInt(dataid);
+
+            const assessmentUpdate= {
+                "id" : id,
+                "assessment" : $("#postmessage").val()
+            }
+
+            if (assessmentUpdate.assessment.trim() === '') {
+                alert('评论不能为空')
+                console.log("hello")
+                return
+            }
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('PUT', `/user/assessments/update/` + id, true);
+            // 设定传输格式 很重要 不然前端无法解析JSON
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(assessmentUpdate));
+
+            // 定义回调函数
+            xhr.onload = function () {
+                // 打印返回数据 {"msg":"登录成功","code":200}
+                // 如果返回字符串中包括":200"则跳转
+                if (xhr.responseText.indexOf(":200") > 0) {
+                    window.location.href = "/user/getMyAssessments/AAA";
+                } else {
+                    alert("修改失败！");
+                    window.location.href = "/user/getMyAssessments/AAA";
+                }
+            }
         })
 
         $('#myModal').on('hidden.bs.modal', function () {

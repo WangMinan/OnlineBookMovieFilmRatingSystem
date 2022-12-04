@@ -141,9 +141,6 @@
             // 解决路径中的中文被UTF-8编码的问题
             const currentLocation = revertUTF8(location.pathname)
 
-            console.log(currentLocation)
-            console.log($(a).attr('href'))
-
             // 绑定事件
             $('#selectYearAndTypeBar').find('li').each(function () {
                 const a = $(this).find('a:first')[0];
@@ -260,8 +257,6 @@
         // 清空modal-body中的内容
         $(this).find('.modal-title').text('')
         $(this).find('.modal-body').empty()
-        // 清空modal-footer下的textarea中的内容
-        $(this).find('.modal-footer').find('.assessment-area').text('')
     });
 
     // UTF8编码转成汉字字符串
