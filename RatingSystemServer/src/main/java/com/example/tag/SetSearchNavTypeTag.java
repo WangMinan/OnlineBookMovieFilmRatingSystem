@@ -7,23 +7,18 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- * 该类用于设置表单标题
+ * 设置搜索框清空筛选后的跳转页面
  */
-public class SetFormTitleTag extends SimpleTagSupport {
-
+public class SetSearchNavTypeTag extends SimpleTagSupport {
     public void doTag() throws JspException {
         try {
             JspWriter out = getJspContext().getOut();
             String outPrint = "";
-            outPrint += "<div class=\"row\">";
-            outPrint += "<div class=\"text-center\">";
-            outPrint += "<h3>";
-            outPrint += getJspContext().getAttribute("title", PageContext.REQUEST_SCOPE);
-            outPrint += "</h3>";
-            outPrint += "</div>";
-            outPrint += "</div>";
+            outPrint += "<a href=\"/user/";
+            outPrint += getJspContext().getAttribute("worktype", PageContext.REQUEST_SCOPE);
+            outPrint += "/AAA\">清空筛选</a>";
             out.print(outPrint);
-        } catch (java.io.IOException e) {
+        } catch (Exception e) {
             throw new JspTagException(e.getMessage());
         }
     }

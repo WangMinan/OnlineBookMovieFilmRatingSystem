@@ -19,4 +19,16 @@
         <tag-class>com.example.tag.SetFooterEntrancesTag</tag-class>
         <body-content>empty</body-content>
     </tag>
+
+    <tag>
+        <name>searchNavTypeTag</name>
+        <tag-class>com.example.tag.SetSearchNavTypeTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>activeWorktypeTag</name>
+        <tag-class>com.example.tag.SetActiveWorktypeTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
 </taglib>

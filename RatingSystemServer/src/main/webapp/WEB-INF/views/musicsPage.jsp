@@ -32,85 +32,9 @@
     <c:import url="banner.jsp" />
     <div class="container">
         <jsp:useBean id="musics" scope="request" type="java.util.Map"/>
-        <!-- Static navbar -->
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">R</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="/user/books/AAA">书籍</a></li>
-                        <li><a href="/user/films/AAA">电影</a></li>
-                        <li class="active"><a href="/user/musics/AAA">音乐</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-
-                        <c:if test="${sessionScope.username!=null}">
-                            <li class="dropdown">
-                                <a
-                                        href="#"
-                                        class="dropdown-toggle"
-                                        data-toggle="dropdown"
-                                        role="button"
-                                        aria-haspopup="true"
-                                        aria-expanded="false">
-                                        ${sessionScope.username}
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="/view/userUpdate">个人信息修改</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/getMyAssessments/AAA">
-                                            查询发表的评价信息
-                                        </a>
-                                    </li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" id="logoutBtn">退出</a></li>
-                                </ul>
-                            </li>
-                        </c:if>
-                        <c:if test="${sessionScope.username==null}">
-                            <li><a href="/view/loginPage">登录/注册</a></li>
-                        </c:if>
-
-                    </ul>
-
-
-                </div><!--/.nav-collapse -->
-            </div><!--/.container-fluid -->
-        </nav>
-        <nav class="navbar navbar-default" id="selectYearAndTypeBar">
-            <div class="container-fluid">
-                <ul class="nav navbar-nav navbar-left" id="yearSelect">
-                    <li>
-                        <a>按年份搜索</a>
-                    </li>
-                    <li>
-                        <a href="/user/musics/AAA">清空筛选</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="container-fluid">
-                <ul class="nav navbar-nav navbar-left" id="typeSelect">
-                    <li>
-                        <a>按类别搜索</a>
-                    </li>
-                    <li>
-                        <a href="/user/musics/AAA">清空筛选</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <c:set var="worktype" scope="request" value="musics" />
+        <c:import url="staticNav.jsp"/>
+        <c:import url="searchNav.jsp"/>
 
         <!-- Main component for a primary marketing message or call to action -->
         <c:forEach var="music" items="${musics.result}">
@@ -135,58 +59,7 @@
                 </div>
             </c:if>
         </c:forEach>
-
-        <div class="modal focus"
-             id="myModal"
-             tabindex="-1"
-             role="dialog"
-             aria-labelledby="myModalLabel"
-             aria-hidden="true"
-        >
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <%--                            插入代码的位置--%>
-                    </div>
-                    <div class="modal-footer">
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class='panel-title text-left'>
-                                    评价区
-                                </h3>
-                            </div>
-                            <div class='panel-body'>
-                                <div class='area'>
-                                    <label for='postmessage'></label>
-                                    <textarea
-                                            class="assessment-area"
-                                            rows='7'
-                                            cols='60'
-                                            name='message'
-                                            id='postmessage'
-                                            maxlength='500'
-                                            placeholder='请输入评价内容'
-                                    >
-                                        </textarea>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <button id='submit' type='button' class='btn btn-primary'>提交评论</button>
-
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    </div>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-
+        <c:import url="modal.jsp" />
         <%--      曲线救国 增加一下和底部的距离      --%>
         <div style="height: 15%;"></div>
     </div> <!-- /container -->
@@ -299,7 +172,7 @@
                 // "isdeleted": 0
             }
             // 如果评论全为空格则不发送请求直接返回
-            if (message.assessment.trim() === '') {
+            if (message.assessment.trim() === '' && ${sessionScope.username!=null}) {
                 alert('评论不能为空')
                 return
             }

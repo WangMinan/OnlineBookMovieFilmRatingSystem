@@ -36,7 +36,7 @@
                             <input id="name"
                                    type="text"
                                    class="form-control"
-                                   placeholder="根据书影音名称、留言发布时间等模糊查询"
+                                   placeholder="根据书影音名称、评价发布时间等模糊查询"
                             >
                         </form>
                         <button class="btn btn-info col-sm-offset-1" id="searchBtn">查询</button>

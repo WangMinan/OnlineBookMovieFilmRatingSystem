@@ -29,7 +29,7 @@
             <!--登录页面主体-->
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2" style="border: 5px solid slategray;background-color: white">
-                    <c:set var="title" scope="session" value="用户登录" />
+                    <c:set var="title" scope="request" value="用户登录" />
                     <mytag:titleTag/>
                     <!--表单内容-->
                     <form class="form-horizontal">
