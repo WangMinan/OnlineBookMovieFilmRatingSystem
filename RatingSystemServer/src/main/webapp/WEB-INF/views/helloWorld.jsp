@@ -31,7 +31,7 @@
     $(function () {
         $("#btnPost").on("click", function () {
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:8080/user/login', true);
+            xhr.open('POST', '/user/login', true);
             // 设定传输格式 很重要 不然前端无法解析JSON
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify(loginUser));
@@ -41,7 +41,7 @@
                 // 打印返回数据 {"msg":"登录成功","code":200}
                 // 如果返回字符串中包括":200"则跳转
                 if (xhr.responseText.indexOf(":200") > 0) {
-                    window.location.href = "http://localhost:8080/user/books/AAA";
+                    window.location.href = "/user/books/AAA";
                 } else {
                     alert(xhr.responseText)
                 }

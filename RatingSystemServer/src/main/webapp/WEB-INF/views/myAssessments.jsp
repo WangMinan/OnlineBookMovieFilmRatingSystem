@@ -134,7 +134,7 @@
             //var id= parseInt(dataid);
 
             let xhr = new XMLHttpRequest();
-            xhr.open('DELETE', `http://localhost:8080/user/assessments/delete/` + id, true);
+            xhr.open('DELETE', `/user/assessments/delete/` + id, true);
             // 设定传输格式 很重要 不然前端无法解析JSON
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify(id));
@@ -145,10 +145,10 @@
                 // 如果返回字符串中包括":200"则跳转
                 if (xhr.responseText.indexOf(":200") > 0) {
                     alert("删除成功！");
-                    window.location.href = "http://localhost:8080/user/getMyAssessments/AAA";
+                    window.location.href = "/user/getMyAssessments/AAA";
                 } else {
                     alert("删除失败！");
-                    window.location.href = "http://localhost:8080/user/getMyAssessments/AAA";
+                    window.location.href = "/user/getMyAssessments/AAA";
                 }
             }
 
@@ -187,8 +187,13 @@
                     "assessment" : $("#postmessage").val()
                 }
 
+                if (assessmentUpdate.assessment.trim() === '') {
+                    alert('评论不能为空')
+                    return
+                }
+
                 let xhr = new XMLHttpRequest();
-                xhr.open('PUT', `http://localhost:8080/user/assessments/update/` + id, true);
+                xhr.open('PUT', `/user/assessments/update/` + id, true);
                 // 设定传输格式 很重要 不然前端无法解析JSON
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify(assessmentUpdate));
@@ -198,10 +203,10 @@
                     // 打印返回数据 {"msg":"登录成功","code":200}
                     // 如果返回字符串中包括":200"则跳转
                     if (xhr.responseText.indexOf(":200") > 0) {
-                        window.location.href = "http://localhost:8080/user/getMyAssessments/AAA";
+                        window.location.href = "/user/getMyAssessments/AAA";
                     } else {
                         alert("修改失败！");
-                        window.location.href = "http://localhost:8080/user/getMyAssessments/AAA";
+                        window.location.href = "/user/getMyAssessments/AAA";
                     }
                 }
             })
@@ -217,9 +222,9 @@
             // 从id为name的框中获取值
             const text = $("#name").val();
             if(text === ""){
-                window.location.href = `http://localhost:8080/user/getMyAssessments/AAA`
+                window.location.href = `/user/getMyAssessments/AAA`
             } else {
-                window.location.href = `http://localhost:8080/user/getMyAssessments/indistinct` + text
+                window.location.href = `/user/getMyAssessments/indistinct` + text
             }
         })
     })

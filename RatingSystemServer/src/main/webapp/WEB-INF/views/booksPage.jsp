@@ -20,7 +20,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>书籍影音评价网站|书籍</title>
+    <title>书影音评价网站|书籍</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <%--  设置网页图标  --%>
@@ -47,9 +47,9 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="http://localhost:8080/user/books/AAA">书籍</a></li>
-                            <li><a href="http://localhost:8080/user/films/AAA">电影</a></li>
-                            <li><a href="http://localhost:8080/user/musics/AAA">音乐</a></li>
+                            <li class="active"><a href="/user/books/AAA">书籍</a></li>
+                            <li><a href="/user/films/AAA">电影</a></li>
+                            <li><a href="/user/musics/AAA">音乐</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
 
@@ -67,10 +67,10 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="http://localhost:8080/view/userUpdate">个人信息修改</a>
+                                            <a href="/view/userUpdate">个人信息修改</a>
                                         </li>
                                         <li>
-                                            <a href="http://localhost:8080/user/getMyAssessments/AAA">
+                                            <a href="/user/getMyAssessments/AAA">
                                                 查询发表的评价信息
                                             </a>
                                         </li>
@@ -96,7 +96,7 @@
                             <a>按年份搜索</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/user/books/AAA">清空筛选</a>
+                            <a href="/user/books/AAA">清空筛选</a>
                         </li>
                     </ul>
                 </div>
@@ -106,7 +106,7 @@
                             <a>按类别搜索</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/user/books/AAA">清空筛选</a>
+                            <a href="/user/books/AAA">清空筛选</a>
                         </li>
                     </ul>
                 </div>
@@ -165,6 +165,7 @@
                                     <div class='area'>
                                         <label for='postmessage'></label>
                                         <textarea
+                                            class = 'assessment-area'
                                             rows='7'
                                             cols='60'
                                             name='message'
@@ -209,7 +210,7 @@
     // 页面加载时调用函数
     $().ready(function (){
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8080/user/assessments/book', true);
+        xhr.open('GET', '/user/assessments/book', true);
         xhr.send();
         xhr.onload = function () {
             const resp = JSON.parse(xhr.responseText)
@@ -224,7 +225,7 @@
     // 页面加载时调用函数
     $().ready(function (){
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8080/user/books/AAA/1/999999', true);
+        xhr.open('GET', '/user/books/AAA/1/999999', true);
         xhr.send();
         xhr.onload = function () {
             const resp = JSON.parse(xhr.responseText)
@@ -249,7 +250,7 @@
             for(let i = 0; i < years.length;i++){
                 $('#yearSelect').append(
                     '<li>' +
-                        '<a href="' + `http://localhost:8080/user/books/year` + years[i] + '">'
+                        '<a href="' + `/user/books/year` + years[i] + '">'
                             + years[i] +
                         '</a>' +
                     '</li>')
@@ -257,7 +258,7 @@
             for(let i = 0; i < types.length;i++){
                 $('#typeSelect').append(
                     '<li>' +
-                        '<a href="' + `http://localhost:8080/user/books/type` + types[i] + '">'
+                        '<a href="' + `/user/books/type` + types[i] + '">'
                             + types[i] +
                         '</a>' +
                     '</li>')
@@ -266,12 +267,13 @@
             // 解决路径中的中文被UTF-8编码的问题
             const currentLocation = revertUTF8(location.pathname)
 
+            console.log(currentLocation)
+            console.log($(a).attr('href'))
+
             // 绑定事件
             $('#selectYearAndTypeBar').find('li').each(function () {
                 const a = $(this).find('a:first')[0];
-                if(currentLocation === 'http://localhost:8080/user/books/AAA'
-                    || currentLocation === 'http://ratingclient.wangminan.me/user/books/AAA'
-                ){
+                if(currentLocation === '/user/books/AAA'){
                     $(this).removeClass('active')
                 }else if (currentLocation === $(a).attr('href')) {
                     $(this).addClass('active'); // this.className = 'active';
@@ -302,7 +304,7 @@
                 return
             }
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:8080/user/assessments', true);
+            xhr.open('POST', '/user/assessments', true);
             // 设定传输格式 很重要 不然前端无法解析JSON
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify(message));
@@ -315,7 +317,7 @@
                     window.location.reload();
                 } else {
                     alert("请您先登录");
-                    window.location.href = "http://localhost:8080/user/assessments";
+                    window.location.href = "/user/assessments";
                 }
             }
         })
@@ -324,7 +326,7 @@
     $(document).ready(function () {
         $("#logoutBtn").click(function () {
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'http://localhost:8080/user/logout', true);
+            xhr.open('GET', '/user/logout', true);
             xhr.send();
             xhr.onload = function () {
                 // 打印返回数据 {"msg":"登录成功","code":200}
@@ -384,6 +386,8 @@
         // 清空modal-body中的内容
         $(this).find('.modal-title').text('')
         $(this).find('.modal-body').empty()
+        // 清空modal-footer下的textarea中的内容
+        $(this).find('.modal-footer').find('.assessment-area').text('')
     });
 
     // UTF8编码转成汉字字符串

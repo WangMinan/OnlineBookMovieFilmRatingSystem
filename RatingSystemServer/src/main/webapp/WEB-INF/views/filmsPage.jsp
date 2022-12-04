@@ -20,7 +20,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>书籍影音评价网站|电影</title>
+    <title>书影音评价网站|电影</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <%--  设置网页图标  --%>
@@ -47,9 +47,9 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="http://localhost:8080/user/books/AAA">书籍</a></li>
+                        <li><a href="/user/books/AAA">书籍</a></li>
                         <li class="active"><a href="/user/films/AAA">电影</a></li>
-                        <li><a href="http://localhost:8080/user/musics/AAA">音乐</a></li>
+                        <li><a href="/user/musics/AAA">音乐</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
 
@@ -70,7 +70,7 @@
                                         <a href="/view/userUpdate">个人信息修改</a>
                                     </li>
                                     <li>
-                                        <a href="http://localhost:8080/user/getMyAssessments/AAA">
+                                        <a href="/user/getMyAssessments/AAA">
                                             查询发表的评价信息
                                         </a>
                                     </li>
@@ -96,7 +96,7 @@
                         <a>按年份搜索</a>
                     </li>
                     <li>
-                        <a href="http://localhost:8080/user/films/AAA">清空筛选</a>
+                        <a href="/user/films/AAA">清空筛选</a>
                     </li>
                 </ul>
             </div>
@@ -106,7 +106,7 @@
                         <a>按类别搜索</a>
                     </li>
                     <li>
-                        <a href="http://localhost:8080/user/films/AAA">清空筛选</a>
+                        <a href="/user/films/AAA">清空筛选</a>
                     </li>
                 </ul>
             </div>
@@ -165,6 +165,7 @@
                                 <div class='area'>
                                     <label for='postmessage'></label>
                                     <textarea
+                                            class="assessment-area"
                                             rows='7'
                                             cols='60'
                                             name='message'
@@ -209,7 +210,7 @@
     // 页面加载时调用函数
     $().ready(function (){
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8080/user/assessments/film', true);
+        xhr.open('GET', '/user/assessments/film', true);
         xhr.send();
         xhr.onload = function () {
             const resp = JSON.parse(xhr.responseText)
@@ -224,7 +225,7 @@
     // 页面加载时调用函数
     $().ready(function (){
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8080/user/films/AAA/1/999999', true);
+        xhr.open('GET', '/user/films/AAA/1/999999', true);
         xhr.send();
         xhr.onload = function () {
             const resp = JSON.parse(xhr.responseText)
@@ -249,7 +250,7 @@
             for(let i = 0; i < years.length;i++){
                 $('#yearSelect').append(
                     '<li>' +
-                    '<a href="' + `http://localhost:8080/user/films/year` + years[i] + '">'
+                    '<a href="' + `/user/films/year` + years[i] + '">'
                     + years[i] +
                     '</a>' +
                     '</li>')
@@ -257,7 +258,7 @@
             for(let i = 0; i < types.length;i++){
                 $('#typeSelect').append(
                     '<li>' +
-                    '<a href="' + `http://localhost:8080/user/films/type` + types[i] + '">'
+                    '<a href="' + `/user/films/type` + types[i] + '">'
                     + types[i] +
                     '</a>' +
                     '</li>')
@@ -269,8 +270,8 @@
             // 绑定事件
             $('#selectYearAndTypeBar').find('li').each(function () {
                 const a = $(this).find('a:first')[0];
-                if(currentLocation === 'http://localhost:8080/user/films/AAA'
-                    || currentLocation === 'http://ratingclient.wangminan.me/user/films/AAA'
+                if(currentLocation === '/user/films/AAA'
+                    || currentLocation === '/user/films/AAA'
                 ){
                     $(this).removeClass('active')
                 }else if (currentLocation === $(a).attr('href')) {
@@ -302,7 +303,7 @@
                 return
             }
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:8080/user/assessments', true);
+            xhr.open('POST', '/user/assessments', true);
             // 设定传输格式 很重要 不然前端无法解析JSON
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify(message));
@@ -315,7 +316,7 @@
                     window.location.reload();
                 } else {
                     alert("请您先登录");
-                    window.location.href = "http://localhost:8080/user/assessments";
+                    window.location.href = "/user/assessments";
                 }
             }
         })
@@ -324,7 +325,7 @@
     $(document).ready(function () {
         $("#logoutBtn").click(function () {
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'http://localhost:8080/user/logout', true);
+            xhr.open('GET', '/user/logout', true);
             xhr.send();
             xhr.onload = function () {
                 // 打印返回数据 {"msg":"登录成功","code":200}
@@ -377,13 +378,15 @@
             }
         }
         if(!flag){
-            modal.find('.modal-title').text('该书籍暂无评论')
+            modal.find('.modal-title').text('该电影暂无评论')
         }
     }).on('hidden.bs.modal', function () {
         // 隐藏模态框后的回调函数
         // 清空modal-body中的内容
         $(this).find('.modal-title').text('')
         $(this).find('.modal-body').empty()
+        // 清空modal-footer下的textarea中的内容
+        $(this).find('.modal-footer').find('.assessment-area').text('')
     });
 
     // UTF8编码转成汉字字符串
