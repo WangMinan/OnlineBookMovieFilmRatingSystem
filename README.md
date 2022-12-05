@@ -3,7 +3,13 @@
         README
     </h1>
 </div>
-作业要求
+## 访问Demo
+
+客户端请访问[书影音评价网站|书籍 (wangminan.me)](http://ratingclient.wangminan.me/user/books/AAA)
+
+管理端请访问[欢迎 (wangminan.me)](http://ratingadmin.wangminan.me/#/welcome)
+
+## 作业要求
 
 （1）系统功能中至少覆盖用户登录、客户端操作、系统管理三部分业务的完整的业务流程，按如下各点要求设计并实现（不强制要求实现系统的所有功能，但建议有条件的同学开发出整个系统，并可以根据自己的设计完善整个系统的功能）。
 
