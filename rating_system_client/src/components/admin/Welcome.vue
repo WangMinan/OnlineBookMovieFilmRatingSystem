@@ -65,7 +65,7 @@ const options = {
         },
         series: [
           {
-            name: 'Access From',
+            name: '留言分布表',
             type: 'pie',
             radius: '50%',
             data: [
@@ -113,7 +113,7 @@ const options = {
       // 重写整个optionsRound的series
       this.optionsRound.series = [
         {
-          name: 'Access From',
+          name: '留言分布表',
           type: 'pie',
           radius: '50%',
           data: [
