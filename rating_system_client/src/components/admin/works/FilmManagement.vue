@@ -285,7 +285,7 @@ const options = {
       },
       selectedRoleId: '',
       currentPicUrl: '',
-      password: '$2a$10$uRan2MvoVp/8oKKBYWGqAujvp/pjsaFR4V/qcJyg6vImX5RUvcM6i',
+      password: '123456',
       fileList: [],
       uploadButtonDisabled: false,
       addButtonDisabled: false
