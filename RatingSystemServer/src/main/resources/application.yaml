@@ -5,19 +5,18 @@ server:
       timeout: PT1H # 1 hour
 
 rsa:
-  private_key: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAMWGPX7zfubbMettZOI+rrWiZTlM3C79N+ZOCgPL5gguClcAjpneROWr/cBserryMq3qf8Q4qn6V3RfVSTjh1Yjo7RsLq1zWiVlWMBJAGEIWue0gH5QfmTHDef0n7VWfWj8Jx4JF69N2faDVwzuw4p5CwuSTt4BSvVi6YIM9zAcnAgMBAAECgYEAkyiSBFTwxJmltVqJAK3mh9f3RhtnJ3LsBJ87gtyUAqAaf/sgQq5/8gSTRpsLTOBItZ2xlsUI8MpCMBFtPf2ykcBXAbLLjOjhd9CnK3GpNWgTUOy4TPPOUHWc1JpT63Og1NIe0zZPp2PFJomddqoHsmJrmXOp1G7COLQmu7jcJlECQQDruT6JhSWMimtllxVYvmxa2SghtJf1RPyshqsXrWMdkkfzUnV/Gfl7haBvuXmilz88tZvDIxq5OM1ecba/EkOLAkEA1oPUPF4RLgxOZDP2k3/s/E/gT2rhwq/gYeOBl2dlyMgkHvwAIoG0947SvNJxGCuooDMJFVof3P49XwTKAF4OVQJBAM//3KvyXii+N3gkMcTl+qzLc7sSJQhbAG6oQi6ZY51DZ9PQTjeCTv9s8R3E1wzeUwGZ6sDsp/cKpUUSKEQ/tHMCQAeI7eWI8FWLvR0r7hdUQQDD1X80o+VwxBLsKNsmmJ6q2Qn1lBOiNrcTXzeetLZColOuNz12wvPCQmmaA3Zr11kCQDc+swszEjTFWeLvuvZ+sxSn8yxUsmsR1nwjtxa6hTd5KXBIkif0VLZfzd68A/3tzZ7sv8LkXeXhB2C6N0OcGIU=
-
+  private_key: my-private-key
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://121.41.227.153:3306/AssessmentSystem?useUnicode=true&characterEncoding=UTF-8
-    username: wangminan
-    password: HaoHao20021118
+    url: jdbc:mysql://localhost:3306/AssessmentSystem?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
   redis:
     port: 6379
-    host: 121.41.227.153
-    password: HaoHao20021118
+    host: localhost
+    password: 123456
     timeout: 10000
     lettuce:
       pool:
@@ -27,8 +26,8 @@ spring:
         min-idle: 0
   mail:
     host: smtp.qq.com
-    username: wangminan0811@qq.com
-    password: iodgebzbykbmdebc
+    username: yourname@qq.com
+    password: 123456
     port: 587
 ## jsp支持
   mvc:
