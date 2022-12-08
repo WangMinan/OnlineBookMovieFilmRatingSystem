@@ -38,7 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if(Objects.equals(queryInfo.getQuery(), "") || queryInfo.getQuery() == null){
             userList = userMapper.selectPage(page, null);
         } else {
-            QueryWrapper wrapper = new QueryWrapper();
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
             wrapper.like("username", queryInfo.getQuery());
             userList = userMapper.selectPage(page, wrapper);
         }
@@ -79,7 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public boolean login(User user) {
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("username", user.getUsername());
         User user1 = userMapper.selectOne(wrapper);
         if(user1 == null){
@@ -91,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public User getUserByUsername(String username) {
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("username", username);
         return userMapper.selectOne(wrapper);
     }

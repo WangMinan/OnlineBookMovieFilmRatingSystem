@@ -23,14 +23,13 @@ public class JwtUtil {
     public static final String JWT_KEY = "sangeng";
 
     public static String getUUID(){
-        String token = UUID.randomUUID().toString().replaceAll("-", "");
-        return token;
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     /**
      * 生成jtw
      * @param subject token中要存放的数据（json格式）
-     * @return
+     * @return token
      */
     public static String createJWT(String subject) {
         JwtBuilder builder = getJwtBuilder(subject, null, getUUID());// 设置过期时间
@@ -41,7 +40,7 @@ public class JwtUtil {
      * 生成jtw
      * @param subject token中要存放的数据（json格式）
      * @param ttlMillis token超时时间
-     * @return
+     * @return token
      */
     public static String createJWT(String subject, Long ttlMillis) {
         JwtBuilder builder = getJwtBuilder(subject, ttlMillis, getUUID());// 设置过期时间
@@ -69,10 +68,10 @@ public class JwtUtil {
 
     /**
      * 创建token
-     * @param id
-     * @param subject
-     * @param ttlMillis
-     * @return
+     * @param id 用户id
+     * @param subject 用户名
+     * @param ttlMillis 过期时间
+     * @return token
      */
     public static String createJWT(String id, String subject, Long ttlMillis) {
         JwtBuilder builder = getJwtBuilder(subject, ttlMillis, id);// 设置过期时间
@@ -81,22 +80,20 @@ public class JwtUtil {
 
     /**
      * 生成加密后的秘钥 secretKey
-     * @return
+     * @return 加密后的秘钥
      */
     public static SecretKey generalKey() {
         byte[] encodedKey = Base64.getDecoder().decode(JwtUtil.JWT_KEY);
-        SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
-        return key;
+        return new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
     }
 
     /**
      * 解析
      *
-     * @param jwt
-     * @return
-     * @throws Exception
+     * @param jwt token
+     * @return Claims
      */
-    public static Claims parseJWT(String jwt) throws Exception {
+    public static Claims parseJWT(String jwt) {
         SecretKey secretKey = generalKey();
         return Jwts.parser()
                 .setSigningKey(secretKey)

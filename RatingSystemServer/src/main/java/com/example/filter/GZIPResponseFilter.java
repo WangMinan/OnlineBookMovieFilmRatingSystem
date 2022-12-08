@@ -1,9 +1,6 @@
 package com.example.filter;
 
-import com.alibaba.druid.util.StringUtils;
-
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
@@ -15,7 +12,6 @@ import java.util.zip.GZIPOutputStream;
 /**
  * 响应过滤器
  */
-//@WebFilter(filterName = "gzipResponseFilter")
 public class GZIPResponseFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

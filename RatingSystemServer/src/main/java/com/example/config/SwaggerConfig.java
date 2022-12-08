@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class SwaggerConfig {
     /**
      * 配置swagger的Docket bean
-     * @return
      */
     @Bean
     public Docket createRestApi() {
@@ -31,7 +30,6 @@ public class SwaggerConfig {
     }
     /**
      * 配置swagger的ApiInfo bean
-     * @return
      */
     @Bean
     public ApiInfo createApiInfo(){

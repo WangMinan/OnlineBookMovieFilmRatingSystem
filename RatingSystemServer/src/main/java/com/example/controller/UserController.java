@@ -150,9 +150,7 @@ public class UserController {
     // 接下来是书籍、电影、音乐查看与留言
     @RequestMapping(value = "/books/{query}", method = RequestMethod.GET)
     public String booksInit(HttpServletRequest request,
-                            HttpServletResponse response,
-                            @PathVariable String query) throws IOException {
-
+                            @PathVariable String query) {
         QueryInfo queryInfo = new QueryInfo();
         if(query.equals("AAA")){
             queryInfo.setQuery(MEANINGLESS_QUERY);
@@ -167,9 +165,7 @@ public class UserController {
 
     @RequestMapping(value = "/films/{query}", method = RequestMethod.GET)
     public String filmsInit(HttpServletRequest request,
-                            HttpServletResponse response,
-                            @PathVariable String query) throws IOException {
-
+                            @PathVariable String query) {
         QueryInfo queryInfo = new QueryInfo();
         if(query.equals("AAA")){
             queryInfo.setQuery(MEANINGLESS_QUERY);
@@ -184,7 +180,6 @@ public class UserController {
 
     @RequestMapping(value = "/musics/{query}", method = RequestMethod.GET)
     public String musicsInit(HttpServletRequest request,
-                             HttpServletResponse response,
                              @PathVariable String query) throws IOException {
 
         QueryInfo queryInfo = new QueryInfo();
@@ -203,9 +198,8 @@ public class UserController {
 
     @RequestMapping(value = "/assessments", method = RequestMethod.POST)
     @ResponseBody
-    public R handleAddAssessment(HttpServletRequest request, HttpServletResponse response,
-                              @RequestBody Assessment assessmentView) throws IOException {
-        //checkSession(request, response);
+    public R handleAddAssessment(HttpServletRequest request,
+                                 @RequestBody Assessment assessmentView) {
         assessmentView.setUsername((String) request.getSession().getAttribute("username"));
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -216,16 +210,15 @@ public class UserController {
 
     @RequestMapping(value = "/assessments/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public R handleDeleteAssessment(HttpServletRequest request, HttpServletResponse response,
-                                 @PathVariable("id") int id) throws IOException {
-        //checkSession(request, response);
+    public R handleDeleteAssessment(@PathVariable("id") int id) {
         return assessmentService.deleteAssessment(id);
     }
 
     @RequestMapping(value = "/assessments/update/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public R handleUpdateAssessment(HttpServletRequest request, HttpServletResponse response,
-                                 @PathVariable("id") long id, @RequestBody Assessment assessmentView) throws IOException {
+    public R handleUpdateAssessment(HttpServletRequest request,
+                                    @PathVariable("id") long id,
+                                    @RequestBody Assessment assessmentView) {
         //checkSession(request, response);
         assessmentView.setUsername((String) request.getSession().getAttribute("username"));
         Date date = new Date();
@@ -238,13 +231,11 @@ public class UserController {
     /**
      * 查看留言
      * @param request 请求
-     * @param response 响应
      * @return
-     * @throws IOException
      */
     @RequestMapping(value = "/getMyAssessments/{query}", method = RequestMethod.GET)
-    public String handleGetMyAssessmentsByQuery(HttpServletRequest request, HttpServletResponse response,
-                               @PathVariable("query") String query) throws IOException {
+    public String handleGetMyAssessmentsByQuery(HttpServletRequest request,
+                                                @PathVariable("query") String query) {
         //checkSession(request, response);
         QueryInfo queryInfo = new QueryInfo();
         if(query.equals("AAA")){
@@ -269,29 +260,24 @@ public class UserController {
 
     @RequestMapping(value = "/assessments/{type}", method = RequestMethod.GET)
     @ResponseBody
-    public R handleGetAssessments(HttpServletRequest request, HttpServletResponse response,
-                                  @PathVariable("type") String type) throws IOException {
+    public R handleGetAssessments(@PathVariable("type") String type) {
         return assessmentService.getAssessmentsByType(type);
     }
 
     // 修改个人信息
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     @ResponseBody
-    public R handleUserUpdate(HttpServletRequest request, HttpServletResponse response,
-                              @RequestBody User user) throws IOException {
-        //checkSession(request, response);
+    public R handleUserUpdate(HttpServletRequest request,
+                              @RequestBody User user) {
         long id = (long) request.getSession().getAttribute("id");
         return userService.updateUser(id,user);
     }
 
     @RequestMapping(value = "/books/{query}/{pagenum}/{pagesize}", method = RequestMethod.GET)
     @ResponseBody
-    public R handleGetAllBooks(HttpServletRequest request,
-                               HttpServletResponse response,
-                               @PathVariable("query") String query,
+    public R handleGetAllBooks(@PathVariable("query") String query,
                                @PathVariable("pagenum") int pagenum,
-                               @PathVariable("pagesize") int pagesize) throws IOException {
-//        checkSession(request, response);
+                               @PathVariable("pagesize") int pagesize) {
         if(query.equals("AAA")){
             query=MEANINGLESS_QUERY;
         }
@@ -302,12 +288,9 @@ public class UserController {
 
     @RequestMapping(value = "/films/{query}/{pagenum}/{pagesize}", method = RequestMethod.GET)
     @ResponseBody
-    public R handleGetAllMovies(HttpServletRequest request,
-                                HttpServletResponse response,
-                                @PathVariable("query") String query,
+    public R handleGetAllMovies(@PathVariable("query") String query,
                                 @PathVariable("pagenum") int pagenum,
-                                @PathVariable("pagesize") int pagesize) throws IOException {
-        //checkSession(request, response);
+                                @PathVariable("pagesize") int pagesize) {
         if(query.equals("AAA")){
             query=MEANINGLESS_QUERY;
         }
@@ -318,12 +301,9 @@ public class UserController {
 
     @RequestMapping(value = "/musics/{query}/{pagenum}/{pagesize}", method = RequestMethod.GET)
     @ResponseBody
-    public R handleGetAllMusics(HttpServletRequest request,
-                                HttpServletResponse response,
-                                @PathVariable("query") String query,
+    public R handleGetAllMusics(@PathVariable("query") String query,
                                 @PathVariable("pagenum") int pagenum,
-                                @PathVariable("pagesize") int pagesize) throws IOException {
-        //checkSession(request, response);
+                                @PathVariable("pagesize") int pagesize) {
         if(query.equals("AAA")){
             query=MEANINGLESS_QUERY;
         }

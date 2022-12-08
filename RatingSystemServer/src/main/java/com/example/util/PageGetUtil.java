@@ -23,7 +23,7 @@ public class PageGetUtil {
      * @return 返回的分页信息
      */
     public static Map<String,Object> getPage(BaseMapper mapper, QueryInfo queryInfo){
-        Page<Book> page = new Page<>(queryInfo.getPagenum(), queryInfo.getPagesize());
+        Page page = new Page<>(queryInfo.getPagenum(), queryInfo.getPagesize());
         Page list = new Page();
         if(Objects.equals(queryInfo.getQuery(), "") || queryInfo.getQuery() == null){
             list = (Page) mapper.selectPage(page, null);

@@ -132,7 +132,7 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
 
     @Override
     public R getAssessmentsByType(String type) {
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<Assessment> wrapper = new QueryWrapper<>();
         wrapper.eq("objectType", type);
         List<Assessment> assessments = assessmentMapper.selectList(wrapper);
         for(Assessment assessment : assessments){
@@ -145,7 +145,7 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
 
     @Override
     public List<Assessment> getAssessmentsByUsername(String username) {
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<Assessment> wrapper = new QueryWrapper<>();
         wrapper.eq("username", username);
         List<Assessment> assessments = assessmentMapper.selectList(wrapper);
         for(Assessment assessment : assessments){

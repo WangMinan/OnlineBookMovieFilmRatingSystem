@@ -1,6 +1,7 @@
 package com.example.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.example.exception.TokenException;
 import com.example.pojo.R;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -20,8 +21,10 @@ import java.io.IOException;
 @Component
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
-            throws IOException, ServletException {
+    public void commence(HttpServletRequest request,
+                         HttpServletResponse response,
+                         AuthenticationException authException)
+            throws IOException {
         R result = R.error(HttpStatus.FORBIDDEN.value(), "无token或token未认证,请登录");
         String responseJson = JSON.toJSONString(result);
 
@@ -32,6 +35,6 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
         outputStream.flush();
         outputStream.close();
         // 纳入全局异常统一处理
-//        throw new RuntimeException("无token或token未认证,请登录");
+        throw new TokenException("无token或token未认证,请登录");
     }
 }
