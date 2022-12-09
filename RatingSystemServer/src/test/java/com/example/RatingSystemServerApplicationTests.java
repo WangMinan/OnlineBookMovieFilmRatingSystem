@@ -1,7 +1,10 @@
 package com.example;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.domain.Assessment;
 import com.example.domain.Book;
+import com.example.domain.User;
 import com.example.mapper.AssessmentMapper;
 import com.example.pojo.QueryInfo;
 import com.example.service.BookService;
@@ -11,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,5 +63,20 @@ class RatingSystemServerApplicationTests {
         }
         resultMap.put("result", resultList);
         System.out.println(resultList);
+    }
+
+    @Test
+    public void testSubString(){
+        System.out.println("0123456789".substring(5));
+        System.out.println("usernamew".substring(8));
+        QueryInfo queryInfo = new QueryInfo("usernamew",1,99999);
+        QueryWrapper wrapper = new QueryWrapper();
+        queryInfo.setQuery(queryInfo.getQuery().substring(8));
+        wrapper.like("username", queryInfo.getQuery());
+        Page page = new Page<>(queryInfo.getPagenum(), queryInfo.getPagesize());
+        Page list = new Page();
+        list = assessmentMapper.selectPage(page, wrapper);
+        // 打印list
+        System.out.println(list.getRecords());
     }
 }

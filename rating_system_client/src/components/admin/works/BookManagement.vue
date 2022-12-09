@@ -329,7 +329,7 @@ const options = {
       },
       selectedRoleId: '',
       currentPicUrl: '',
-      password: '123456',
+      password: '$2a$10$uRan2MvoVp/8oKKBYWGqAujvp/pjsaFR4V/qcJyg6vImX5RUvcM6i',
       fileList: [],
       uploadButtonDisabled: false,
       addButtonDisabled: false
@@ -341,6 +341,8 @@ const options = {
         let query = this.queryInfo.query
         if (query === '') {
           query = 'AAA'
+        } else {
+          query = 'name' + query
         }
         const resp =
           await axios.get(`/admin/books/${query}/${this.queryInfo.pagenum}/${this.queryInfo.pagesize}`)

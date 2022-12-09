@@ -48,9 +48,11 @@ public class AssessmentServiceImpl extends ServiceImpl<AssessmentMapper, Assessm
         String query = "";
         if(queryInfo.getQuery().equals("")){
             flag = true;
-        } else {
+        } else if(queryInfo.getQuery().startsWith("indistinct")) {
             // 取出第10个之后的部分
             query = queryInfo.getQuery().substring(10);
+        } else if(queryInfo.getQuery().startsWith("username")){
+            query = queryInfo.getQuery().substring(8);
         }
         queryInfo.setQuery("");
         Map<String,Object> map = PageGetUtil.getPage(assessmentMapper, queryInfo);

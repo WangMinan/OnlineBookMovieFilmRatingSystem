@@ -7,6 +7,15 @@
       <el-breadcrumb-item>留言列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
+      <!--      搜索与添加区-->
+      <el-row :gutter = 20>
+        <el-col :span = "10">
+          <!--          需要绑定@clear以在清空文本框时做状态更新-->
+          <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable @clear="getSpittleList">
+            <el-button slot="append" icon="el-icon-search" @click="getSpittleList"></el-button>
+          </el-input>
+        </el-col>
+      </el-row>
       <el-table :data="spittleList" border stripe>
         <el-table-column type="index"></el-table-column>
         <el-table-column label="用户名" prop="user.username"></el-table-column>
@@ -121,6 +130,8 @@ const options = {
         let query = this.queryInfo.query
         if (query === '') {
           query = 'AAA'
+        } else {
+          query = 'username' + query
         }
         const resp = await axios.get(`/admin/assessments/${query}/${this.queryInfo.pagenum}/${this.queryInfo.pagesize}`)
         if (resp.data.code === 200) {

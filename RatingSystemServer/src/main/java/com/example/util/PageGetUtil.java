@@ -27,7 +27,7 @@ public class PageGetUtil {
         Page list = new Page();
         if(Objects.equals(queryInfo.getQuery(), "") || queryInfo.getQuery() == null){
             list = (Page) mapper.selectPage(page, null);
-        } else if(queryInfo.getQuery().startsWith("name")){
+        }else if(queryInfo.getQuery().startsWith("name")){
             QueryWrapper wrapper = new QueryWrapper();
             queryInfo.setQuery(queryInfo.getQuery().substring(4));
             wrapper.like("name", queryInfo.getQuery());

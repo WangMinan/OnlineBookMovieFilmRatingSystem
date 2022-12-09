@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 import router from '@/router'
 
 const _axios = axios.create({
-  baseURL: 'http://127.0.0.1:8080',
+  baseURL: 'http://ratingclient.wangminan.me',
   withCredentials: true,
   timeout: 1000 * 10
 })
@@ -29,6 +29,9 @@ _axios.interceptors.response.use(
     return response
   },
   (error) => {
+    if (error) {
+      Message.error('服务器异常')
+    }
     if ((error.response.data.code != null) && (error.response.data.code === 403)) {
       Message.error('登录过期,系统将根根据情况自动或请您重新登录,如您选择自动登录则页面跳转将在3秒后进行')
       window.sessionStorage.removeItem('token')
