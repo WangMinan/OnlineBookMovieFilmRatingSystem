@@ -13,6 +13,7 @@ import com.example.util.PageGetUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,5 +79,19 @@ class RatingSystemServerApplicationTests {
         list = assessmentMapper.selectPage(page, wrapper);
         // 打印list
         System.out.println(list.getRecords());
+    }
+
+    @Test
+    public void testBcryptPasswordEncoder(){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        for(int i=1;i<20;i++){
+            String password1 = encoder.encode("123456");
+            System.out.println(password1);
+        }
+        String password1 = encoder.encode("123456");
+        System.out.println(password1);
+        String password2 = "123456";
+        System.out.println(encoder.matches(password2, password1));
+        System.out.println(encoder.matches(password2,"$2a$10$rkMZnTJz5I2xt9x3WzQJ1OyqBRg1TNGjeFEU0uof4PtIPoqyxx8ca"));
     }
 }

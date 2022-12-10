@@ -1,10 +1,13 @@
 package com.example.controller;
 
+import cn.hutool.crypto.asymmetric.KeyType;
+import cn.hutool.crypto.asymmetric.RSA;
 import com.example.domain.*;
 import com.example.pojo.QueryInfo;
 import com.example.pojo.R;
 import com.example.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -42,6 +45,9 @@ public class AdminController {
     @Autowired
     private AssessmentService assessmentService;
 
+    @Value("${rsa.private_key}")
+    private String privateKey; // 用于RSA解密的私钥
+
     @PostMapping("/login")
     public R handleAdminLogin(@RequestBody Admin admin){
         return adminService.login(admin);
@@ -73,6 +79,9 @@ public class AdminController {
 
     @PostMapping("/users")
     public R handleAddUser(@RequestBody User user){
+        RSA rsa = new RSA(privateKey, null);
+        String password = new String(rsa.decrypt(user.getPassword(), KeyType.PrivateKey));
+        user.setPassword(password);
         return userService.addUser(user);
     }
 
