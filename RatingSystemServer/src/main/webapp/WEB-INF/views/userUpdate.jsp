@@ -169,38 +169,8 @@
           // 打印返回数据 {"msg":"注册成功","code":200}
           // 如果返回字符串中包括":200"则跳转
           if (xhr.responseText.indexOf(":200") > 0) {
-            window.location.href = "/user/books/AAA";
-          } else {
-            alert("个人信息修改失败！");
-            window.location.href = "/view/userUpdate";
-          }
-        }
-      }
-
-    })
-  })
-
-  $(function () {
-    $("#submitBtn").on("click", function () {
-      if(checkForm()) {
-        const user= {
-          "username" : document.getElementById("username").value,
-          "password" : document.getElementById("password").value,
-          "mail" : document.getElementById("email").value
-        }
-
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/user/users', true);
-        // 设定传输格式 很重要 不然前端无法解析JSON
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(user));
-
-        // 定义回调函数
-        xhr.onload = function () {
-          // 打印返回数据 {"msg":"注册成功","code":200}
-          // 如果返回字符串中包括":200"则跳转
-          if (xhr.responseText.indexOf(":200") > 0) {
-            window.location.href = "/user/books/AAA";
+            alert("信息修改成功,请重新登录");
+            window.location.href = "/view/loginPage";
           } else {
             alert("个人信息修改失败！");
             window.location.href = "/view/userUpdate";
