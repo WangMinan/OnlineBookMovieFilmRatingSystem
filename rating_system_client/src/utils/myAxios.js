@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 import router from '@/router'
 
 const _axios = axios.create({
-  baseURL: 'http://ratingclient.wangminan.me',
+  baseURL: 'http://127.0.0.1:8080',
   withCredentials: true,
   timeout: 1000 * 10
 })
