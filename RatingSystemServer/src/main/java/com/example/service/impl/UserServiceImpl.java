@@ -65,8 +65,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public R updateUser(long id, User user) {
         user.setId(id);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userMapper.updateById(user) > 0 ? R.ok("更新用户成功") : R.error("更新用户失败,可能与现有用户名重复或用户不存在");
+        User user1 = userMapper.selectById(id);
+        // 前后端区分 如果密码是加密后的情况则不进行加密 否则进行加密
+        if (!user1.getPassword().equals(user.getPassword())) {
+            String password = passwordEncoder.encode(user.getPassword());
+            user.setPassword(password);
+        }
+        return userMapper.updateById(user) > 0 ? R.ok("更新用户成功") : R.error("更新用户失败");
     }
 
     @Override
@@ -85,8 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if(user1 == null){
             return false;
         }
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.matches(user.getPassword(), user1.getPassword());
+        return passwordEncoder.matches(user.getPassword(), user1.getPassword());
     }
 
     @Override
