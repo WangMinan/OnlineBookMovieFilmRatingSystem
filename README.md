@@ -14,7 +14,7 @@
 
 RatingSystemServer：全系统后端源码，客户端JSP，请使用idea启动
 
-rating_system_client：管理端Vue源码，请使用npm run serve启动
+rating_system_client：管理端Vue源码，请使用npm run serve启动，若报redis缓存过期且未自动跳转请重新登陆管理端
 
 base.sql：数据库mysqldump导出文件，可使用Datagrip或Navicat导入本地数据库
 
