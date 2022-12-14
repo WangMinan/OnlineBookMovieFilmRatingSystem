@@ -12,9 +12,9 @@
 
 ## 文件目录说明
 
-RatingSystemServer：全系统后端，客户端JSP
+RatingSystemServer：全系统后端源码，客户端JSP，请使用idea启动
 
-rating_system_client：管理端Vue
+rating_system_client：管理端Vue源码，请使用npm run serve启动
 
 base.sql：数据库mysqldump导出文件，可使用Datagrip或Navicat导入本地数据库
 
