@@ -10,6 +10,20 @@
 
 管理端请访问[欢迎 (wangminan.me)](http://ratingadmin.wangminan.me/#/welcome)
 
+## 文件目录说明
+
+RatingSystemServer：全系统后端，客户端JSP
+
+rating_system_client：管理端Vue
+
+base.sql：数据库mysqldump导出文件，可使用Datagrip或Navicat导入本地数据库
+
+SpringBoot与JSP.md：技术指导文档
+
+书影音评价系统接口文档.md：前后端联动接口文档
+
+接下来的工作安排.md：中期之后的工作安排
+
 ## 作业要求
 
 （1）系统功能中至少覆盖用户登录、客户端操作、系统管理三部分业务的完整的业务流程，按如下各点要求设计并实现（不强制要求实现系统的所有功能，但建议有条件的同学开发出整个系统，并可以根据自己的设计完善整个系统的功能）。
